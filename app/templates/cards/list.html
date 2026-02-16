@@ -78,7 +78,7 @@
             {% set first_version = card.versions.first() %}
             {% set first_image = first_version.images.first() if first_version else None %}
             {% if first_image %}
-            <img src="{{ first_image.original_url }}" 
+            <img src="{{ first_image.original_url|cdn_image(200) }}" 
                  alt="{{ card.name }}" 
                  class="card-image"
                  loading="lazy">

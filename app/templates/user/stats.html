@@ -63,7 +63,7 @@
             </div>
             <div class="col-md-4">
                 {% if top_value_cards %}
-                <h6 class="text-muted mb-2">最も価値の高い卡牌</h6>
+                <h6 class="text-muted mb-2">最有价值的卡牌</h6>
                 <ol class="list-unstyled mb-0 small">
                     {% for card_number, name, price, qty, total_value in top_value_cards[:3] %}
                     <li class="mb-1">
@@ -74,14 +74,14 @@
                     {% endfor %}
                 </ol>
                 {% else %}
-                <p class="text-muted small mb-0">价格データがありません</p>
+                <p class="text-muted small mb-0">暂无价格数据</p>
                 {% endif %}
             </div>
         </div>
         {% if cards_with_price < collection_count %}
         <div class="alert alert-info mb-0 mt-3 small">
             <i class="bi bi-info-circle"></i> 
-            {{ collection_count - cards_with_price }} 张の卡牌には价格データがありません。
+            {{ collection_count - cards_with_price }} 张の卡牌には暂无价格数据。
             价格は毎日更新されます。
         </div>
         {% endif %}

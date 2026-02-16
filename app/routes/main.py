@@ -11,16 +11,18 @@ bp = Blueprint('main', __name__)
 
 @bp.route('/')
 def index():
-    """ホームページ"""
-    # 統計情報
+    """首页"""
+    # 统计信息
     stats = {
         'series_count': Series.query.count(),
         'card_count': Card.query.count(),
         'leader_count': Card.query.filter_by(card_type='LEADER').count(),
-        'version_count': CardVersion.query.count()
+        'version_count': CardVersion.query.count(),
+        'jp_count': Card.query.filter_by(language='jp').count(),
+        'en_count': Card.query.filter_by(language='en').count()
     }
     
-    # 最新シリーズ（ブースターパック優先）
+    # 最新系列
     recent_series = []
     for s in Series.query.filter_by(language='jp').order_by(Series.code.desc()).limit(20).all():
         card_count = Card.query.filter_by(series_id=s.id).count()
@@ -32,7 +34,7 @@ def index():
             'card_count': card_count
         })
     
-    # 上位6件のみ表示
+    # 只显示前6个
     recent_series = recent_series[:6]
     
     return render_template('index.html', stats=stats, recent_series=recent_series)

@@ -104,12 +104,12 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('cards.card_list') }}">
+                        <a class="nav-link" href="{{ url_for('cards.card_list', lang=request.args.get('lang', 'jp')) }}">
                             <i class="bi bi-grid"></i> 卡牌列表
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('cards.series_list') }}">
+                        <a class="nav-link" href="{{ url_for('cards.series_list', lang=request.args.get('lang', 'jp')) }}">
                             <i class="bi bi-folder"></i> 系列
                         </a>
                     </li>
@@ -117,6 +117,23 @@
                         <a class="nav-link" href="{{ url_for('main.search') }}">
                             <i class="bi bi-search"></i> 搜索
                         </a>
+                    </li>
+                    <!-- 语言切换 -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-globe"></i> 
+                            {% if request.args.get('lang') == 'en' %}EN{% else %}JP{% endif %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item {% if request.args.get('lang', 'jp') == 'jp' %}active{% endif %}" 
+                                   href="{{ url_for(request.endpoint or 'main.index', **dict(request.args, lang='jp')) }}">
+                                🇯🇵 日文版 ({{ stats.jp_count if stats else '2302' }} 张)
+                            </a></li>
+                            <li><a class="dropdown-item {% if request.args.get('lang') == 'en' %}active{% endif %}" 
+                                   href="{{ url_for(request.endpoint or 'main.index', **dict(request.args, lang='en')) }}">
+                                🇺🇸 英文版 ({{ stats.en_count if stats else '1108' }} 张)
+                            </a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('prices.price_list') }}">

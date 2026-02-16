@@ -15,17 +15,22 @@ bp = Blueprint('cards', __name__, url_prefix='/cards')
 
 @bp.route('/')
 def card_list():
-    """カード一覧"""
+    """卡牌列表"""
     page = request.args.get('page', 1, type=int)
     per_page = 24
     
-    # フィルター
+    # 语言过滤
+    lang = request.args.get('lang', 'jp').strip()
+    if lang not in ('jp', 'en'):
+        lang = 'jp'
+    
+    # 其他过滤器
     series_id = request.args.get('series', type=int)
     card_type = request.args.get('type', '').strip()
     color = request.args.get('color', '').strip()
     rarity = request.args.get('rarity', '').strip()
     
-    q = Card.query
+    q = Card.query.filter(Card.language == lang)
     
     if series_id:
         q = q.filter(Card.series_id == series_id)
@@ -41,12 +46,20 @@ def card_list():
     )
     
     cards = pagination.items
-    series_list = Series.query.filter_by(language='jp').order_by(Series.code).all()
+    series_list = Series.query.filter_by(language=lang).order_by(Series.code).all()
+    
+    # 语言统计
+    stats = {
+        'jp_count': Card.query.filter_by(language='jp').count(),
+        'en_count': Card.query.filter_by(language='en').count()
+    }
     
     return render_template('cards/list.html', 
                           cards=cards, 
                           pagination=pagination,
-                          series_list=series_list)
+                          series_list=series_list,
+                          stats=stats,
+                          current_lang=lang)
 
 
 @bp.route('/<card_number>')
@@ -100,29 +113,41 @@ def card_detail(card_number):
 
 @bp.route('/series/')
 def series_list():
-    """シリーズ一覧"""
+    """系列列表"""
     series_type = request.args.get('type', '').strip()
+    lang = request.args.get('lang', 'jp').strip()
+    if lang not in ('jp', 'en'):
+        lang = 'jp'
     
-    q = Series.query.filter_by(language='jp')
+    q = Series.query.filter_by(language=lang)
     
     if series_type:
         q = q.filter(Series.series_type == series_type)
     
     series_all = q.order_by(Series.code.desc()).all()
     
-    # 版本数を追加（新逻辑：按 series_id 统计 CardVersion）
-    series_list = []
+    # 版本数统计
+    series_list_data = []
     for s in series_all:
         version_count = CardVersion.query.filter_by(series_id=s.id).count()
-        series_list.append({
+        series_list_data.append({
             'id': s.id,
             'code': s.code,
             'name': s.name,
             'series_type': s.series_type,
-            'card_count': version_count  # 这里显示版本数更准确
+            'card_count': version_count
         })
     
-    return render_template('cards/series_list.html', series_list=series_list)
+    # 语言统计
+    stats = {
+        'jp_count': Card.query.filter_by(language='jp').count(),
+        'en_count': Card.query.filter_by(language='en').count()
+    }
+    
+    return render_template('cards/series_list.html', 
+                          series_list=series_list_data,
+                          stats=stats,
+                          current_lang=lang)
 
 
 @bp.route('/series/<int:series_id>')

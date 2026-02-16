@@ -155,7 +155,7 @@
                     </tr>
                 </thead>
                 <tbody id="priceTableBody">
-                    <tr><td colspan="4" class="text-center text-muted">データを読み込み中...</td></tr>
+                    <tr><td colspan="4" class="text-center text-muted">数据加载中...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -204,7 +204,7 @@ function loadChart(days) {
     
     if (!currentVersionId) {
         document.getElementById('priceTableBody').innerHTML = 
-            '<tr><td colspan="4" class="text-center text-muted">价格データがありません</td></tr>';
+            '<tr><td colspan="4" class="text-center text-muted">暂无价格数据</td></tr>';
         return;
     }
     
@@ -232,7 +232,7 @@ function renderChart(data) {
         ctx.font = '16px Arial';
         ctx.fillStyle = '#6c757d';
         ctx.textAlign = 'center';
-        ctx.fillText('价格データがありません', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        ctx.fillText('暂无价格数据', ctx.canvas.width / 2, ctx.canvas.height / 2);
         return;
     }
     
@@ -307,7 +307,7 @@ function renderTable(data) {
     const tbody = document.getElementById('priceTableBody');
     
     if (!data.data || data.data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">价格データがありません</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">暂无价格数据</td></tr>';
         return;
     }
     

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ deck.name }} を编辑 - OPCG TCG Manager{% endblock %}
+{% block title %}{{ deck.name }} 编辑 - OPCG TCG Manager{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -91,7 +91,7 @@
             </div>
             <div class="card-body card-search-results">
                 <div id="searchResults" class="card-grid">
-                    <p class="text-muted text-center py-4">搜索してください</p>
+                    <p class="text-muted text-center py-4">请搜索</p>
                 </div>
             </div>
         </div>
@@ -217,7 +217,7 @@ function searchCards() {
 function renderSearchResults(cards) {
     const container = document.getElementById('searchResults');
     if (cards.length === 0) {
-        container.innerHTML = '<p class="text-muted text-center py-4">該当する卡牌がありません</p>';
+        container.innerHTML = '<p class="text-muted text-center py-4">没有找到匹配的卡牌</p>';
         return;
     }
     
@@ -243,7 +243,7 @@ function addCard(versionId) {
         if (data.success) {
             location.reload();
         } else {
-            alert(data.error || '卡牌を添加できませんでした');
+            alert(data.error || '添加卡牌できませんでした');
         }
     });
 }

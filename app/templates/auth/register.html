@@ -15,7 +15,7 @@
                         <label class="form-label">ユーザー名</label>
                         <input type="text" class="form-control" name="username" required 
                                pattern="[a-zA-Z0-9_]+" minlength="3" maxlength="20">
-                        <small class="text-muted">3-20文字、英数字とアンダースコアのみ</small>
+                        <small class="text-muted">3-20位字符，仅限英文字母、数字和下划线</small>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">メールアドレス</label>
@@ -36,7 +36,7 @@
                 </form>
                 <hr>
                 <p class="text-center mb-0">
-                    すでにアカウントをお持ちの方は
+                    已有账号？
                     <a href="{{ url_for('auth.login') }}">登录</a>
                 </p>
             </div>

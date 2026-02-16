@@ -62,7 +62,7 @@
 {% if query or request.args.get('color') or request.args.get('type') or request.args.get('rarity') %}
     {% if cards %}
     <p class="text-muted mb-3">
-        <strong>{{ cards|length }}</strong> 条の結果
+        <strong>{{ cards|length }}</strong> 条结果
         {% if query %}「<strong>{{ query }}</strong>」{% endif %}
     </p>
     
@@ -100,16 +100,16 @@
     {% else %}
     <div class="text-center py-5">
         <i class="bi bi-search display-1 text-muted"></i>
-        <p class="text-muted mt-3">「{{ query }}」に一致する卡牌が見つかりませんでした</p>
+        <p class="text-muted mt-3">「{{ query }}」没有找到匹配的卡牌</p>
         <a href="{{ url_for('cards.card_list') }}" class="btn btn-outline-primary">
-            全部の卡牌を見る
+            查看全部卡牌
         </a>
     </div>
     {% endif %}
 {% else %}
 <div class="text-center py-5">
     <i class="bi bi-search display-1 text-muted"></i>
-    <p class="text-muted mt-3">搜索キーワードを入力してください</p>
+    <p class="text-muted mt-3">请输入搜索关键词</p>
 </div>
 {% endif %}
 {% endblock %}

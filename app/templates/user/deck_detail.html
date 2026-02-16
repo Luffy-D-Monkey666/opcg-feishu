@@ -51,7 +51,7 @@
         <div class="card">
             <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
                 {% if image %}
-                <img src="{{ image.original_url }}" class="card-img-top" alt="{{ card.name }}">
+                <img src="{{ image.original_url|cdn_image }}" class="card-img-top" alt="{{ card.name }}">
                 {% endif %}
             </a>
             <div class="card-body py-2">
@@ -81,7 +81,7 @@
             <div class="card-item position-relative">
                 <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-image" alt="{{ card.name }}">
                     {% endif %}
                 </a>
                 <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
@@ -106,7 +106,7 @@
             <div class="card-item position-relative">
                 <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-image" alt="{{ card.name }}">
                     {% endif %}
                 </a>
                 <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
@@ -131,7 +131,7 @@
             <div class="card-item position-relative">
                 <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-image" alt="{{ card.name }}">
                     {% endif %}
                 </a>
                 <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
@@ -178,7 +178,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><i class="bi bi-share"></i> 卡组をシェア</h5>
+                <h5 class="modal-title"><i class="bi bi-share"></i> 分享卡组</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">

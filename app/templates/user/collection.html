@@ -17,7 +17,7 @@
         
         <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
             {% if image %}
-            <img src="{{ image.original_url }}" alt="{{ card.name }}" class="card-image" loading="lazy">
+            <img src="{{ image.original_url|cdn_image }}" alt="{{ card.name }}" class="card-image" loading="lazy">
             {% else %}
             <div class="card-image bg-secondary d-flex align-items-center justify-content-center" style="height: 280px;">
                 <i class="bi bi-image text-white display-4"></i>
@@ -83,9 +83,9 @@
 {% else %}
 <div class="text-center py-5">
     <i class="bi bi-collection display-1 text-muted"></i>
-    <p class="text-muted mt-3">收藏はまだありません</p>
+    <p class="text-muted mt-3">暂无收藏</p>
     <a href="{{ url_for('cards.card_list') }}" class="btn btn-primary">
-        <i class="bi bi-plus"></i> 卡牌を添加
+        <i class="bi bi-plus"></i> 添加卡牌
     </a>
 </div>
 {% endif %}
@@ -94,7 +94,7 @@
 {% block extra_js %}
 <script>
 function removeFromCollection(versionId) {
-    if (!confirm('この卡牌を收藏から删除しますか？')) return;
+    if (!confirm('确定要从收藏中删除这张卡牌吗？')) return;
     
     fetch('/api/collection/remove', {
         method: 'POST',

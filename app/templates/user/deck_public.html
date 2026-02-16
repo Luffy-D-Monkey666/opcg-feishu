@@ -65,7 +65,7 @@
             <div class="col-auto">
                 {% set image = leader.version.images.first() %}
                 {% if image %}
-                <img src="{{ image.original_url }}" alt="{{ leader.version.card.name }}" 
+                <img src="{{ image.original_url|cdn_image }}" alt="{{ leader.version.card.name }}" 
                      style="height: 120px; border-radius: 8px;">
                 {% endif %}
             </div>
@@ -96,7 +96,7 @@
                 {% set image = dc.version.images.first() %}
                 <div class="card h-100 card-hover">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-img-top" alt="{{ dc.version.card.name }}">
                     {% endif %}
                     <div class="card-body p-2 text-center">
                         <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
@@ -123,7 +123,7 @@
                 {% set image = dc.version.images.first() %}
                 <div class="card h-100 card-hover">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-img-top" alt="{{ dc.version.card.name }}">
                     {% endif %}
                     <div class="card-body p-2 text-center">
                         <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
@@ -150,7 +150,7 @@
                 {% set image = dc.version.images.first() %}
                 <div class="card h-100 card-hover">
                     {% if image %}
-                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    <img src="{{ image.original_url|cdn_image }}" class="card-img-top" alt="{{ dc.version.card.name }}">
                     {% endif %}
                     <div class="card-body p-2 text-center">
                         <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
@@ -170,7 +170,7 @@
 function copyShareLink() {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(() => {
-        alert('リンクをコピーしました');
+        alert('链接已复制');
     });
 }
 </script>
