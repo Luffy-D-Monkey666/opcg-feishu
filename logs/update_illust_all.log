@@ -1,0 +1,353 @@
+2026-02-17 01:44:31.937 | INFO     | scrapers.jp_official:start_browser:71 - 浏览器已启动
+2026-02-17 01:44:31.963 | INFO     | scrapers.jp_official:get_series_list:83 - 获取系列列表...
+2026-02-17 01:44:43.885 | INFO     | scrapers.jp_official:get_series_list:121 - 共找到 49 个系列
+2026-02-17 01:44:43.885 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-14
+2026-02-17 01:44:43.885 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550114
+2026-02-17 01:44:48.478 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 25 张卡片
+2026-02-17 01:44:52.080 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:44:54.100 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 131 张卡片
+2026-02-17 01:44:56.090 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:44:56.177 | INFO     | __main__:update_illustration_types:93 - 系列 OP-14: 更新 0 个版本 | 分布: {'オリジナル': 126, '原作': 23, 'unknown': 7}
+2026-02-17 01:44:57.178 | INFO     | __main__:update_illustration_types:51 - 处理系列: PRB-02
+2026-02-17 01:44:57.178 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550302
+2026-02-17 01:44:59.174 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 67 张卡片
+2026-02-17 01:45:02.858 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 6 张卡片
+2026-02-17 01:45:04.978 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 231 张卡片
+2026-02-17 01:45:08.854 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 12 张卡片
+2026-02-17 01:45:09.013 | INFO     | __main__:update_illustration_types:93 - 系列 PRB-02: 更新 114 个版本 | 分布: {'unknown': 202, '原作': 24, 'オリジナル': 86, 'その他': 4}
+2026-02-17 01:45:10.014 | INFO     | __main__:update_illustration_types:51 - 处理系列: PRB-01
+2026-02-17 01:45:10.014 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550301
+2026-02-17 01:45:12.026 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 78 张卡片
+2026-02-17 01:45:15.640 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 34 张卡片
+2026-02-17 01:45:17.757 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 207 张卡片
+2026-02-17 01:45:21.632 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:45:21.770 | INFO     | __main__:update_illustration_types:93 - 系列 PRB-01: 更新 129 个版本 | 分布: {'unknown': 190, 'オリジナル': 87, 'アニメ': 10, '原作': 32}
+2026-02-17 01:45:22.770 | INFO     | __main__:update_illustration_types:51 - 处理系列: EB-04
+2026-02-17 01:45:22.771 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550204
+2026-02-17 01:45:26.344 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 14 张卡片
+2026-02-17 01:45:28.296 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:45:30.160 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 71 张卡片
+2026-02-17 01:45:32.010 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:45:32.078 | INFO     | __main__:update_illustration_types:93 - 系列 EB-04: 更新 81 个版本 | 分布: {'オリジナル': 67, '原作': 14, 'unknown': 4}
+2026-02-17 01:45:33.079 | INFO     | __main__:update_illustration_types:51 - 处理系列: EB-03
+2026-02-17 01:45:33.079 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550203
+2026-02-17 01:45:35.041 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 6 张卡片
+2026-02-17 01:45:36.890 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 1 张卡片
+2026-02-17 01:45:38.755 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 83 张卡片
+2026-02-17 01:45:40.732 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:45:40.799 | INFO     | __main__:update_illustration_types:93 - 系列 EB-03: 更新 90 个版本 | 分布: {'オリジナル': 83, '原作': 6, 'アニメ': 1}
+2026-02-17 01:45:41.799 | INFO     | __main__:update_illustration_types:51 - 处理系列: EB-02
+2026-02-17 01:45:41.800 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550202
+2026-02-17 01:45:43.751 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 7 张卡片
+2026-02-17 01:45:45.715 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 38 张卡片
+2026-02-17 01:45:47.675 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 60 张卡片
+2026-02-17 01:45:49.634 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:45:49.710 | INFO     | __main__:update_illustration_types:93 - 系列 EB-02: 更新 79 个版本 | 分布: {'unknown': 26, 'オリジナル': 60, 'アニメ': 12, '原作': 7}
+2026-02-17 01:45:50.711 | INFO     | __main__:update_illustration_types:51 - 处理系列: EB-01
+2026-02-17 01:45:50.711 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550201
+2026-02-17 01:45:52.669 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 15 张卡片
+2026-02-17 01:45:54.623 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 3 张卡片
+2026-02-17 01:45:56.576 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 62 张卡片
+2026-02-17 01:45:58.528 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:45:58.592 | INFO     | __main__:update_illustration_types:93 - 系列 EB-01: 更新 80 个版本 | 分布: {'アニメ': 3, 'オリジナル': 62, '原作': 15}
+2026-02-17 01:45:59.593 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-13
+2026-02-17 01:45:59.593 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550113
+2026-02-17 01:46:01.582 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 41 张卡片
+2026-02-17 01:46:03.559 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:46:05.554 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 133 张卡片
+2026-02-17 01:46:07.548 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:46:07.676 | INFO     | __main__:update_illustration_types:93 - 系列 OP-13: 更新 165 个版本 | 分布: {'オリジナル': 126, '原作': 39, 'unknown': 9}
+2026-02-17 01:46:08.677 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-12
+2026-02-17 01:46:08.677 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550112
+2026-02-17 01:46:10.658 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 26 张卡片
+2026-02-17 01:46:14.236 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:46:17.880 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 128 张卡片
+2026-02-17 01:46:19.861 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:46:19.982 | INFO     | __main__:update_illustration_types:93 - 系列 OP-12: 更新 146 个版本 | 分布: {'オリジナル': 122, '原作': 24, 'unknown': 8}
+2026-02-17 01:46:20.983 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-11
+2026-02-17 01:46:20.983 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550111
+2026-02-17 01:46:24.568 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 25 张卡片
+2026-02-17 01:46:28.203 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:46:31.767 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 130 张卡片
+2026-02-17 01:46:33.758 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:46:33.898 | INFO     | __main__:update_illustration_types:93 - 系列 OP-11: 更新 147 个版本 | 分布: {'オリジナル': 124, '原作': 23, 'unknown': 8}
+2026-02-17 01:46:34.899 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-10
+2026-02-17 01:46:34.899 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550110
+2026-02-17 01:46:38.806 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 23 张卡片
+2026-02-17 01:46:40.826 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:46:44.575 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 127 张卡片
+2026-02-17 01:46:46.551 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:46:46.672 | INFO     | __main__:update_illustration_types:93 - 系列 OP-10: 更新 144 个版本 | 分布: {'オリジナル': 121, '原作': 23, 'unknown': 6}
+2026-02-17 01:46:47.672 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-09
+2026-02-17 01:46:47.672 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550109
+2026-02-17 01:46:49.659 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 35 张卡片
+2026-02-17 01:46:51.644 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 6 张卡片
+2026-02-17 01:46:53.641 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 114 张卡片
+2026-02-17 01:46:57.267 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 3 张卡片
+2026-02-17 01:46:57.390 | INFO     | __main__:update_illustration_types:93 - 系列 OP-09: 更新 151 个版本 | 分布: {'アニメ': 6, '原作': 34, 'オリジナル': 108, 'その他': 3, 'unknown': 7}
+2026-02-17 01:46:58.391 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-08
+2026-02-17 01:46:58.391 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550108
+2026-02-17 01:47:00.379 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 23 张卡片
+2026-02-17 01:47:02.347 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 7 张卡片
+2026-02-17 01:47:04.357 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 120 张卡片
+2026-02-17 01:47:07.952 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:08.070 | INFO     | __main__:update_illustration_types:93 - 系列 OP-08: 更新 144 个版本 | 分布: {'アニメ': 7, 'オリジナル': 114, '原作': 23, 'unknown': 6}
+2026-02-17 01:47:09.071 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-07
+2026-02-17 01:47:09.071 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550107
+2026-02-17 01:47:11.059 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 23 张卡片
+2026-02-17 01:47:14.676 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 6 张卡片
+2026-02-17 01:47:16.686 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 121 张卡片
+2026-02-17 01:47:18.551 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:18.670 | INFO     | __main__:update_illustration_types:93 - 系列 OP-07: 更新 144 个版本 | 分布: {'アニメ': 6, 'オリジナル': 115, '原作': 23, 'unknown': 6}
+2026-02-17 01:47:19.670 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-06
+2026-02-17 01:47:19.671 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550106
+2026-02-17 01:47:21.668 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 19 张卡片
+2026-02-17 01:47:23.521 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 10 张卡片
+2026-02-17 01:47:25.388 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 121 张卡片
+2026-02-17 01:47:27.240 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:27.361 | INFO     | __main__:update_illustration_types:93 - 系列 OP-06: 更新 144 个版本 | 分布: {'アニメ': 10, 'オリジナル': 115, '原作': 19, 'unknown': 6}
+2026-02-17 01:47:28.362 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-05
+2026-02-17 01:47:28.362 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550105
+2026-02-17 01:47:32.123 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 34 张卡片
+2026-02-17 01:47:34.095 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 9 张卡片
+2026-02-17 01:47:36.069 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 111 张卡片
+2026-02-17 01:47:37.918 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:38.039 | INFO     | __main__:update_illustration_types:93 - 系列 OP-05: 更新 147 个版本 | 分布: {'アニメ': 9, '原作': 32, 'オリジナル': 106, 'unknown': 7}
+2026-02-17 01:47:39.040 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-04
+2026-02-17 01:47:39.040 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550104
+2026-02-17 01:47:40.902 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 22 张卡片
+2026-02-17 01:47:42.755 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 9 张卡片
+2026-02-17 01:47:44.738 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 118 张卡片
+2026-02-17 01:47:46.586 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:46.706 | INFO     | __main__:update_illustration_types:93 - 系列 OP-04: 更新 144 个版本 | 分布: {'アニメ': 9, 'オリジナル': 113, '原作': 22, 'unknown': 5}
+2026-02-17 01:47:47.707 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-03
+2026-02-17 01:47:47.707 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550103
+2026-02-17 01:47:49.678 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 26 张卡片
+2026-02-17 01:47:53.225 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 25 张卡片
+2026-02-17 01:47:55.209 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 103 张卡片
+2026-02-17 01:47:57.180 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:47:57.303 | INFO     | __main__:update_illustration_types:93 - 系列 OP-03: 更新 150 个版本 | 分布: {'アニメ': 21, 'オリジナル': 103, '原作': 26, 'unknown': 4}
+2026-02-17 01:47:58.303 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-02
+2026-02-17 01:47:58.304 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550102
+2026-02-17 01:48:00.284 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 29 张卡片
+2026-02-17 01:48:03.845 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 30 张卡片
+2026-02-17 01:48:07.582 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 95 张卡片
+2026-02-17 01:48:11.128 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:11.248 | INFO     | __main__:update_illustration_types:93 - 系列 OP-02: 更新 154 个版本 | 分布: {'アニメ': 30, '原作': 29, 'オリジナル': 95}
+2026-02-17 01:48:12.249 | INFO     | __main__:update_illustration_types:51 - 处理系列: OP-01
+2026-02-17 01:48:12.249 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550101
+2026-02-17 01:48:16.787 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 30 张卡片
+2026-02-17 01:48:18.767 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 34 张卡片
+2026-02-17 01:48:20.748 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 90 张卡片
+2026-02-17 01:48:24.370 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:24.488 | INFO     | __main__:update_illustration_types:93 - 系列 OP-01: 更新 154 个版本 | 分布: {'アニメ': 37, '原作': 29, 'オリジナル': 88}
+2026-02-17 01:48:25.489 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-29
+2026-02-17 01:48:25.489 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550029
+2026-02-17 01:48:27.446 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 3 张卡片
+2026-02-17 01:48:29.394 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:48:31.351 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 28 张卡片
+2026-02-17 01:48:33.206 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:33.230 | INFO     | __main__:update_illustration_types:93 - 系列 ST-29: 更新 31 个版本 | 分布: {'オリジナル': 28, '原作': 3}
+2026-02-17 01:48:34.231 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-28
+2026-02-17 01:48:34.231 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550028
+2026-02-17 01:48:36.178 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:48:38.120 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:48:40.076 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:48:42.024 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:42.038 | INFO     | __main__:update_illustration_types:93 - 系列 ST-28: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:48:43.038 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-27
+2026-02-17 01:48:43.039 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550027
+2026-02-17 01:48:44.992 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:48:46.959 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:48:48.902 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:48:50.839 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:50.853 | INFO     | __main__:update_illustration_types:93 - 系列 ST-27: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:48:51.854 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-26
+2026-02-17 01:48:51.854 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550026
+2026-02-17 01:48:53.694 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:48:55.644 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:48:57.589 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 13 张卡片
+2026-02-17 01:48:59.425 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:48:59.439 | INFO     | __main__:update_illustration_types:93 - 系列 ST-26: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:49:00.440 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-25
+2026-02-17 01:49:00.440 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550025
+2026-02-17 01:49:02.393 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:49:04.338 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:06.280 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:49:08.223 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:08.237 | INFO     | __main__:update_illustration_types:93 - 系列 ST-25: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:49:09.238 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-24
+2026-02-17 01:49:09.238 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550024
+2026-02-17 01:49:11.193 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:49:13.027 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:14.972 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 13 张卡片
+2026-02-17 01:49:16.918 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:16.932 | INFO     | __main__:update_illustration_types:93 - 系列 ST-24: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:49:17.933 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-23
+2026-02-17 01:49:17.933 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550023
+2026-02-17 01:49:19.889 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:49:21.834 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:23.790 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:49:25.624 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:25.640 | INFO     | __main__:update_illustration_types:93 - 系列 ST-23: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:49:26.641 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-22
+2026-02-17 01:49:26.641 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550022
+2026-02-17 01:49:28.590 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 3 张卡片
+2026-02-17 01:49:30.425 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:32.378 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 28 张卡片
+2026-02-17 01:49:34.324 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:34.348 | INFO     | __main__:update_illustration_types:93 - 系列 ST-22: 更新 31 个版本 | 分布: {'オリジナル': 28, '原作': 3}
+2026-02-17 01:49:35.349 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-21
+2026-02-17 01:49:35.349 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550021
+2026-02-17 01:49:37.296 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:49:39.237 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:41.079 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 30 张卡片
+2026-02-17 01:49:43.024 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:43.049 | INFO     | __main__:update_illustration_types:93 - 系列 ST-21: 更新 32 个版本 | 分布: {'オリジナル': 30, '原作': 2}
+2026-02-17 01:49:44.049 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-20
+2026-02-17 01:49:44.050 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550020
+2026-02-17 01:49:46.001 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:49:47.942 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 2 张卡片
+2026-02-17 01:49:49.890 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 11 张卡片
+2026-02-17 01:49:51.832 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:49:51.847 | INFO     | __main__:update_illustration_types:93 - 系列 ST-20: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:49:52.848 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-19
+2026-02-17 01:49:52.848 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550019
+2026-02-17 01:49:54.792 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:49:56.742 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:49:58.693 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:50:00.637 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:00.651 | INFO     | __main__:update_illustration_types:93 - 系列 ST-19: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:50:01.652 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-18
+2026-02-17 01:50:01.652 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550018
+2026-02-17 01:50:03.597 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:50:05.546 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:50:07.514 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 14 张卡片
+2026-02-17 01:50:09.474 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:09.490 | INFO     | __main__:update_illustration_types:93 - 系列 ST-18: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:50:10.490 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-17
+2026-02-17 01:50:10.491 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550017
+2026-02-17 01:50:12.436 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:50:14.285 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 4 张卡片
+2026-02-17 01:50:16.226 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 10 张卡片
+2026-02-17 01:50:18.171 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:18.184 | INFO     | __main__:update_illustration_types:93 - 系列 ST-17: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:50:19.185 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-16
+2026-02-17 01:50:19.185 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550016
+2026-02-17 01:50:21.128 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 0 张卡片
+2026-02-17 01:50:23.166 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 8 张卡片
+2026-02-17 01:50:25.144 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 7 张卡片
+2026-02-17 01:50:27.083 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:27.097 | INFO     | __main__:update_illustration_types:93 - 系列 ST-16: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:50:28.098 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-15
+2026-02-17 01:50:28.098 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550015
+2026-02-17 01:50:30.049 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 1 张卡片
+2026-02-17 01:50:31.890 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 1 张卡片
+2026-02-17 01:50:33.835 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 13 张卡片
+2026-02-17 01:50:35.794 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:35.809 | INFO     | __main__:update_illustration_types:93 - 系列 ST-15: 更新 5 个版本 | 分布: {'unknown': 10, 'オリジナル': 5}
+2026-02-17 01:50:36.810 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-14
+2026-02-17 01:50:36.810 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550014
+2026-02-17 01:50:38.762 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:50:40.700 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:50:42.645 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 15 张卡片
+2026-02-17 01:50:44.588 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:44.608 | INFO     | __main__:update_illustration_types:93 - 系列 ST-14: 更新 17 个版本 | 分布: {'オリジナル': 15, '原作': 2}
+2026-02-17 01:50:45.609 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-13
+2026-02-17 01:50:45.609 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550013
+2026-02-17 01:50:47.564 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 0 张卡片
+2026-02-17 01:50:49.528 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:50:51.486 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 32 张卡片
+2026-02-17 01:50:53.430 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:50:53.458 | INFO     | __main__:update_illustration_types:93 - 系列 ST-13: 更新 32 个版本 | 分布: {'オリジナル': 32, 'unknown': 3}
+2026-02-17 01:50:54.459 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-12
+2026-02-17 01:50:54.459 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550012
+2026-02-17 01:50:56.407 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 0 张卡片
+2026-02-17 01:50:58.351 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:51:00.198 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 17 张卡片
+2026-02-17 01:51:02.137 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:02.157 | INFO     | __main__:update_illustration_types:93 - 系列 ST-12: 更新 17 个版本 | 分布: {'オリジナル': 17}
+2026-02-17 01:51:03.157 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-11
+2026-02-17 01:51:03.158 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550011
+2026-02-17 01:51:05.106 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 0 张卡片
+2026-02-17 01:51:07.050 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 13 张卡片
+2026-02-17 01:51:08.997 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 2 张卡片
+2026-02-17 01:51:10.939 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:10.953 | INFO     | __main__:update_illustration_types:93 - 系列 ST-11: 更新 5 个版本 | 分布: {'unknown': 10, 'アニメ': 4, 'オリジナル': 1}
+2026-02-17 01:51:11.954 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-10
+2026-02-17 01:51:11.954 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550010
+2026-02-17 01:51:13.907 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 3 张卡片
+2026-02-17 01:51:15.848 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:51:17.821 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 16 张卡片
+2026-02-17 01:51:19.764 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:19.785 | INFO     | __main__:update_illustration_types:93 - 系列 ST-10: 更新 17 个版本 | 分布: {'unknown': 2, 'オリジナル': 14, '原作': 3}
+2026-02-17 01:51:20.786 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-09
+2026-02-17 01:51:20.786 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550009
+2026-02-17 01:51:22.736 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:51:24.683 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:51:26.625 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 13 张卡片
+2026-02-17 01:51:28.575 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:28.593 | INFO     | __main__:update_illustration_types:93 - 系列 ST-09: 更新 15 个版本 | 分布: {'オリジナル': 13, '原作': 2}
+2026-02-17 01:51:29.593 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-08
+2026-02-17 01:51:29.594 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550008
+2026-02-17 01:51:31.540 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 2 张卡片
+2026-02-17 01:51:33.487 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 0 张卡片
+2026-02-17 01:51:35.433 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 13 张卡片
+2026-02-17 01:51:37.277 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:37.295 | INFO     | __main__:update_illustration_types:93 - 系列 ST-08: 更新 15 个版本 | 分布: {'オリジナル': 13, '原作': 2}
+2026-02-17 01:51:38.296 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-07
+2026-02-17 01:51:38.296 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550007
+2026-02-17 01:51:40.239 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 5 张卡片
+2026-02-17 01:51:42.184 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 4 张卡片
+2026-02-17 01:51:44.024 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 8 张卡片
+2026-02-17 01:51:45.985 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:46.007 | INFO     | __main__:update_illustration_types:93 - 系列 ST-07: 更新 17 个版本 | 分布: {'原作': 5, 'オリジナル': 8, 'アニメ': 4}
+2026-02-17 01:51:47.007 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-06
+2026-02-17 01:51:47.008 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550006
+2026-02-17 01:51:48.987 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 6 张卡片
+2026-02-17 01:51:50.938 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 6 张卡片
+2026-02-17 01:51:52.886 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 5 张卡片
+2026-02-17 01:51:54.835 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:51:54.855 | INFO     | __main__:update_illustration_types:93 - 系列 ST-06: 更新 17 个版本 | 分布: {'原作': 6, 'オリジナル': 5, 'アニメ': 6}
+2026-02-17 01:51:55.856 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-05
+2026-02-17 01:51:55.856 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550005
+2026-02-17 01:51:57.804 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 0 张卡片
+2026-02-17 01:51:59.747 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 17 张卡片
+2026-02-17 01:52:01.692 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 0 张卡片
+2026-02-17 01:52:03.631 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:52:03.650 | INFO     | __main__:update_illustration_types:93 - 系列 ST-05: 更新 17 个版本 | 分布: {'アニメ': 17}
+2026-02-17 01:52:04.651 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-04
+2026-02-17 01:52:04.651 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550004
+2026-02-17 01:52:06.598 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 7 张卡片
+2026-02-17 01:52:08.550 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 9 张卡片
+2026-02-17 01:52:10.495 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 1 张卡片
+2026-02-17 01:52:12.443 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:52:12.462 | INFO     | __main__:update_illustration_types:93 - 系列 ST-04: 更新 17 个版本 | 分布: {'原作': 7, 'アニメ': 9, 'オリジナル': 1}
+2026-02-17 01:52:13.463 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-03
+2026-02-17 01:52:13.463 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550003
+2026-02-17 01:52:15.417 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 7 张卡片
+2026-02-17 01:52:17.359 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 10 张卡片
+2026-02-17 01:52:19.300 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 0 张卡片
+2026-02-17 01:52:21.150 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:52:21.169 | INFO     | __main__:update_illustration_types:93 - 系列 ST-03: 更新 17 个版本 | 分布: {'原作': 7, 'アニメ': 10}
+2026-02-17 01:52:22.170 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-02
+2026-02-17 01:52:22.170 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550002
+2026-02-17 01:52:24.117 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 7 张卡片
+2026-02-17 01:52:26.063 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 10 张卡片
+2026-02-17 01:52:28.001 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 0 张卡片
+2026-02-17 01:52:29.961 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:52:29.981 | INFO     | __main__:update_illustration_types:93 - 系列 ST-02: 更新 17 个版本 | 分布: {'原作': 7, 'アニメ': 10}
+2026-02-17 01:52:30.982 | INFO     | __main__:update_illustration_types:51 - 处理系列: ST-01
+2026-02-17 01:52:30.982 | INFO     | scrapers.jp_official:scrape_illustration_types:334 - 获取插画类型: series=550001
+2026-02-17 01:52:32.928 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [原作]: 7 张卡片
+2026-02-17 01:52:34.871 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [アニメ]: 9 张卡片
+2026-02-17 01:52:36.827 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [オリジナル]: 1 张卡片
+2026-02-17 01:52:38.788 | INFO     | scrapers.jp_official:scrape_illustration_types:382 - 插画类型 [その他]: 0 张卡片
+2026-02-17 01:52:38.808 | INFO     | __main__:update_illustration_types:93 - 系列 ST-01: 更新 17 个版本 | 分布: {'原作': 7, 'アニメ': 9, 'オリジナル': 1}
+2026-02-17 01:52:39.809 | WARNING  | __main__:update_illustration_types:48 - 系列 FDS 在官网未找到，跳过
+2026-02-17 01:52:39.809 | WARNING  | __main__:update_illustration_types:48 - 系列 P 在官网未找到，跳过
+2026-02-17 01:52:39.810 | WARNING  | __main__:update_illustration_types:48 - 系列 LTD 在官网未找到，跳过
+2026-02-17 01:52:39.810 | INFO     | __main__:update_illustration_types:98 - 
+=== 更新完成 ===
+2026-02-17 01:52:39.810 | INFO     | __main__:update_illustration_types:99 - 总计更新 2898 个版本
+2026-02-17 01:52:39.872 | INFO     | scrapers.jp_official:close_browser:79 - 浏览器已关闭

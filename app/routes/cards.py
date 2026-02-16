@@ -29,6 +29,7 @@ def card_list():
     card_type = request.args.get('type', '').strip()
     color = request.args.get('color', '').strip()
     rarity = request.args.get('rarity', '').strip()
+    illustration = request.args.get('illustration', '').strip()
     
     q = Card.query.filter(Card.language == lang)
     
@@ -41,12 +42,26 @@ def card_list():
     if rarity:
         q = q.filter(Card.rarity == rarity)
     
+    # 插画类型筛选（需要 JOIN CardVersion）
+    if illustration:
+        q = q.join(CardVersion, Card.id == CardVersion.card_id)\
+             .filter(CardVersion.illustration_type == illustration)\
+             .distinct()
+    
     pagination = q.order_by(Card.card_number).paginate(
         page=page, per_page=per_page, error_out=False
     )
     
     cards = pagination.items
     series_list = Series.query.filter_by(language=lang).order_by(Series.code).all()
+    
+    # 系列分组（用于侧边栏树形导航）
+    series_groups = _get_series_groups(lang)
+    
+    # 当前选中的系列
+    current_series = None
+    if series_id:
+        current_series = Series.query.get(series_id)
     
     # 语言统计
     stats = {
@@ -58,7 +73,80 @@ def card_list():
                           cards=cards, 
                           pagination=pagination,
                           series_list=series_list,
+                          series_groups=series_groups,
+                          current_series=current_series,
                           stats=stats,
+                          current_lang=lang)
+
+
+def _get_series_groups(lang: str) -> dict:
+    """获取系列分组数据"""
+    series_all = Series.query.filter_by(language=lang).order_by(Series.code.desc()).all()
+    
+    # 分组映射
+    type_names = {
+        'booster': '📦 补充包 (Booster)',
+        'starter': '🎴 起始套牌 (Starter)',
+        'extra': '✨ 额外补充 (Extra)',
+        'premium': '👑 高级补充 (Premium)',
+        'promo': '🎁 促销卡 (Promo)',
+        'limited': '🔒 限定商品 (Limited)',
+        'ultimate': '⚔️ 终极套牌 (Ultimate)',
+        'family': '👨‍👩‍👧 家庭套牌 (Family)',
+        'other': '📁 其他'
+    }
+    
+    groups = {}
+    for s in series_all:
+        group_name = type_names.get(s.series_type, type_names['other'])
+        if group_name not in groups:
+            groups[group_name] = []
+        groups[group_name].append(s)
+    
+    # 排序：按定义顺序
+    ordered_groups = {}
+    for type_key in ['booster', 'starter', 'extra', 'premium', 'promo', 'limited', 'ultimate', 'family', 'other']:
+        group_name = type_names.get(type_key)
+        if group_name and group_name in groups:
+            ordered_groups[group_name] = groups[group_name]
+    
+    return ordered_groups
+
+
+@bp.route('/<card_number>/all-versions')
+def card_all_versions(card_number):
+    """查看同一语种内所有系列中该卡号的全部版本"""
+    lang = request.args.get('lang', 'jp').strip()
+    if lang not in ('jp', 'en'):
+        lang = 'jp'
+    
+    # 查找该语种的卡片
+    card = Card.query.filter_by(card_number=card_number, language=lang).first_or_404()
+    
+    # 获取该语种所有系列中该卡号的版本
+    # 通过 CardVersion.series_id 关联到 Series，筛选同语种
+    versions = CardVersion.query.filter_by(card_id=card.id)\
+        .join(Series, CardVersion.series_id == Series.id)\
+        .filter(Series.language == lang)\
+        .order_by(Series.code.desc(), CardVersion.version_suffix)\
+        .all()
+    
+    # 按系列分组
+    series_versions = {}
+    for v in versions:
+        series = Series.query.get(v.series_id)
+        if series:
+            if series.code not in series_versions:
+                series_versions[series.code] = {
+                    'series': series,
+                    'versions': []
+                }
+            v.images_list = v.images.all()
+            series_versions[series.code]['versions'].append(v)
+    
+    return render_template('cards/all_versions.html',
+                          card=card,
+                          series_versions=series_versions,
                           current_lang=lang)
 
 

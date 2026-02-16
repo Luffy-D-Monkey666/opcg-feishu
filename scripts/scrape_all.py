@@ -105,20 +105,27 @@ def save_card_to_db(card_data: CardData, series: Series):
         )
     
     # 创建卡片版本
+    # 每个版本关联到特定系列，记录入手情报
     version_suffix = f"_v{card_data.version_index}" if card_data.version_index > 0 else ""
     version = CardVersion.query.filter_by(
         card_id=card.id,
+        series_id=series.id,
         version_suffix=version_suffix
     ).first()
     
     if not version:
         version = CardVersion(
             card_id=card.id,
+            series_id=series.id,  # 版本所属系列
             version_suffix=version_suffix,
-            version_type='normal' if card_data.version_index == 0 else 'alt_art'
+            version_type='normal' if card_data.version_index == 0 else 'alt_art',
+            source_description=card_data.source_info  # 入手情报
         )
         db.session.add(version)
         db.session.flush()
+    elif not version.source_description and card_data.source_info:
+        # 更新已有版本的入手情报（如果之前没有）
+        version.source_description = card_data.source_info
     
     # 创建图片记录
     if card_data.image_url:

@@ -137,6 +137,9 @@ class CardVersion(db.Model):
     # 来源描述 (如: "フラッグシップバトル 優勝記念品")
     source_description = db.Column(db.String(500))
     
+    # 插画类型: 原作/アニメ/オリジナル/その他
+    illustration_type = db.Column(db.String(20))
+    
     # 创建/更新时间
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

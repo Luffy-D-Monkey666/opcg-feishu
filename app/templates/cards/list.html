@@ -1,32 +1,31 @@
-{% extends "base.html" %}
+{% extends "base_sidebar.html" %}
 
 {% block title %}卡牌列表 - OPCG 卡牌图鉴{% endblock %}
 
-{% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-grid"></i> 卡牌列表</h2>
+{% block main_content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">
+        <i class="bi bi-grid"></i> 
+        {% if current_series %}
+            {{ current_series.code }} - 卡牌列表
+        {% else %}
+            全部卡牌
+        {% endif %}
+    </h4>
     <span class="badge bg-secondary fs-6">{{ pagination.total }} 条</span>
 </div>
 
-<!-- フィルター -->
-<div class="search-box mb-4">
+<!-- 筛选器（精简版，系列筛选移到侧边栏） -->
+<div class="search-box mb-3">
     <form method="get" action="{{ url_for('cards.card_list') }}">
         <input type="hidden" name="lang" value="{{ request.args.get('lang', 'jp') }}">
-        <div class="row g-3">
-            <div class="col-md-3">
-                <label class="form-label">系列</label>
-                <select class="form-select" name="series">
-                    <option value="">全部</option>
-                    {% for s in series_list %}
-                    <option value="{{ s.id }}" {% if request.args.get('series')|int == s.id %}selected{% endif %}>
-                        {{ s.code }}
-                    </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-md-2">
-                <label class="form-label">类型</label>
-                <select class="form-select" name="type">
+        {% if current_series %}
+        <input type="hidden" name="series" value="{{ current_series.id }}">
+        {% endif %}
+        <div class="row g-2 align-items-end">
+            <div class="col-auto">
+                <label class="form-label small mb-1">类型</label>
+                <select class="form-select form-select-sm" name="type">
                     <option value="">全部</option>
                     <option value="LEADER" {% if request.args.get('type') == 'LEADER' %}selected{% endif %}>LEADER</option>
                     <option value="CHARACTER" {% if request.args.get('type') == 'CHARACTER' %}selected{% endif %}>CHARACTER</option>
@@ -34,21 +33,21 @@
                     <option value="STAGE" {% if request.args.get('type') == 'STAGE' %}selected{% endif %}>STAGE</option>
                 </select>
             </div>
-            <div class="col-md-2">
-                <label class="form-label">颜色</label>
-                <select class="form-select" name="color">
+            <div class="col-auto">
+                <label class="form-label small mb-1">颜色</label>
+                <select class="form-select form-select-sm" name="color">
                     <option value="">全部</option>
-                    <option value="赤" {% if request.args.get('color') == '赤' %}selected{% endif %}>赤</option>
-                    <option value="緑" {% if request.args.get('color') == '緑' %}selected{% endif %}>緑</option>
-                    <option value="青" {% if request.args.get('color') == '青' %}selected{% endif %}>青</option>
-                    <option value="紫" {% if request.args.get('color') == '紫' %}selected{% endif %}>紫</option>
-                    <option value="黄" {% if request.args.get('color') == '黄' %}selected{% endif %}>黄</option>
-                    <option value="黒" {% if request.args.get('color') == '黒' %}selected{% endif %}>黒</option>
+                    <option value="赤" {% if request.args.get('color') == '赤' %}selected{% endif %}>🔴 赤</option>
+                    <option value="緑" {% if request.args.get('color') == '緑' %}selected{% endif %}>🟢 緑</option>
+                    <option value="青" {% if request.args.get('color') == '青' %}selected{% endif %}>🔵 青</option>
+                    <option value="紫" {% if request.args.get('color') == '紫' %}selected{% endif %}>🟣 紫</option>
+                    <option value="黄" {% if request.args.get('color') == '黄' %}selected{% endif %}>🟡 黄</option>
+                    <option value="黒" {% if request.args.get('color') == '黒' %}selected{% endif %}>⚫ 黒</option>
                 </select>
             </div>
-            <div class="col-md-2">
-                <label class="form-label">稀有度</label>
-                <select class="form-select" name="rarity">
+            <div class="col-auto">
+                <label class="form-label small mb-1">稀有度</label>
+                <select class="form-select form-select-sm" name="rarity">
                     <option value="">全部</option>
                     <option value="L" {% if request.args.get('rarity') == 'L' %}selected{% endif %}>L</option>
                     <option value="SEC" {% if request.args.get('rarity') == 'SEC' %}selected{% endif %}>SEC</option>
@@ -58,11 +57,24 @@
                     <option value="C" {% if request.args.get('rarity') == 'C' %}selected{% endif %}>C</option>
                 </select>
             </div>
-            <div class="col-md-3 d-flex align-items-end">
-                <button type="submit" class="btn btn-primary me-2">
+            <div class="col-auto">
+                <label class="form-label small mb-1">插画</label>
+                <select class="form-select form-select-sm" name="illustration">
+                    <option value="">全部</option>
+                    <option value="原作" {% if request.args.get('illustration') == '原作' %}selected{% endif %}>📖 原作</option>
+                    <option value="アニメ" {% if request.args.get('illustration') == 'アニメ' %}selected{% endif %}>📺 动画</option>
+                    <option value="オリジナル" {% if request.args.get('illustration') == 'オリジナル' %}selected{% endif %}>🎨 原创</option>
+                    <option value="その他" {% if request.args.get('illustration') == 'その他' %}selected{% endif %}>📁 其他</option>
+                </select>
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary btn-sm">
                     <i class="bi bi-funnel"></i> 筛选
                 </button>
-                <a href="{{ url_for('cards.card_list', lang=request.args.get('lang', 'jp')) }}" class="btn btn-outline-secondary">
+            </div>
+            <div class="col-auto">
+                <a href="{{ url_for('cards.card_list', lang=request.args.get('lang', 'jp'), series=request.args.get('series', '')) }}" 
+                   class="btn btn-outline-secondary btn-sm">
                     <i class="bi bi-x"></i> 清除
                 </a>
             </div>
@@ -70,7 +82,7 @@
     </form>
 </div>
 
-<!-- 卡牌グリッド -->
+<!-- 卡牌网格 -->
 {% if cards %}
 <div class="card-grid">
     {% for card in cards %}
@@ -108,9 +120,9 @@
 
 <!-- 分页 -->
 {% if pagination.pages > 1 %}
-{% set filter_args = {'series': request.args.get('series', ''), 'type': request.args.get('type', ''), 'color': request.args.get('color', ''), 'rarity': request.args.get('rarity', ''), 'lang': request.args.get('lang', 'jp')} %}
+{% set filter_args = {'series': request.args.get('series', ''), 'type': request.args.get('type', ''), 'color': request.args.get('color', ''), 'rarity': request.args.get('rarity', ''), 'illustration': request.args.get('illustration', ''), 'lang': request.args.get('lang', 'jp')} %}
 <nav class="mt-4">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center flex-wrap">
         {% if pagination.has_prev %}
         <li class="page-item">
             <a class="page-link" href="{{ url_for('cards.card_list', page=pagination.prev_num, **filter_args) }}">

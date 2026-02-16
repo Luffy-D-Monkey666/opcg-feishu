@@ -31,6 +31,7 @@ class CardData:
     block_icon: Optional[int] = None
     image_url: Optional[str] = None
     version_index: int = 0  # 同编号的第几个版本 (0=普通, 1+=异画等)
+    illustration_type: Optional[str] = None  # 原作/アニメ/オリジナル/その他
 
 
 class JapanOfficialScraper:
@@ -317,6 +318,75 @@ class JapanOfficialScraper:
             
         except Exception as e:
             logger.error(f"下载图片失败 {card.card_number}: {e}")
+    
+    def scrape_illustration_types(self, series_id: str) -> Dict[str, str]:
+        """
+        获取系列中每张卡片的插画类型
+        
+        通过 POST 请求分别筛选每个插画类型，收集该类型下的卡片列表，
+        然后反推每张卡片的插画类型。
+        
+        Returns:
+            Dict[str, str]: {card_id: illustration_type}
+            card_id 格式: "OP14-001" 或 "OP14-001_p1"
+            illustration_type: "原作" / "アニメ" / "オリジナル" / "その他"
+        """
+        logger.info(f"获取插画类型: series={series_id}")
+        
+        illustration_types = ['原作', 'アニメ', 'オリジナル', 'その他']
+        card_to_type = {}
+        
+        for ill_type in illustration_types:
+            # 使用 POST 提交筛选表单
+            url = f"{self.CARD_LIST_URL}?series={series_id}"
+            
+            # 构建表单数据
+            self.page.goto(url, wait_until='networkidle')
+            time.sleep(1)
+            self._close_cookie_banner()
+            
+            # 通过 JavaScript 提交表单
+            card_ids = self.page.evaluate('''
+                (args) => {
+                    const [illustrationType, seriesId] = args;
+                    return new Promise((resolve) => {
+                        // 创建 FormData
+                        const formData = new FormData();
+                        formData.append('illustrations[]', illustrationType);
+                        formData.append('series', seriesId);
+                        
+                        // POST 请求
+                        fetch(window.location.href, {
+                            method: 'POST',
+                            body: formData
+                        })
+                        .then(response => response.text())
+                        .then(html => {
+                            // 解析返回的 HTML
+                            const parser = new DOMParser();
+                            const doc = parser.parseFromString(html, 'text/html');
+                            const ids = [];
+                            doc.querySelectorAll('.resultCol .modalCol').forEach(modal => {
+                                if (modal.id) ids.push(modal.id);
+                            });
+                            resolve(ids);
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            resolve([]);
+                        });
+                    });
+                }
+            ''', [ill_type, series_id])
+            
+            logger.info(f"插画类型 [{ill_type}]: {len(card_ids)} 张卡片")
+            
+            # 记录每张卡的插画类型
+            for card_id in card_ids:
+                if card_id and card_id not in card_to_type:
+                    card_to_type[card_id] = ill_type
+        
+        return card_to_type
 
 
 def test_scraper():

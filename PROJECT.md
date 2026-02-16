@@ -311,6 +311,39 @@ python scripts/scrape_all.py --all --images
 - 显示有价格数据的卡片比例
 - Top 3 最有价值卡片列表
 
+### 🚧 阶段7: 数据完善与 UI 优化 (进行中)
+
+#### 7a: 入手情报字段 (完成)
+**问题**: 每个版本的入手情报需要单独存储
+**解决**:
+- CardVersion 的 `source_description` 字段现在存储每个版本的入手情报
+- 修改 `scrape_all.py` 在新爬取时自动存储
+- 创建 `update_source_info.py` 脚本更新现有数据
+- **状态**: 全部 49 个系列已更新完成
+
+#### 7b: 插画类型字段 (完成)
+**问题**: 官网有 イラスト種類 筛选（原作/アニメ/オリジナル/その他）
+**解决**:
+- CardVersion 新增 `illustration_type` 字段
+- 爬虫新增 `scrape_illustration_types()` 方法（通过 POST 请求筛选）
+- 创建 `update_illustration_types.py` 脚本
+- **OP-14 测试**: 原作 23, オリジナル 126 (再录卡 7 张暂无)
+
+#### 7c: 左侧导航树 (完成)
+**功能**: 卡片列表页添加固定侧边栏
+- 系列按类型分组（Booster/Starter/Extra 等）
+- 可折叠的树形结构
+- 响应式设计（移动端可隐藏）
+- 快速筛选按钮
+
+**文件**:
+- `templates/base_sidebar.html` - 带侧边栏的基础模板
+- `templates/cards/list.html` - 更新后的卡片列表
+
+#### 7d: 前端筛选功能 (待做)
+- [ ] 添加 イラスト種類 筛选下拉框
+- [ ] 显示版本入手情报
+
 ---
 
 ## 🔧 开发环境

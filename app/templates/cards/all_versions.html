@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}{{ card.card_number }} 全部版本 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">首页</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list', lang=current_lang) }}">卡牌列表</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=current_lang) }}">{{ card.card_number }}</a></li>
+        <li class="breadcrumb-item active">全部版本</li>
+    </ol>
+</nav>
+
+<div class="d-flex align-items-center mb-4">
+    <h2 class="mb-0 me-3">
+        <i class="bi bi-layers"></i> {{ card.card_number }} - {{ card.name }}
+    </h2>
+    <span class="badge bg-primary fs-6">
+        {% set total_versions = series_versions.values()|map(attribute='versions')|map('length')|sum %}
+        {{ total_versions }} 版本
+    </span>
+</div>
+
+<p class="text-muted mb-4">
+    以下是 <strong>{{ '日文版' if current_lang == 'jp' else '英文版' }}</strong> 图鉴中所有包含 {{ card.card_number }} 的系列及其版本。
+</p>
+
+{% if series_versions %}
+<div class="row">
+    {% for series_code, data in series_versions.items() %}
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <div>
+                    <a href="{{ url_for('cards.series_detail', series_id=data.series.id) }}" class="text-decoration-none">
+                        <i class="bi bi-folder"></i> <strong>{{ data.series.code }}</strong>
+                    </a>
+                    <span class="text-muted ms-2">{{ data.series.name[:40] }}{% if data.series.name|length > 40 %}...{% endif %}</span>
+                </div>
+                <span class="badge bg-secondary">{{ data.versions|length }} 版本</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    {% for version in data.versions %}
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=current_lang, version_id=version.id) }}" 
+                           class="text-decoration-none">
+                            <div class="text-center">
+                                {% if version.images_list %}
+                                <img src="{{ version.images_list[0].original_url }}" 
+                                     alt="{{ card.name }}" 
+                                     class="img-fluid rounded shadow-sm"
+                                     style="max-height: 200px;"
+                                     loading="lazy">
+                                {% else %}
+                                <div class="bg-secondary d-flex align-items-center justify-content-center rounded" 
+                                     style="height: 200px;">
+                                    <i class="bi bi-image text-white display-4"></i>
+                                </div>
+                                {% endif %}
+                                <div class="mt-2">
+                                    <span class="badge bg-{{ 'primary' if version.version_type == 'normal' else 'warning' }}">
+                                        {{ version.version_type }}
+                                    </span>
+                                    {% if version.version_suffix %}
+                                    <small class="text-muted d-block">{{ version.version_suffix }}</small>
+                                    {% endif %}
+                                </div>
+                                {% if version.source_description %}
+                                <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+                                    {{ version.source_description[:30] }}{% if version.source_description|length > 30 %}...{% endif %}
+                                </small>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% else %}
+<div class="alert alert-info">
+    <i class="bi bi-info-circle"></i> 未找到该卡号的其他版本。
+</div>
+{% endif %}
+
+<div class="mt-4">
+    <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=current_lang) }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> 返回卡片详情
+    </a>
+</div>
+{% endblock %}

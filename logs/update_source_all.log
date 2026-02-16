@@ -1,0 +1,304 @@
+2026-02-17 01:29:21.313 | INFO     | scrapers.jp_official:start_browser:70 - 浏览器已启动
+2026-02-17 01:29:21.343 | INFO     | scrapers.jp_official:get_series_list:82 - 获取系列列表...
+2026-02-17 01:29:29.532 | INFO     | scrapers.jp_official:get_series_list:120 - 共找到 49 个系列
+2026-02-17 01:29:29.532 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-14
+2026-02-17 01:29:29.532 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550114
+2026-02-17 01:29:46.028 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:29:46.066 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 156 条卡片记录
+2026-02-17 01:29:46.067 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 156 张卡片
+2026-02-17 01:29:46.103 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-14: 更新 0 个版本的入手情报
+2026-02-17 01:29:47.104 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: PRB-02
+2026-02-17 01:29:47.104 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550302
+2026-02-17 01:30:05.053 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:30:05.114 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 316 条卡片记录
+2026-02-17 01:30:05.114 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 316 张卡片
+2026-02-17 01:30:05.241 | INFO     | __main__:update_source_info_for_series:87 - 系列 PRB-02: 更新 316 个版本的入手情报
+2026-02-17 01:30:06.242 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: PRB-01
+2026-02-17 01:30:06.242 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550301
+2026-02-17 01:30:22.128 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:30:22.190 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 319 条卡片记录
+2026-02-17 01:30:22.190 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 319 张卡片
+2026-02-17 01:30:22.310 | INFO     | __main__:update_source_info_for_series:87 - 系列 PRB-01: 更新 319 个版本的入手情报
+2026-02-17 01:30:23.311 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: EB-04
+2026-02-17 01:30:23.311 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550204
+2026-02-17 01:30:39.145 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:30:39.165 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 85 条卡片记录
+2026-02-17 01:30:39.166 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 85 张卡片
+2026-02-17 01:30:39.215 | INFO     | __main__:update_source_info_for_series:87 - 系列 EB-04: 更新 85 个版本的入手情报
+2026-02-17 01:30:40.216 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: EB-03
+2026-02-17 01:30:40.216 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550203
+2026-02-17 01:30:55.955 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:30:55.977 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 90 条卡片记录
+2026-02-17 01:30:55.977 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 90 张卡片
+2026-02-17 01:30:56.024 | INFO     | __main__:update_source_info_for_series:87 - 系列 EB-03: 更新 90 个版本的入手情报
+2026-02-17 01:30:57.024 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: EB-02
+2026-02-17 01:30:57.024 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550202
+2026-02-17 01:31:14.676 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:31:14.700 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 105 条卡片记录
+2026-02-17 01:31:14.700 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 105 张卡片
+2026-02-17 01:31:14.762 | INFO     | __main__:update_source_info_for_series:87 - 系列 EB-02: 更新 105 个版本的入手情报
+2026-02-17 01:31:15.762 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: EB-01
+2026-02-17 01:31:15.763 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550201
+2026-02-17 01:31:31.600 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:31:31.619 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 80 条卡片记录
+2026-02-17 01:31:31.619 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 80 张卡片
+2026-02-17 01:31:31.665 | INFO     | __main__:update_source_info_for_series:87 - 系列 EB-01: 更新 80 个版本的入手情报
+2026-02-17 01:31:32.666 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-13
+2026-02-17 01:31:32.666 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550113
+2026-02-17 01:31:50.107 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:31:50.140 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 174 条卡片记录
+2026-02-17 01:31:50.140 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 174 张卡片
+2026-02-17 01:31:50.230 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-13: 更新 174 个版本的入手情报
+2026-02-17 01:31:51.231 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-12
+2026-02-17 01:31:51.231 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550112
+2026-02-17 01:32:08.724 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:32:08.770 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 154 条卡片记录
+2026-02-17 01:32:08.770 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 154 张卡片
+2026-02-17 01:32:08.869 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-12: 更新 154 个版本的入手情报
+2026-02-17 01:32:09.870 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-11
+2026-02-17 01:32:09.870 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550111
+2026-02-17 01:32:27.621 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:32:27.666 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 155 条卡片记录
+2026-02-17 01:32:27.666 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 155 张卡片
+2026-02-17 01:32:27.776 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-11: 更新 155 个版本的入手情报
+2026-02-17 01:32:28.777 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-10
+2026-02-17 01:32:28.777 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550110
+2026-02-17 01:32:46.303 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:32:46.335 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 150 条卡片记录
+2026-02-17 01:32:46.335 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 150 张卡片
+2026-02-17 01:32:46.421 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-10: 更新 150 个版本的入手情报
+2026-02-17 01:32:47.422 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-09
+2026-02-17 01:32:47.422 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550109
+2026-02-17 01:33:04.915 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:33:04.949 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 158 条卡片记录
+2026-02-17 01:33:04.949 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 158 张卡片
+2026-02-17 01:33:05.035 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-09: 更新 158 个版本的入手情报
+2026-02-17 01:33:06.036 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-08
+2026-02-17 01:33:06.036 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550108
+2026-02-17 01:33:23.914 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:33:23.953 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 150 条卡片记录
+2026-02-17 01:33:23.953 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 150 张卡片
+2026-02-17 01:33:24.063 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-08: 更新 150 个版本的入手情报
+2026-02-17 01:33:25.064 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-07
+2026-02-17 01:33:25.064 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550107
+2026-02-17 01:33:40.937 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:33:40.971 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 150 条卡片记录
+2026-02-17 01:33:40.971 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 150 张卡片
+2026-02-17 01:33:41.059 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-07: 更新 150 个版本的入手情报
+2026-02-17 01:33:42.060 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-06
+2026-02-17 01:33:42.060 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550106
+2026-02-17 01:33:59.784 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:33:59.855 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 150 条卡片记录
+2026-02-17 01:33:59.855 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 150 张卡片
+2026-02-17 01:33:59.978 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-06: 更新 150 个版本的入手情报
+2026-02-17 01:34:00.979 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-05
+2026-02-17 01:34:00.979 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550105
+2026-02-17 01:34:18.722 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:34:18.754 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 154 条卡片记录
+2026-02-17 01:34:18.754 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 154 张卡片
+2026-02-17 01:34:18.840 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-05: 更新 154 个版本的入手情报
+2026-02-17 01:34:19.840 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-04
+2026-02-17 01:34:19.841 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550104
+2026-02-17 01:34:37.350 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:34:37.381 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 149 条卡片记录
+2026-02-17 01:34:37.382 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 149 张卡片
+2026-02-17 01:34:37.469 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-04: 更新 149 个版本的入手情报
+2026-02-17 01:34:38.469 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-03
+2026-02-17 01:34:38.470 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550103
+2026-02-17 01:34:54.330 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:34:54.362 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 154 条卡片记录
+2026-02-17 01:34:54.362 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 154 张卡片
+2026-02-17 01:34:54.454 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-03: 更新 154 个版本的入手情报
+2026-02-17 01:34:55.455 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-02
+2026-02-17 01:34:55.455 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550102
+2026-02-17 01:35:11.346 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:35:11.377 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 154 条卡片记录
+2026-02-17 01:35:11.377 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 154 张卡片
+2026-02-17 01:35:11.462 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-02: 更新 154 个版本的入手情报
+2026-02-17 01:35:12.462 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: OP-01
+2026-02-17 01:35:12.463 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550101
+2026-02-17 01:35:28.301 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:35:28.332 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 154 条卡片记录
+2026-02-17 01:35:28.332 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 154 张卡片
+2026-02-17 01:35:28.416 | INFO     | __main__:update_source_info_for_series:87 - 系列 OP-01: 更新 154 个版本的入手情报
+2026-02-17 01:35:29.417 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-29
+2026-02-17 01:35:29.417 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550029
+2026-02-17 01:35:45.247 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:35:45.257 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 31 条卡片记录
+2026-02-17 01:35:45.257 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 31 张卡片
+2026-02-17 01:35:45.273 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-29: 更新 31 个版本的入手情报
+2026-02-17 01:35:46.274 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-28
+2026-02-17 01:35:46.274 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550028
+2026-02-17 01:36:02.095 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:36:02.102 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:36:02.102 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:36:02.117 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-28: 更新 15 个版本的入手情报
+2026-02-17 01:36:03.118 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-27
+2026-02-17 01:36:03.118 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550027
+2026-02-17 01:36:18.948 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:36:18.955 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:36:18.955 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:36:18.969 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-27: 更新 15 个版本的入手情报
+2026-02-17 01:36:19.970 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-26
+2026-02-17 01:36:19.970 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550026
+2026-02-17 01:36:35.802 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:36:35.809 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:36:35.809 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:36:35.823 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-26: 更新 15 个版本的入手情报
+2026-02-17 01:36:36.824 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-25
+2026-02-17 01:36:36.824 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550025
+2026-02-17 01:36:52.648 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:36:52.654 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:36:52.654 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:36:52.668 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-25: 更新 15 个版本的入手情报
+2026-02-17 01:36:53.668 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-24
+2026-02-17 01:36:53.669 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550024
+2026-02-17 01:37:09.496 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:37:09.502 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:37:09.502 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:37:09.516 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-24: 更新 15 个版本的入手情报
+2026-02-17 01:37:10.517 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-23
+2026-02-17 01:37:10.517 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550023
+2026-02-17 01:37:26.340 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:37:26.347 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:37:26.347 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:37:26.360 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-23: 更新 15 个版本的入手情报
+2026-02-17 01:37:27.361 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-22
+2026-02-17 01:37:27.361 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550022
+2026-02-17 01:37:43.078 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:37:43.088 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 31 条卡片记录
+2026-02-17 01:37:43.088 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 31 张卡片
+2026-02-17 01:37:43.104 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-22: 更新 31 个版本的入手情报
+2026-02-17 01:37:44.105 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-21
+2026-02-17 01:37:44.105 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550021
+2026-02-17 01:37:59.928 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:37:59.937 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 32 条卡片记录
+2026-02-17 01:37:59.937 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 32 张卡片
+2026-02-17 01:37:59.953 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-21: 更新 32 个版本的入手情报
+2026-02-17 01:38:00.954 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-20
+2026-02-17 01:38:00.954 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550020
+2026-02-17 01:38:16.779 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:38:16.785 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:38:16.785 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:38:16.799 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-20: 更新 15 个版本的入手情报
+2026-02-17 01:38:17.800 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-19
+2026-02-17 01:38:17.800 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550019
+2026-02-17 01:38:33.620 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:38:33.626 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:38:33.627 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:38:33.640 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-19: 更新 15 个版本的入手情报
+2026-02-17 01:38:34.641 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-18
+2026-02-17 01:38:34.641 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550018
+2026-02-17 01:38:50.359 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:38:50.365 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:38:50.366 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:38:50.380 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-18: 更新 15 个版本的入手情报
+2026-02-17 01:38:51.380 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-17
+2026-02-17 01:38:51.381 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550017
+2026-02-17 01:39:07.224 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:39:07.230 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:39:07.230 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:39:07.245 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-17: 更新 15 个版本的入手情报
+2026-02-17 01:39:08.245 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-16
+2026-02-17 01:39:08.246 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550016
+2026-02-17 01:39:24.080 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:39:24.087 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:39:24.087 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:39:24.100 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-16: 更新 15 个版本的入手情报
+2026-02-17 01:39:25.101 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-15
+2026-02-17 01:39:25.101 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550015
+2026-02-17 01:39:40.924 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:39:40.930 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:39:40.930 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:39:40.945 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-15: 更新 15 个版本的入手情报
+2026-02-17 01:39:41.945 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-14
+2026-02-17 01:39:41.946 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550014
+2026-02-17 01:39:57.706 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:39:57.712 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:39:57.712 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:39:57.727 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-14: 更新 17 个版本的入手情报
+2026-02-17 01:39:58.728 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-13
+2026-02-17 01:39:58.728 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550013
+2026-02-17 01:40:14.553 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:40:14.564 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 35 条卡片记录
+2026-02-17 01:40:14.564 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 35 张卡片
+2026-02-17 01:40:14.581 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-13: 更新 35 个版本的入手情报
+2026-02-17 01:40:15.582 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-12
+2026-02-17 01:40:15.582 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550012
+2026-02-17 01:40:31.305 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:40:31.311 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:40:31.311 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:40:31.326 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-12: 更新 17 个版本的入手情报
+2026-02-17 01:40:32.327 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-11
+2026-02-17 01:40:32.327 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550011
+2026-02-17 01:40:48.151 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:40:48.160 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:40:48.160 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:40:48.178 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-11: 更新 15 个版本的入手情报
+2026-02-17 01:40:49.179 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-10
+2026-02-17 01:40:49.179 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550010
+2026-02-17 01:41:05.017 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:41:05.024 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 19 条卡片记录
+2026-02-17 01:41:05.024 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 19 张卡片
+2026-02-17 01:41:05.041 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-10: 更新 19 个版本的入手情报
+2026-02-17 01:41:06.041 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-09
+2026-02-17 01:41:06.042 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550009
+2026-02-17 01:41:21.872 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:41:21.879 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:41:21.879 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:41:21.893 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-09: 更新 15 个版本的入手情报
+2026-02-17 01:41:22.894 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-08
+2026-02-17 01:41:22.894 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550008
+2026-02-17 01:41:38.721 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:41:38.727 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 15 条卡片记录
+2026-02-17 01:41:38.727 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 15 张卡片
+2026-02-17 01:41:38.741 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-08: 更新 15 个版本的入手情报
+2026-02-17 01:41:39.741 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-07
+2026-02-17 01:41:39.742 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550007
+2026-02-17 01:41:55.564 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:41:55.571 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:41:55.571 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:41:55.586 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-07: 更新 17 个版本的入手情报
+2026-02-17 01:41:56.587 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-06
+2026-02-17 01:41:56.587 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550006
+2026-02-17 01:42:12.302 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:42:12.308 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:42:12.308 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:42:12.323 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-06: 更新 17 个版本的入手情报
+2026-02-17 01:42:13.324 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-05
+2026-02-17 01:42:13.324 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550005
+2026-02-17 01:42:29.140 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:42:29.148 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:42:29.148 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:42:29.189 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-05: 更新 17 个版本的入手情报
+2026-02-17 01:42:30.190 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-04
+2026-02-17 01:42:30.190 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550004
+2026-02-17 01:42:46.019 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:42:46.026 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:42:46.026 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:42:46.041 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-04: 更新 17 个版本的入手情报
+2026-02-17 01:42:47.042 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-03
+2026-02-17 01:42:47.042 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550003
+2026-02-17 01:43:02.870 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:43:02.877 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:43:02.877 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:43:02.892 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-03: 更新 17 个版本的入手情报
+2026-02-17 01:43:03.892 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-02
+2026-02-17 01:43:03.892 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550002
+2026-02-17 01:43:19.610 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:43:19.617 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:43:19.617 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:43:19.632 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-02: 更新 17 个版本的入手情报
+2026-02-17 01:43:20.632 | INFO     | __main__:update_source_info_for_series:51 - 处理系列: ST-01
+2026-02-17 01:43:20.633 | INFO     | scrapers.jp_official:scrape_series:128 - 爬取系列: https://www.onepiece-cardgame.com/cardlist/?series=550001
+2026-02-17 01:43:36.458 | WARNING  | scrapers.jp_official:scrape_series:143 - 等待卡片加载超时
+2026-02-17 01:43:36.472 | INFO     | scrapers.jp_official:scrape_series:148 - 获取 17 条卡片记录
+2026-02-17 01:43:36.472 | INFO     | scrapers.jp_official:scrape_series:166 - 系列爬取完成，共 17 张卡片
+2026-02-17 01:43:36.487 | INFO     | __main__:update_source_info_for_series:87 - 系列 ST-01: 更新 17 个版本的入手情报
+2026-02-17 01:43:37.487 | WARNING  | __main__:update_source_info_for_series:48 - 系列 FDS 在官网未找到，跳过
+2026-02-17 01:43:37.488 | WARNING  | __main__:update_source_info_for_series:48 - 系列 P 在官网未找到，跳过
+2026-02-17 01:43:37.488 | WARNING  | __main__:update_source_info_for_series:48 - 系列 LTD 在官网未找到，跳过
+2026-02-17 01:43:37.488 | INFO     | __main__:update_source_info_for_series:92 - 
+=== 更新完成 ===
+2026-02-17 01:43:37.488 | INFO     | __main__:update_source_info_for_series:93 - 总计更新 3527 个版本
+2026-02-17 01:43:37.541 | INFO     | scrapers.jp_official:close_browser:78 - 浏览器已关闭
