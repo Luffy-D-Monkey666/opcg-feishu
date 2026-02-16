@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}検索結果 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-search"></i> 検索結果</h2>
+
+<!-- 検索フォーム -->
+<div class="search-box mb-4">
+    <form method="get" action="{{ url_for('main.search') }}">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label">キーワード</label>
+                <input type="text" class="form-control" name="q" 
+                       value="{{ request.args.get('q', '') }}" 
+                       placeholder="カード名 / カード番号">
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">色</label>
+                <select class="form-select" name="color">
+                    <option value="">全て</option>
+                    <option value="赤" {% if request.args.get('color') == '赤' %}selected{% endif %}>赤</option>
+                    <option value="緑" {% if request.args.get('color') == '緑' %}selected{% endif %}>緑</option>
+                    <option value="青" {% if request.args.get('color') == '青' %}selected{% endif %}>青</option>
+                    <option value="紫" {% if request.args.get('color') == '紫' %}selected{% endif %}>紫</option>
+                    <option value="黄" {% if request.args.get('color') == '黄' %}selected{% endif %}>黄</option>
+                    <option value="黒" {% if request.args.get('color') == '黒' %}selected{% endif %}>黒</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">タイプ</label>
+                <select class="form-select" name="type">
+                    <option value="">全て</option>
+                    <option value="LEADER" {% if request.args.get('type') == 'LEADER' %}selected{% endif %}>LEADER</option>
+                    <option value="CHARACTER" {% if request.args.get('type') == 'CHARACTER' %}selected{% endif %}>CHARACTER</option>
+                    <option value="EVENT" {% if request.args.get('type') == 'EVENT' %}selected{% endif %}>EVENT</option>
+                    <option value="STAGE" {% if request.args.get('type') == 'STAGE' %}selected{% endif %}>STAGE</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">レアリティ</label>
+                <select class="form-select" name="rarity">
+                    <option value="">全て</option>
+                    <option value="L" {% if request.args.get('rarity') == 'L' %}selected{% endif %}>L</option>
+                    <option value="SEC" {% if request.args.get('rarity') == 'SEC' %}selected{% endif %}>SEC</option>
+                    <option value="SR" {% if request.args.get('rarity') == 'SR' %}selected{% endif %}>SR</option>
+                    <option value="R" {% if request.args.get('rarity') == 'R' %}selected{% endif %}>R</option>
+                    <option value="UC" {% if request.args.get('rarity') == 'UC' %}selected{% endif %}>UC</option>
+                    <option value="C" {% if request.args.get('rarity') == 'C' %}selected{% endif %}>C</option>
+                </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-search"></i> 検索
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- 検索結果 -->
+{% if query or request.args.get('color') or request.args.get('type') or request.args.get('rarity') %}
+    {% if cards %}
+    <p class="text-muted mb-3">
+        <strong>{{ cards|length }}</strong> 件の結果
+        {% if query %}「<strong>{{ query }}</strong>」{% endif %}
+    </p>
+    
+    <div class="card-grid">
+        {% for card in cards %}
+        <div class="card-item">
+            <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
+                {% set fv = card.versions.first() %}{% set fi = fv.images.first() if fv else None %}{% if fi %}
+                <img src="{{ fi.original_url }}" 
+                     alt="{{ card.name }}" 
+                     class="card-image"
+                     loading="lazy">
+                {% else %}
+                <div class="card-image bg-secondary d-flex align-items-center justify-content-center" style="height: 280px;">
+                    <i class="bi bi-image text-white display-4"></i>
+                </div>
+                {% endif %}
+                <div class="mt-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <small class="text-muted">{{ card.card_number }}</small>
+                        <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
+                    </div>
+                    <p class="mb-0 text-dark fw-bold small">{{ card.name[:20] }}{% if card.name|length > 20 %}...{% endif %}</p>
+                    <div>
+                        {% for color in card.colors.split('/') %}
+                        <span class="color-badge color-{{ color }}"></span>
+                        {% endfor %}
+                        <small class="text-muted">{{ card.card_type }}</small>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="bi bi-search display-1 text-muted"></i>
+        <p class="text-muted mt-3">「{{ query }}」に一致するカードが見つかりませんでした</p>
+        <a href="{{ url_for('cards.card_list') }}" class="btn btn-outline-primary">
+            全てのカードを見る
+        </a>
+    </div>
+    {% endif %}
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-search display-1 text-muted"></i>
+    <p class="text-muted mt-3">検索キーワードを入力してください</p>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,335 @@
+{% extends "base.html" %}
+
+{% block title %}{{ card.card_number }} 価格履歴 - OPCG TCG Manager{% endblock %}
+
+{% block extra_css %}
+<style>
+    .price-chart-container {
+        height: 400px;
+        margin-bottom: 2rem;
+    }
+    .version-selector {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+    }
+    .version-card {
+        width: 80px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        border-radius: 8px;
+        transition: border-color 0.2s;
+    }
+    .version-card.active {
+        border-color: #0d6efd;
+    }
+    .version-card img {
+        width: 100%;
+        border-radius: 6px;
+    }
+    .price-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+    .stat-card {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+    }
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+    .stat-label {
+        font-size: 0.85rem;
+        color: #6c757d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('prices.price_list') }}">価格</a></li>
+        <li class="breadcrumb-item active">{{ card.card_number }}</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-4">
+        <!-- カード情報 -->
+        <div class="card mb-4">
+            {% set default_version = versions[0] if versions else None %}
+            {% set default_image = default_version.image if default_version else None %}
+            <img src="{{ default_image.original_url if default_image else '' }}" 
+                 class="card-img-top" 
+                 alt="{{ card.name }}"
+                 id="mainCardImage">
+            <div class="card-body">
+                <h5 class="card-title">{{ card.name }}</h5>
+                <p class="text-muted mb-2">{{ card.card_number }}</p>
+                <div class="d-flex gap-2 mb-2">
+                    <span class="badge bg-secondary">{{ card.card_type }}</span>
+                    <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
+                </div>
+                <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" 
+                   class="btn btn-outline-primary btn-sm">
+                    カード詳細へ
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <!-- バージョン選択 -->
+        <div class="mb-4">
+            <h6>バージョン選択</h6>
+            <div class="version-selector">
+                {% for v in versions %}
+                <div class="version-card {% if loop.first %}active{% endif %}" 
+                     data-version-id="{{ v.id }}"
+                     onclick="selectVersion({{ v.id }}, '{{ v.image.original_url if v.image else '' }}')">
+                    {% if v.image %}
+                    <img src="{{ v.image.original_url }}" alt="Version {{ loop.index }}">
+                    {% else %}
+                    <div class="bg-secondary d-flex align-items-center justify-content-center" style="height: 110px;">
+                        <small class="text-white">No Image</small>
+                    </div>
+                    {% endif %}
+                    <small class="d-block text-center text-muted">
+                        {{ v.version_type[:6] }}
+                    </small>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- 価格統計 -->
+        <div class="price-stats" id="priceStats">
+            <div class="stat-card">
+                <div class="stat-value text-primary" id="currentPrice">-</div>
+                <div class="stat-label">現在価格</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value text-success" id="lowestPrice">-</div>
+                <div class="stat-label">最安値 (30日)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value text-danger" id="highestPrice">-</div>
+                <div class="stat-label">最高値 (30日)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="priceChange">-</div>
+                <div class="stat-label">変動率</div>
+            </div>
+        </div>
+        
+        <!-- 期間選択 -->
+        <div class="btn-group mb-3" role="group">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="loadChart(7)">7日</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm active" onclick="loadChart(30)">30日</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="loadChart(90)">90日</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="loadChart(365)">1年</button>
+        </div>
+        
+        <!-- グラフ -->
+        <div class="price-chart-container">
+            <canvas id="priceChart"></canvas>
+        </div>
+        
+        <!-- 価格履歴テーブル -->
+        <h6>価格履歴</h6>
+        <div class="table-responsive">
+            <table class="table table-sm" id="priceTable">
+                <thead>
+                    <tr>
+                        <th>日時</th>
+                        <th>価格</th>
+                        <th>ソース</th>
+                        <th>状態</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody">
+                    <tr><td colspan="4" class="text-center text-muted">データを読み込み中...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let chart = null;
+let currentVersionId = {{ versions[0].id if versions else 'null' }};
+let currentDays = 30;
+
+function selectVersion(versionId, imageUrl) {
+    currentVersionId = versionId;
+    
+    // Update active state
+    document.querySelectorAll('.version-card').forEach(el => {
+        el.classList.remove('active');
+        if (el.dataset.versionId == versionId) {
+            el.classList.add('active');
+        }
+    });
+    
+    // Update main image
+    if (imageUrl) {
+        document.getElementById('mainCardImage').src = imageUrl;
+    }
+    
+    // Reload chart
+    loadChart(currentDays);
+}
+
+function loadChart(days) {
+    currentDays = days;
+    
+    // Update button states
+    document.querySelectorAll('.btn-group .btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes(days + '日') || 
+            (days === 365 && btn.textContent.includes('1年'))) {
+            btn.classList.add('active');
+        }
+    });
+    
+    if (!currentVersionId) {
+        document.getElementById('priceTableBody').innerHTML = 
+            '<tr><td colspan="4" class="text-center text-muted">価格データがありません</td></tr>';
+        return;
+    }
+    
+    fetch(`/prices/api/history/${currentVersionId}?days=${days}`)
+        .then(res => res.json())
+        .then(data => {
+            renderChart(data);
+            renderStats(data);
+            renderTable(data);
+        })
+        .catch(err => {
+            console.error('Error loading price data:', err);
+        });
+}
+
+function renderChart(data) {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    
+    if (chart) {
+        chart.destroy();
+    }
+    
+    if (!data.data || data.data.length === 0) {
+        // No data message
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#6c757d';
+        ctx.textAlign = 'center';
+        ctx.fillText('価格データがありません', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        return;
+    }
+    
+    const labels = data.data.map(d => new Date(d.date).toLocaleDateString('ja-JP'));
+    const prices = data.data.map(d => d.price);
+    const currency = data.data[0]?.currency || 'USD';
+    
+    chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: `価格 (${currency})`,
+                data: prices,
+                borderColor: '#0d6efd',
+                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                fill: true,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function(value) {
+                            return currency === 'JPY' ? '¥' + value.toLocaleString() : '$' + value.toFixed(2);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function renderStats(data) {
+    if (!data.data || data.data.length === 0) {
+        document.getElementById('currentPrice').textContent = '-';
+        document.getElementById('lowestPrice').textContent = '-';
+        document.getElementById('highestPrice').textContent = '-';
+        document.getElementById('priceChange').textContent = '-';
+        return;
+    }
+    
+    const prices = data.data.map(d => d.price);
+    const currency = data.data[0]?.currency || 'USD';
+    const fmt = (p) => currency === 'JPY' ? '¥' + p.toLocaleString() : '$' + p.toFixed(2);
+    
+    const current = prices[prices.length - 1];
+    const lowest = Math.min(...prices);
+    const highest = Math.max(...prices);
+    const first = prices[0];
+    const change = ((current - first) / first * 100).toFixed(1);
+    
+    document.getElementById('currentPrice').textContent = fmt(current);
+    document.getElementById('lowestPrice').textContent = fmt(lowest);
+    document.getElementById('highestPrice').textContent = fmt(highest);
+    
+    const changeEl = document.getElementById('priceChange');
+    changeEl.textContent = (change >= 0 ? '+' : '') + change + '%';
+    changeEl.className = 'stat-value ' + (change >= 0 ? 'text-success' : 'text-danger');
+}
+
+function renderTable(data) {
+    const tbody = document.getElementById('priceTableBody');
+    
+    if (!data.data || data.data.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">価格データがありません</td></tr>';
+        return;
+    }
+    
+    const currency = data.data[0]?.currency || 'USD';
+    const fmt = (p) => currency === 'JPY' ? '¥' + p.toLocaleString() : '$' + p.toFixed(2);
+    
+    // Show last 20 records, newest first
+    const rows = data.data.slice(-20).reverse().map(d => `
+        <tr>
+            <td>${new Date(d.date).toLocaleString('ja-JP')}</td>
+            <td>${fmt(d.price)}</td>
+            <td>${d.source}</td>
+            <td>${d.condition || '-'}</td>
+        </tr>
+    `).join('');
+    
+    tbody.innerHTML = rows;
+}
+
+// Initial load
+document.addEventListener('DOMContentLoaded', () => {
+    loadChart(30);
+});
+</script>
+{% endblock %}

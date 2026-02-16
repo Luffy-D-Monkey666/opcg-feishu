@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}ウィッシュリスト - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-heart"></i> ウィッシュリスト</h2>
+    <span class="badge bg-danger fs-6">{{ pagination.total }} 枚</span>
+</div>
+
+{% if items %}
+<div class="card-grid">
+    {% for item in items %}
+    <div class="card-item position-relative">
+        {% set card = item.version.card %}
+        {% set image = item.version.images.first() %}
+        
+        <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
+            {% if image %}
+            <img src="{{ image.original_url }}" alt="{{ card.name }}" class="card-image" loading="lazy">
+            {% else %}
+            <div class="card-image bg-secondary d-flex align-items-center justify-content-center" style="height: 280px;">
+                <i class="bi bi-image text-white display-4"></i>
+            </div>
+            {% endif %}
+        </a>
+        
+        <!-- 優先度バッジ -->
+        {% if item.priority > 0 %}
+        <span class="position-absolute top-0 end-0 badge bg-warning text-dark m-2">
+            {% for _ in range(item.priority) %}<i class="bi bi-star-fill"></i>{% endfor %}
+        </span>
+        {% endif %}
+        
+        <div class="mt-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <small class="text-muted">{{ card.card_number }}</small>
+                <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
+            </div>
+            <p class="mb-1 text-dark fw-bold small">{{ card.name[:20] }}{% if card.name|length > 20 %}...{% endif %}</p>
+            
+            <div class="btn-group w-100">
+                <button class="btn btn-outline-success btn-sm" 
+                        onclick="moveToCollection({{ item.version_id }})">
+                    <i class="bi bi-check"></i> 入手
+                </button>
+                <button class="btn btn-outline-danger btn-sm" 
+                        onclick="removeFromWishlist({{ item.version_id }})">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if pagination.pages > 1 %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.prev_num) }}">前へ</a>
+        </li>
+        {% endif %}
+        {% for p in pagination.iter_pages() %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('user.wishlist', page=p) }}">{{ p }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+        {% if pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.next_num) }}">次へ</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-heart display-1 text-muted"></i>
+    <p class="text-muted mt-3">ウィッシュリストは空です</p>
+    <a href="{{ url_for('cards.card_list') }}" class="btn btn-primary">
+        <i class="bi bi-plus"></i> カードを追加
+    </a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function removeFromWishlist(versionId) {
+    fetch('/api/wishlist/remove', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({version_id: versionId})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) location.reload();
+    });
+}
+
+function moveToCollection(versionId) {
+    // ウィッシュリストから削除してコレクションに追加
+    fetch('/api/collection/add', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({version_id: versionId})
+    })
+    .then(() => fetch('/api/wishlist/remove', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({version_id: versionId})
+    }))
+    .then(() => location.reload());
+}
+</script>
+{% endblock %}

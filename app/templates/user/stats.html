@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+
+{% block title %}コレクション統計 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-bar-chart"></i> コレクション統計</h2>
+    <a href="{{ url_for('user.collection') }}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> 戻る
+    </a>
+</div>
+
+<!-- 概要カード -->
+<div class="row mb-4">
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card text-center bg-success text-white h-100">
+            <div class="card-body">
+                <h3>{{ collection_count }}</h3>
+                <p class="mb-0">ユニークカード</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card text-center bg-primary text-white h-100">
+            <div class="card-body">
+                <h3>{{ total_quantity }}</h3>
+                <p class="mb-0">合計枚数</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card text-center bg-info text-white h-100">
+            <div class="card-body">
+                <h3>{{ owned_series }} / {{ all_series }}</h3>
+                <p class="mb-0">シリーズカバー率</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-6 mb-3">
+        <div class="card text-center bg-warning text-dark h-100">
+            <div class="card-body">
+                <h3>{{ ((owned_series / all_series) * 100) | round(1) if all_series > 0 else 0 }}%</h3>
+                <p class="mb-0">完成度</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 収蔵価値 -->
+<div class="card mb-4 border-success">
+    <div class="card-header bg-success text-white">
+        <i class="bi bi-currency-dollar"></i> コレクション価値推定
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <h2 class="text-success mb-0">${{ "%.2f"|format(total_value_usd) }}</h2>
+                <small class="text-muted">推定総価値 (USD)</small>
+            </div>
+            <div class="col-md-4 text-center mb-3 mb-md-0">
+                <h4 class="mb-0">{{ cards_with_price }} / {{ collection_count }}</h4>
+                <small class="text-muted">価格データあり</small>
+            </div>
+            <div class="col-md-4">
+                {% if top_value_cards %}
+                <h6 class="text-muted mb-2">最も価値の高いカード</h6>
+                <ol class="list-unstyled mb-0 small">
+                    {% for card_number, name, price, qty, total_value in top_value_cards[:3] %}
+                    <li class="mb-1">
+                        <span class="badge bg-secondary">{{ card_number }}</span>
+                        {{ name[:15] }}{% if name|length > 15 %}...{% endif %}
+                        <span class="text-success">${{ "%.2f"|format(total_value) }}</span>
+                    </li>
+                    {% endfor %}
+                </ol>
+                {% else %}
+                <p class="text-muted small mb-0">価格データがありません</p>
+                {% endif %}
+            </div>
+        </div>
+        {% if cards_with_price < collection_count %}
+        <div class="alert alert-info mb-0 mt-3 small">
+            <i class="bi bi-info-circle"></i> 
+            {{ collection_count - cards_with_price }} 枚のカードには価格データがありません。
+            価格は毎日更新されます。
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <!-- レアリティ分布 -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-gem"></i> レアリティ分布
+            </div>
+            <div class="card-body">
+                {% if rarity_stats %}
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>レアリティ</th>
+                            <th class="text-end">種類</th>
+                            <th class="text-end">枚数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rarity, count, total in rarity_stats %}
+                        <tr>
+                            <td>
+                                <span class="badge 
+                                    {% if rarity == 'SEC' %}bg-danger
+                                    {% elif rarity == 'SR' %}bg-warning text-dark
+                                    {% elif rarity == 'R' %}bg-info
+                                    {% elif rarity == 'L' %}bg-dark
+                                    {% else %}bg-secondary
+                                    {% endif %}">{{ rarity or 'N/A' }}</span>
+                            </td>
+                            <td class="text-end">{{ count }}</td>
+                            <td class="text-end">{{ total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted text-center">データがありません</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- カードタイプ分布 -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-grid"></i> カードタイプ分布
+            </div>
+            <div class="card-body">
+                {% if type_stats %}
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>タイプ</th>
+                            <th class="text-end">種類</th>
+                            <th class="text-end">枚数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for card_type, count, total in type_stats %}
+                        <tr>
+                            <td>{{ card_type }}</td>
+                            <td class="text-end">{{ count }}</td>
+                            <td class="text-end">{{ total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted text-center">データがありません</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- 色分布 -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-palette"></i> 色分布
+            </div>
+            <div class="card-body">
+                {% if color_counts %}
+                <div class="row">
+                    {% for color, count in color_counts.items() %}
+                    <div class="col-6 mb-2">
+                        <div class="d-flex align-items-center">
+                            <span class="badge me-2
+                                {% if color == '赤' %}bg-danger
+                                {% elif color == '青' %}bg-primary
+                                {% elif color == '緑' %}bg-success
+                                {% elif color == '紫' %}bg-purple
+                                {% elif color == '黄' %}bg-warning text-dark
+                                {% elif color == '黒' %}bg-dark
+                                {% else %}bg-secondary
+                                {% endif %}" style="width: 40px;">{{ color }}</span>
+                            <div class="flex-grow-1">
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar 
+                                        {% if color == '赤' %}bg-danger
+                                        {% elif color == '青' %}bg-primary
+                                        {% elif color == '緑' %}bg-success
+                                        {% elif color == '紫' %}bg-purple
+                                        {% elif color == '黄' %}bg-warning
+                                        {% elif color == '黒' %}bg-dark
+                                        {% else %}bg-secondary
+                                        {% endif %}" 
+                                        style="width: {{ (count / total_quantity * 100) | round(1) }}%">
+                                        {{ count }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-muted text-center">データがありません</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- シリーズ Top 10 -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <i class="bi bi-collection"></i> シリーズ Top 10
+            </div>
+            <div class="card-body">
+                {% if series_stats %}
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>シリーズ</th>
+                            <th class="text-end">枚数</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for code, name, count, total in series_stats %}
+                        <tr>
+                            <td>
+                                <span class="badge bg-secondary">{{ code }}</span>
+                                <small class="text-muted">{{ name[:20] }}...</small>
+                            </td>
+                            <td class="text-end">{{ total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p class="text-muted text-center">データがありません</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 导出按钮 -->
+<div class="card">
+    <div class="card-header">
+        <i class="bi bi-download"></i> データエクスポート
+    </div>
+    <div class="card-body">
+        <a href="{{ url_for('user.collection_export', format='csv') }}" class="btn btn-outline-primary me-2">
+            <i class="bi bi-filetype-csv"></i> CSV エクスポート
+        </a>
+        <a href="{{ url_for('user.collection_export', format='json') }}" class="btn btn-outline-success me-2">
+            <i class="bi bi-filetype-json"></i> JSON エクスポート
+        </a>
+        <a href="{{ url_for('user.collection_import') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-upload"></i> インポート
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bg-purple {
+        background-color: #6f42c1 !important;
+    }
+</style>
+{% endblock %}

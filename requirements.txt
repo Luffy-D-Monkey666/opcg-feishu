@@ -1,0 +1,26 @@
+# Web框架
+Flask==3.0.0
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+
+# 数据库
+SQLAlchemy==2.0.23
+
+# 密码加密
+Werkzeug==3.0.1
+
+# 爬虫
+playwright==1.40.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# 图片处理
+Pillow==10.1.0
+
+# 工具
+python-dotenv==1.0.0
+loguru==0.7.2
+
+# 生产环境
+gunicorn==21.2.0

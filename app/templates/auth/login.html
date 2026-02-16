@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}ログイン - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-box-arrow-in-right"></i> ログイン</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">ユーザー名 / メールアドレス</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">パスワード</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" name="remember" id="remember">
+                        <label class="form-check-label" for="remember">ログイン状態を保持</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-box-arrow-in-right"></i> ログイン
+                    </button>
+                </form>
+                <hr>
+                <p class="text-center mb-0">
+                    アカウントをお持ちでない方は
+                    <a href="{{ url_for('auth.register') }}">新規登録</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

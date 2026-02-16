@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}新規登録 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="bi bi-person-plus"></i> 新規登録</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">ユーザー名</label>
+                        <input type="text" class="form-control" name="username" required 
+                               pattern="[a-zA-Z0-9_]+" minlength="3" maxlength="20">
+                        <small class="text-muted">3-20文字、英数字とアンダースコアのみ</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">メールアドレス</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">パスワード</label>
+                        <input type="password" class="form-control" name="password" required minlength="6">
+                        <small class="text-muted">6文字以上</small>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">パスワード（確認）</label>
+                        <input type="password" class="form-control" name="password2" required>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="bi bi-person-plus"></i> 登録
+                    </button>
+                </form>
+                <hr>
+                <p class="text-center mb-0">
+                    すでにアカウントをお持ちの方は
+                    <a href="{{ url_for('auth.login') }}">ログイン</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

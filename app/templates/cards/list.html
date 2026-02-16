@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}カード一覧 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-grid"></i> カード一覧</h2>
+    <span class="badge bg-secondary fs-6">{{ pagination.total }} 件</span>
+</div>
+
+<!-- フィルター -->
+<div class="search-box mb-4">
+    <form method="get" action="{{ url_for('cards.card_list') }}">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">シリーズ</label>
+                <select class="form-select" name="series">
+                    <option value="">全て</option>
+                    {% for s in series_list %}
+                    <option value="{{ s.id }}" {% if request.args.get('series')|int == s.id %}selected{% endif %}>
+                        {{ s.code }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">タイプ</label>
+                <select class="form-select" name="type">
+                    <option value="">全て</option>
+                    <option value="LEADER" {% if request.args.get('type') == 'LEADER' %}selected{% endif %}>LEADER</option>
+                    <option value="CHARACTER" {% if request.args.get('type') == 'CHARACTER' %}selected{% endif %}>CHARACTER</option>
+                    <option value="EVENT" {% if request.args.get('type') == 'EVENT' %}selected{% endif %}>EVENT</option>
+                    <option value="STAGE" {% if request.args.get('type') == 'STAGE' %}selected{% endif %}>STAGE</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">色</label>
+                <select class="form-select" name="color">
+                    <option value="">全て</option>
+                    <option value="赤" {% if request.args.get('color') == '赤' %}selected{% endif %}>赤</option>
+                    <option value="緑" {% if request.args.get('color') == '緑' %}selected{% endif %}>緑</option>
+                    <option value="青" {% if request.args.get('color') == '青' %}selected{% endif %}>青</option>
+                    <option value="紫" {% if request.args.get('color') == '紫' %}selected{% endif %}>紫</option>
+                    <option value="黄" {% if request.args.get('color') == '黄' %}selected{% endif %}>黄</option>
+                    <option value="黒" {% if request.args.get('color') == '黒' %}selected{% endif %}>黒</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label">レアリティ</label>
+                <select class="form-select" name="rarity">
+                    <option value="">全て</option>
+                    <option value="L" {% if request.args.get('rarity') == 'L' %}selected{% endif %}>L</option>
+                    <option value="SEC" {% if request.args.get('rarity') == 'SEC' %}selected{% endif %}>SEC</option>
+                    <option value="SR" {% if request.args.get('rarity') == 'SR' %}selected{% endif %}>SR</option>
+                    <option value="R" {% if request.args.get('rarity') == 'R' %}selected{% endif %}>R</option>
+                    <option value="UC" {% if request.args.get('rarity') == 'UC' %}selected{% endif %}>UC</option>
+                    <option value="C" {% if request.args.get('rarity') == 'C' %}selected{% endif %}>C</option>
+                </select>
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary me-2">
+                    <i class="bi bi-funnel"></i> フィルター
+                </button>
+                <a href="{{ url_for('cards.card_list') }}" class="btn btn-outline-secondary">
+                    <i class="bi bi-x"></i> クリア
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- カードグリッド -->
+{% if cards %}
+<div class="card-grid">
+    {% for card in cards %}
+    <div class="card-item">
+        <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
+            {% set first_version = card.versions.first() %}
+            {% set first_image = first_version.images.first() if first_version else None %}
+            {% if first_image %}
+            <img src="{{ first_image.original_url }}" 
+                 alt="{{ card.name }}" 
+                 class="card-image"
+                 loading="lazy">
+            {% else %}
+            <div class="card-image bg-secondary d-flex align-items-center justify-content-center" style="height: 280px;">
+                <i class="bi bi-image text-white display-4"></i>
+            </div>
+            {% endif %}
+            <div class="mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{ card.card_number }}</small>
+                    <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
+                </div>
+                <p class="mb-0 text-dark fw-bold small">{{ card.name[:20] }}{% if card.name|length > 20 %}...{% endif %}</p>
+                <div>
+                    {% for color in card.colors.split('/') %}
+                    <span class="color-badge color-{{ color }}"></span>
+                    {% endfor %}
+                    <small class="text-muted">{{ card.card_type }}</small>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- ページネーション -->
+{% if pagination.pages > 1 %}
+<nav class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if pagination.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('cards.card_list', page=pagination.prev_num, **request.args) }}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        {% endif %}
+        
+        {% for p in pagination.iter_pages() %}
+            {% if p %}
+                <li class="page-item {% if p == pagination.page %}active{% endif %}">
+                    <a class="page-link" href="{{ url_for('cards.card_list', page=p, **request.args) }}">{{ p }}</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled"><span class="page-link">...</span></li>
+            {% endif %}
+        {% endfor %}
+        
+        {% if pagination.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('cards.card_list', page=pagination.next_num, **request.args) }}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-inbox display-1 text-muted"></i>
+    <p class="text-muted mt-3">カードが見つかりませんでした</p>
+</div>
+{% endif %}
+{% endblock %}

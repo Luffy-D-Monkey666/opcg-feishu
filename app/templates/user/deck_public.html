@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}{{ deck.name }} - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2><i class="bi bi-layers"></i> {{ deck.name }}</h2>
+        <p class="text-muted mb-0">
+            作成者: {{ deck.user.display_name or deck.user.username }}
+            {% if deck.share_code %}
+            <span class="badge bg-success ms-2">公開デッキ</span>
+            {% endif %}
+        </p>
+    </div>
+    <div>
+        <button class="btn btn-outline-primary" onclick="copyShareLink()">
+            <i class="bi bi-share"></i> シェア
+        </button>
+    </div>
+</div>
+
+{% if deck.description %}
+<div class="alert alert-light">
+    {{ deck.description }}
+</div>
+{% endif %}
+
+<!-- デッキ統計 -->
+<div class="row mb-4">
+    <div class="col">
+        <div class="card">
+            <div class="card-body py-2">
+                <div class="row text-center">
+                    <div class="col">
+                        <strong>{{ deck.card_count }}</strong>
+                        <small class="text-muted d-block">合計</small>
+                    </div>
+                    <div class="col">
+                        <strong>{{ char_count }}</strong>
+                        <small class="text-muted d-block">キャラ</small>
+                    </div>
+                    <div class="col">
+                        <strong>{{ event_count }}</strong>
+                        <small class="text-muted d-block">イベント</small>
+                    </div>
+                    <div class="col">
+                        <strong>{{ stage_count }}</strong>
+                        <small class="text-muted d-block">ステージ</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- リーダー -->
+{% if leader %}
+<div class="card mb-4">
+    <div class="card-header bg-dark text-white">
+        <i class="bi bi-star-fill"></i> LEADER
+    </div>
+    <div class="card-body">
+        <div class="row align-items-center">
+            <div class="col-auto">
+                {% set image = leader.version.images.first() %}
+                {% if image %}
+                <img src="{{ image.original_url }}" alt="{{ leader.version.card.name }}" 
+                     style="height: 120px; border-radius: 8px;">
+                {% endif %}
+            </div>
+            <div class="col">
+                <h5 class="mb-1">{{ leader.version.card.name }}</h5>
+                <p class="text-muted mb-0">
+                    {{ leader.version.card.card_number }} | 
+                    {{ leader.version.card.colors }} | 
+                    ライフ {{ leader.version.card.life }} | 
+                    パワー {{ leader.version.card.power }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- キャラクター -->
+{% if characters %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-person"></i> CHARACTER ({{ char_count }})
+    </div>
+    <div class="card-body">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+            {% for dc in characters %}
+            <div class="col">
+                {% set image = dc.version.images.first() %}
+                <div class="card h-100 card-hover">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    {% endif %}
+                    <div class="card-body p-2 text-center">
+                        <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
+                        <span class="badge bg-secondary">x{{ dc.quantity }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- イベント -->
+{% if events %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-lightning"></i> EVENT ({{ event_count }})
+    </div>
+    <div class="card-body">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+            {% for dc in events %}
+            <div class="col">
+                {% set image = dc.version.images.first() %}
+                <div class="card h-100 card-hover">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    {% endif %}
+                    <div class="card-body p-2 text-center">
+                        <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
+                        <span class="badge bg-secondary">x{{ dc.quantity }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- ステージ -->
+{% if stages %}
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="bi bi-building"></i> STAGE ({{ stage_count }})
+    </div>
+    <div class="card-body">
+        <div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+            {% for dc in stages %}
+            <div class="col">
+                {% set image = dc.version.images.first() %}
+                <div class="card h-100 card-hover">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-img-top" alt="{{ dc.version.card.name }}">
+                    {% endif %}
+                    <div class="card-body p-2 text-center">
+                        <small class="d-block text-truncate">{{ dc.version.card.name }}</small>
+                        <span class="badge bg-secondary">x{{ dc.quantity }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function copyShareLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        alert('リンクをコピーしました');
+    });
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+}
+</style>
+{% endblock %}

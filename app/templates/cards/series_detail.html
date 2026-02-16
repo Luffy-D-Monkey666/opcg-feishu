@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}{{ series.code }} - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.series_list') }}">シリーズ</a></li>
+        <li class="breadcrumb-item active">{{ series.code }}</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <span class="badge 
+            {% if series.series_type == 'booster' %}bg-primary
+            {% elif series.series_type == 'starter' %}bg-success
+            {% elif series.series_type == 'extra' %}bg-info
+            {% elif series.series_type == 'premium' %}bg-warning text-dark
+            {% else %}bg-secondary
+            {% endif %} me-2">
+            {{ series.series_type }}
+        </span>
+        <h2 class="d-inline">{{ series.code }}</h2>
+    </div>
+    <span class="badge bg-secondary fs-6">{{ total_versions }} 枚</span>
+</div>
+
+<p class="text-muted mb-4">{{ series.name }}</p>
+
+<!-- 統計 -->
+<div class="row mb-4">
+    <div class="col-md-2 col-4">
+        <div class="text-center p-2 bg-light rounded">
+            <div class="fs-4 text-warning">{{ stats.leader }}</div>
+            <small class="text-muted">LEADER</small>
+        </div>
+    </div>
+    <div class="col-md-2 col-4">
+        <div class="text-center p-2 bg-light rounded">
+            <div class="fs-4 text-primary">{{ stats.character }}</div>
+            <small class="text-muted">CHARACTER</small>
+        </div>
+    </div>
+    <div class="col-md-2 col-4">
+        <div class="text-center p-2 bg-light rounded">
+            <div class="fs-4 text-success">{{ stats.event }}</div>
+            <small class="text-muted">EVENT</small>
+        </div>
+    </div>
+    <div class="col-md-2 col-4">
+        <div class="text-center p-2 bg-light rounded">
+            <div class="fs-4 text-info">{{ stats.stage }}</div>
+            <small class="text-muted">STAGE</small>
+        </div>
+    </div>
+</div>
+
+<!-- タイプフィルター -->
+<div class="mb-4">
+    <div class="btn-group" role="group">
+        <a href="{{ url_for('cards.series_detail', series_id=series.id) }}" 
+           class="btn btn-outline-secondary btn-sm {% if not request.args.get('type') %}active{% endif %}">
+            全て
+        </a>
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='LEADER') }}" 
+           class="btn btn-outline-warning btn-sm {% if request.args.get('type') == 'LEADER' %}active{% endif %}">
+            LEADER
+        </a>
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='CHARACTER') }}" 
+           class="btn btn-outline-primary btn-sm {% if request.args.get('type') == 'CHARACTER' %}active{% endif %}">
+            CHARACTER
+        </a>
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='EVENT') }}" 
+           class="btn btn-outline-success btn-sm {% if request.args.get('type') == 'EVENT' %}active{% endif %}">
+            EVENT
+        </a>
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='STAGE') }}" 
+           class="btn btn-outline-info btn-sm {% if request.args.get('type') == 'STAGE' %}active{% endif %}">
+            STAGE
+        </a>
+    </div>
+</div>
+
+<!-- カードグリッド - 版本レベルで表示 -->
+<div class="card-grid">
+    {% for version in versions %}
+    {% set card = version.card_info %}
+    <div class="card-item">
+        <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
+            {% set fi = version.images_list[0] if version.images_list else None %}
+            {% if fi %}
+            <img src="{{ fi.original_url }}" 
+                 alt="{{ card.name }}" 
+                 class="card-image"
+                 loading="lazy">
+            {% else %}
+            <div class="card-image bg-secondary d-flex align-items-center justify-content-center" style="height: 280px;">
+                <i class="bi bi-image text-white display-4"></i>
+            </div>
+            {% endif %}
+            <div class="mt-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">
+                        {{ card.card_number }}
+                        {% if version.version_suffix %}<span class="badge bg-info">{{ version.version_type }}</span>{% endif %}
+                    </small>
+                    <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
+                </div>
+                <p class="mb-0 text-dark fw-bold small">{{ card.name[:20] }}{% if card.name|length > 20 %}...{% endif %}</p>
+                <div>
+                    {% for color in card.colors.split('/') %}
+                    <span class="color-badge color-{{ color }}"></span>
+                    {% endfor %}
+                    <small class="text-muted">{{ card.card_type }}</small>
+                    {% if not card.card_number.startswith(series.code.replace('-', '')) %}
+                    <span class="badge bg-secondary">再録</span>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not versions %}
+<div class="text-center py-5">
+    <i class="bi bi-inbox display-1 text-muted"></i>
+    <p class="text-muted mt-3">カードが見つかりませんでした</p>
+</div>
+{% endif %}
+{% endblock %}

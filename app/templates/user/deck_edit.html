@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}{{ deck.name }} を編集 - OPCG TCG Manager{% endblock %}
+
+{% block extra_css %}
+<style>
+    .deck-sidebar {
+        position: sticky;
+        top: 80px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+    .deck-card-mini {
+        width: 60px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: transform 0.1s;
+    }
+    .deck-card-mini:hover {
+        transform: scale(1.1);
+    }
+    .card-search-results {
+        max-height: 600px;
+        overflow-y: auto;
+    }
+    .add-card-btn {
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+    .add-card-btn:hover {
+        opacity: 0.8;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('user.decks') }}">デッキ</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('user.deck_detail', deck_id=deck.id) }}">{{ deck.name }}</a></li>
+        <li class="breadcrumb-item active">編集</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <!-- 左: カード検索 -->
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="bi bi-search"></i> カード検索
+            </div>
+            <div class="card-body">
+                <div class="row g-2">
+                    <div class="col-md-4">
+                        <input type="text" id="searchName" class="form-control" placeholder="カード名">
+                    </div>
+                    <div class="col-md-3">
+                        <select id="searchType" class="form-select">
+                            <option value="">全タイプ</option>
+                            <option value="LEADER">LEADER</option>
+                            <option value="CHARACTER">CHARACTER</option>
+                            <option value="EVENT">EVENT</option>
+                            <option value="STAGE">STAGE</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select id="searchColor" class="form-select">
+                            <option value="">全色</option>
+                            <option value="赤">赤</option>
+                            <option value="緑">緑</option>
+                            <option value="青">青</option>
+                            <option value="紫">紫</option>
+                            <option value="黄">黄</option>
+                            <option value="黒">黒</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" onclick="searchCards()">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 検索結果 -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <span><i class="bi bi-grid"></i> 検索結果</span>
+                <span class="badge bg-secondary" id="resultCount">0</span>
+            </div>
+            <div class="card-body card-search-results">
+                <div id="searchResults" class="card-grid">
+                    <p class="text-muted text-center py-4">検索してください</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 右: デッキ内容 -->
+    <div class="col-md-4">
+        <div class="deck-sidebar">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-layers"></i> {{ deck.name }}</span>
+                    <span class="badge bg-{{ 'success' if deck.card_count == 50 else 'warning' }}" id="deckCount">
+                        {{ deck.card_count }}/50
+                    </span>
+                </div>
+                <div class="card-body">
+                    <!-- リーダー -->
+                    <h6>リーダー</h6>
+                    <div id="deckLeader" class="mb-3">
+                        {% if leader %}
+                        <div class="d-flex align-items-center">
+                            {% set img = leader.version.images.first() %}
+                            {% if img %}
+                            <img src="{{ img.original_url }}" class="deck-card-mini me-2">
+                            {% endif %}
+                            <span class="small">{{ leader.version.card.name }}</span>
+                            <button class="btn btn-sm btn-outline-danger ms-auto" onclick="removeCard({{ leader.version_id }})">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        {% else %}
+                        <p class="text-muted small">未選択</p>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- キャラクター -->
+                    <h6>キャラクター <span class="badge bg-secondary" id="charCount">{{ char_count }}</span></h6>
+                    <div id="deckCharacters" class="mb-3">
+                        {% for dc in characters %}
+                        <div class="d-flex align-items-center mb-1 deck-card-row" data-version="{{ dc.version_id }}">
+                            {% set img = dc.version.images.first() %}
+                            {% if img %}
+                            <img src="{{ img.original_url }}" class="deck-card-mini me-2" style="width:40px">
+                            {% endif %}
+                            <span class="small flex-grow-1 text-truncate">{{ dc.version.card.name }}</span>
+                            <span class="badge bg-dark me-1">×{{ dc.quantity }}</span>
+                            <button class="btn btn-sm btn-outline-danger py-0" onclick="removeCard({{ dc.version_id }})">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- イベント -->
+                    <h6>イベント <span class="badge bg-secondary" id="eventCount">{{ event_count }}</span></h6>
+                    <div id="deckEvents" class="mb-3">
+                        {% for dc in events %}
+                        <div class="d-flex align-items-center mb-1 deck-card-row" data-version="{{ dc.version_id }}">
+                            {% set img = dc.version.images.first() %}
+                            {% if img %}
+                            <img src="{{ img.original_url }}" class="deck-card-mini me-2" style="width:40px">
+                            {% endif %}
+                            <span class="small flex-grow-1 text-truncate">{{ dc.version.card.name }}</span>
+                            <span class="badge bg-dark me-1">×{{ dc.quantity }}</span>
+                            <button class="btn btn-sm btn-outline-danger py-0" onclick="removeCard({{ dc.version_id }})">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- ステージ -->
+                    <h6>ステージ <span class="badge bg-secondary" id="stageCount">{{ stage_count }}</span></h6>
+                    <div id="deckStages">
+                        {% for dc in stages %}
+                        <div class="d-flex align-items-center mb-1 deck-card-row" data-version="{{ dc.version_id }}">
+                            {% set img = dc.version.images.first() %}
+                            {% if img %}
+                            <img src="{{ img.original_url }}" class="deck-card-mini me-2" style="width:40px">
+                            {% endif %}
+                            <span class="small flex-grow-1 text-truncate">{{ dc.version.card.name }}</span>
+                            <span class="badge bg-dark me-1">×{{ dc.quantity }}</span>
+                            <button class="btn btn-sm btn-outline-danger py-0" onclick="removeCard({{ dc.version_id }})">
+                                <i class="bi bi-x"></i>
+                            </button>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('user.deck_detail', deck_id=deck.id) }}" class="btn btn-success w-100">
+                        <i class="bi bi-check"></i> 完了
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const DECK_ID = {{ deck.id }};
+
+function searchCards() {
+    const name = document.getElementById('searchName').value;
+    const type = document.getElementById('searchType').value;
+    const color = document.getElementById('searchColor').value;
+    
+    const params = new URLSearchParams();
+    if (name) params.append('name', name);
+    if (type) params.append('type', type);
+    if (color) params.append('color', color);
+    
+    fetch(`/api/cards/search?${params}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('resultCount').textContent = data.length;
+            renderSearchResults(data);
+        });
+}
+
+function renderSearchResults(cards) {
+    const container = document.getElementById('searchResults');
+    if (cards.length === 0) {
+        container.innerHTML = '<p class="text-muted text-center py-4">該当するカードがありません</p>';
+        return;
+    }
+    
+    container.innerHTML = cards.map(card => `
+        <div class="card-item add-card-btn" onclick="addCard(${card.version_id})">
+            <img src="${card.image_url || ''}" class="card-image" alt="${card.name}">
+            <div class="mt-1">
+                <small class="text-muted">${card.card_number}</small>
+                <p class="mb-0 small text-truncate">${card.name}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function addCard(versionId) {
+    fetch(`/api/decks/${DECK_ID}/add-card`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({version_id: versionId})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert(data.error || 'カードを追加できませんでした');
+        }
+    });
+}
+
+function removeCard(versionId) {
+    fetch(`/api/decks/${DECK_ID}/remove-card`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({version_id: versionId})
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        }
+    });
+}
+
+// Enter键搜索
+document.getElementById('searchName').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') searchCards();
+});
+</script>
+{% endblock %}

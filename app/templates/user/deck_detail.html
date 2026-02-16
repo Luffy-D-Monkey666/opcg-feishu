@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}{{ deck.name }} - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('user.profile') }}">マイページ</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('user.decks') }}">デッキ</a></li>
+        <li class="breadcrumb-item active">{{ deck.name }}</li>
+    </ol>
+</nav>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="mb-0">
+            <i class="bi bi-layers"></i> {{ deck.name }}
+            {% if deck.is_public %}
+            <span class="badge bg-info ms-2">公開</span>
+            {% endif %}
+        </h2>
+        {% if deck.description %}
+        <p class="text-muted mt-1 mb-0">{{ deck.description }}</p>
+        {% endif %}
+    </div>
+    <div>
+        <span class="badge bg-{{ 'success' if deck.card_count == 50 else 'warning' }} fs-6 me-2">
+            {{ deck.card_count }}/50 枚
+        </span>
+        {% if is_owner %}
+        <button class="btn btn-outline-success me-1" onclick="shareDeck({{ deck.id }})">
+            <i class="bi bi-share"></i> シェア
+        </button>
+        <a href="{{ url_for('user.deck_export', deck_id=deck.id) }}" class="btn btn-outline-secondary me-1">
+            <i class="bi bi-download"></i> 出力
+        </a>
+        <a href="{{ url_for('user.deck_edit', deck_id=deck.id) }}" class="btn btn-primary">
+            <i class="bi bi-pencil"></i> 編集
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row">
+    <!-- リーダー -->
+    <div class="col-md-3 mb-4">
+        <h5><i class="bi bi-star"></i> リーダー</h5>
+        {% if leader %}
+        {% set card = leader.version.card %}
+        {% set image = leader.version.images.first() %}
+        <div class="card">
+            <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
+                {% if image %}
+                <img src="{{ image.original_url }}" class="card-img-top" alt="{{ card.name }}">
+                {% endif %}
+            </a>
+            <div class="card-body py-2">
+                <small class="text-muted">{{ card.card_number }}</small>
+                <p class="mb-0 fw-bold">{{ card.name }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="card bg-light">
+            <div class="card-body text-center py-5">
+                <i class="bi bi-question-circle display-4 text-muted"></i>
+                <p class="text-muted mt-2">リーダー未選択</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <!-- メインデッキ -->
+    <div class="col-md-9">
+        <!-- キャラクター -->
+        <h5><i class="bi bi-person"></i> キャラクター ({{ char_count }})</h5>
+        {% if characters %}
+        <div class="card-grid mb-4">
+            {% for dc in characters %}
+            {% set card = dc.version.card %}
+            {% set image = dc.version.images.first() %}
+            <div class="card-item position-relative">
+                <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    {% endif %}
+                </a>
+                <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
+                <div class="mt-1">
+                    <small class="d-block text-muted">{{ card.card_number }}</small>
+                    <small class="d-block text-truncate">{{ card.name }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted mb-4">キャラクターカードなし</p>
+        {% endif %}
+        
+        <!-- イベント -->
+        <h5><i class="bi bi-lightning"></i> イベント ({{ event_count }})</h5>
+        {% if events %}
+        <div class="card-grid mb-4">
+            {% for dc in events %}
+            {% set card = dc.version.card %}
+            {% set image = dc.version.images.first() %}
+            <div class="card-item position-relative">
+                <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    {% endif %}
+                </a>
+                <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
+                <div class="mt-1">
+                    <small class="d-block text-muted">{{ card.card_number }}</small>
+                    <small class="d-block text-truncate">{{ card.name }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted mb-4">イベントカードなし</p>
+        {% endif %}
+        
+        <!-- ステージ -->
+        {% if stages %}
+        <h5><i class="bi bi-building"></i> ステージ ({{ stage_count }})</h5>
+        <div class="card-grid mb-4">
+            {% for dc in stages %}
+            {% set card = dc.version.card %}
+            {% set image = dc.version.images.first() %}
+            <div class="card-item position-relative">
+                <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}">
+                    {% if image %}
+                    <img src="{{ image.original_url }}" class="card-image" alt="{{ card.name }}">
+                    {% endif %}
+                </a>
+                <span class="position-absolute top-0 end-0 badge bg-dark m-1">×{{ dc.quantity }}</span>
+                <div class="mt-1">
+                    <small class="d-block text-muted">{{ card.card_number }}</small>
+                    <small class="d-block text-truncate">{{ card.name }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- デッキ統計 -->
+<div class="card mt-4">
+    <div class="card-header">
+        <i class="bi bi-bar-chart"></i> デッキ統計
+    </div>
+    <div class="card-body">
+        <div class="row text-center">
+            <div class="col">
+                <h4>{{ deck.card_count }}</h4>
+                <small class="text-muted">総枚数</small>
+            </div>
+            <div class="col">
+                <h4>{{ char_count }}</h4>
+                <small class="text-muted">キャラ</small>
+            </div>
+            <div class="col">
+                <h4>{{ event_count }}</h4>
+                <small class="text-muted">イベント</small>
+            </div>
+            <div class="col">
+                <h4>{{ stage_count }}</h4>
+                <small class="text-muted">ステージ</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 分享模态框 -->
+<div class="modal fade" id="shareModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-share"></i> デッキをシェア</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">シェアリンク</label>
+                    <div class="input-group">
+                        <input type="text" id="shareUrl" class="form-control" readonly>
+                        <button class="btn btn-outline-primary" onclick="copyShareUrl()">
+                            <i class="bi bi-clipboard"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">シェアコード</label>
+                    <input type="text" id="shareCode" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function shareDeck(deckId) {
+    fetch(`/user/decks/${deckId}/share`, {method: 'POST'})
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('shareUrl').value = data.share_url;
+                document.getElementById('shareCode').value = data.share_code;
+                new bootstrap.Modal(document.getElementById('shareModal')).show();
+            }
+        });
+}
+
+function copyShareUrl() {
+    const url = document.getElementById('shareUrl');
+    url.select();
+    navigator.clipboard.writeText(url.value);
+    alert('コピーしました');
+}
+</script>
+{% endblock %}

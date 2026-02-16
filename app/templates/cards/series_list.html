@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}シリーズ一覧 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<h2 class="mb-4"><i class="bi bi-folder"></i> シリーズ一覧</h2>
+
+<!-- シリーズタイプフィルター -->
+<div class="mb-4">
+    <div class="btn-group flex-wrap" role="group">
+        <a href="{{ url_for('cards.series_list') }}" 
+           class="btn btn-outline-secondary {% if not request.args.get('type') %}active{% endif %}">
+            全て
+        </a>
+        <a href="{{ url_for('cards.series_list', type='booster') }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'booster' %}active{% endif %}">
+            ブースター
+        </a>
+        <a href="{{ url_for('cards.series_list', type='starter') }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'starter' %}active{% endif %}">
+            スターター
+        </a>
+        <a href="{{ url_for('cards.series_list', type='extra') }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'extra' %}active{% endif %}">
+            エクストラ
+        </a>
+        <a href="{{ url_for('cards.series_list', type='premium') }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'premium' %}active{% endif %}">
+            プレミアム
+        </a>
+    </div>
+</div>
+
+<!-- シリーズグリッド -->
+<div class="row">
+    {% for series in series_list %}
+    <div class="col-md-4 col-lg-3 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge 
+                        {% if series.series_type == 'booster' %}bg-primary
+                        {% elif series.series_type == 'starter' %}bg-success
+                        {% elif series.series_type == 'extra' %}bg-info
+                        {% elif series.series_type == 'premium' %}bg-warning text-dark
+                        {% else %}bg-secondary
+                        {% endif %}">
+                        {{ series.series_type }}
+                    </span>
+                </div>
+                <h5 class="card-title">{{ series.code }}</h5>
+                <p class="card-text small text-muted">
+                    {{ series.name[:50] }}{% if series.name|length > 50 %}...{% endif %}
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-muted small">
+                        <i class="bi bi-grid-3x3"></i> {{ series.card_count }} カード
+                    </span>
+                </div>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{{ url_for('cards.series_detail', series_id=series.id) }}" 
+                   class="btn btn-outline-primary btn-sm w-100">
+                    <i class="bi bi-eye"></i> カードを見る
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if not series_list %}
+<div class="text-center py-5">
+    <i class="bi bi-folder-x display-1 text-muted"></i>
+    <p class="text-muted mt-3">シリーズが見つかりませんでした</p>
+</div>
+{% endif %}
+{% endblock %}

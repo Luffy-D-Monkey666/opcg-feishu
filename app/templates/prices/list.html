@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}価格一覧 - OPCG TCG Manager{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb" class="mb-3">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
+        <li class="breadcrumb-item active">価格</li>
+    </ol>
+</nav>
+
+<h2 class="mb-4">
+    <i class="bi bi-graph-up"></i> 価格一覧
+</h2>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <p class="text-muted">価格データのあるカード一覧です。カードをクリックして価格履歴を確認できます。</p>
+    </div>
+</div>
+
+{% if prices %}
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 60px;"></th>
+                <th>カード</th>
+                <th>バージョン</th>
+                <th>価格</th>
+                <th>ソース</th>
+                <th>更新日時</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in prices %}
+            {% if p.card %}
+            <tr>
+                <td>
+                    {% if p.image %}
+                    <img src="{{ p.image.original_url }}" alt="" style="width: 50px; border-radius: 4px;">
+                    {% else %}
+                    <div class="bg-secondary d-flex align-items-center justify-content-center" 
+                         style="width: 50px; height: 70px; border-radius: 4px;">
+                        <i class="bi bi-image text-white"></i>
+                    </div>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('cards.card_detail', card_number=p.card.card_number) }}" 
+                       class="text-decoration-none">
+                        <strong>{{ p.card.name }}</strong>
+                    </a>
+                    <br>
+                    <small class="text-muted">{{ p.card.card_number }}</small>
+                </td>
+                <td>
+                    <span class="badge bg-secondary">{{ p.version.version_type }}</span>
+                </td>
+                <td>
+                    <strong class="text-primary">{{ p.display_price }}</strong>
+                </td>
+                <td>
+                    <small>{{ p.source }}</small>
+                </td>
+                <td>
+                    <small class="text-muted">{{ p.recorded_at.strftime('%Y-%m-%d %H:%M') }}</small>
+                </td>
+                <td>
+                    <a href="{{ url_for('prices.card_price_history', card_number=p.card.card_number) }}" 
+                       class="btn btn-sm btn-outline-primary">
+                        <i class="bi bi-graph-up"></i> 履歴
+                    </a>
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="text-center py-5">
+    <i class="bi bi-graph-up display-1 text-muted"></i>
+    <p class="text-muted mt-3">価格データがありません</p>
+    <p class="text-muted small">価格データは定期的に更新されます</p>
+</div>
+{% endif %}
+{% endblock %}
