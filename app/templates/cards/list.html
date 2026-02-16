@@ -11,6 +11,7 @@
 <!-- フィルター -->
 <div class="search-box mb-4">
     <form method="get" action="{{ url_for('cards.card_list') }}">
+        <input type="hidden" name="lang" value="{{ request.args.get('lang', 'jp') }}">
         <div class="row g-3">
             <div class="col-md-3">
                 <label class="form-label">系列</label>
@@ -61,7 +62,7 @@
                 <button type="submit" class="btn btn-primary me-2">
                     <i class="bi bi-funnel"></i> 筛选
                 </button>
-                <a href="{{ url_for('cards.card_list') }}" class="btn btn-outline-secondary">
+                <a href="{{ url_for('cards.card_list', lang=request.args.get('lang', 'jp')) }}" class="btn btn-outline-secondary">
                     <i class="bi bi-x"></i> 清除
                 </a>
             </div>

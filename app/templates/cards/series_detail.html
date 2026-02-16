@@ -1,12 +1,13 @@
 {% extends "base.html" %}
+{% set current_lang = request.args.get('lang', 'jp') %}
 
-{% block title %}{{ series.code }} - OPCG TCG Manager{% endblock %}
+{% block title %}{{ series.code }} - OPCG 卡牌图鉴{% endblock %}
 
 {% block content %}
 <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('cards.series_list') }}">系列</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">首页</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.series_list', lang=current_lang) }}">系列</a></li>
         <li class="breadcrumb-item active">{{ series.code }}</li>
     </ol>
 </nav>
@@ -18,6 +19,8 @@
             {% elif series.series_type == 'starter' %}bg-success
             {% elif series.series_type == 'extra' %}bg-info
             {% elif series.series_type == 'premium' %}bg-warning text-dark
+            {% elif series.series_type == 'ultimate' %}bg-danger
+            {% elif series.series_type == 'promo' %}bg-dark
             {% else %}bg-secondary
             {% endif %} me-2">
             {{ series.series_type }}
@@ -29,61 +32,61 @@
 
 <p class="text-muted mb-4">{{ series.name }}</p>
 
-<!-- 統計 -->
+<!-- 统计 -->
 <div class="row mb-4">
     <div class="col-md-2 col-4">
         <div class="text-center p-2 bg-light rounded">
             <div class="fs-4 text-warning">{{ stats.leader }}</div>
-            <small class="text-muted">LEADER</small>
+            <small class="text-muted">领航员</small>
         </div>
     </div>
     <div class="col-md-2 col-4">
         <div class="text-center p-2 bg-light rounded">
             <div class="fs-4 text-primary">{{ stats.character }}</div>
-            <small class="text-muted">CHARACTER</small>
+            <small class="text-muted">角色</small>
         </div>
     </div>
     <div class="col-md-2 col-4">
         <div class="text-center p-2 bg-light rounded">
             <div class="fs-4 text-success">{{ stats.event }}</div>
-            <small class="text-muted">EVENT</small>
+            <small class="text-muted">事件</small>
         </div>
     </div>
     <div class="col-md-2 col-4">
         <div class="text-center p-2 bg-light rounded">
             <div class="fs-4 text-info">{{ stats.stage }}</div>
-            <small class="text-muted">STAGE</small>
+            <small class="text-muted">舞台</small>
         </div>
     </div>
 </div>
 
-<!-- タイプフィルター -->
+<!-- 类型筛选 -->
 <div class="mb-4">
     <div class="btn-group" role="group">
-        <a href="{{ url_for('cards.series_detail', series_id=series.id) }}" 
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, lang=current_lang) }}" 
            class="btn btn-outline-secondary btn-sm {% if not request.args.get('type') %}active{% endif %}">
             全部
         </a>
-        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='LEADER') }}" 
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='LEADER', lang=current_lang) }}" 
            class="btn btn-outline-warning btn-sm {% if request.args.get('type') == 'LEADER' %}active{% endif %}">
             LEADER
         </a>
-        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='CHARACTER') }}" 
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='CHARACTER', lang=current_lang) }}" 
            class="btn btn-outline-primary btn-sm {% if request.args.get('type') == 'CHARACTER' %}active{% endif %}">
             CHARACTER
         </a>
-        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='EVENT') }}" 
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='EVENT', lang=current_lang) }}" 
            class="btn btn-outline-success btn-sm {% if request.args.get('type') == 'EVENT' %}active{% endif %}">
             EVENT
         </a>
-        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='STAGE') }}" 
+        <a href="{{ url_for('cards.series_detail', series_id=series.id, type='STAGE', lang=current_lang) }}" 
            class="btn btn-outline-info btn-sm {% if request.args.get('type') == 'STAGE' %}active{% endif %}">
             STAGE
         </a>
     </div>
 </div>
 
-<!-- 卡牌グリッド - 版本レベルで表示 -->
+<!-- 卡牌网格 -->
 <div class="card-grid">
     {% for version in versions %}
     {% set card = version.card_info %}
@@ -91,7 +94,7 @@
         <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
             {% set fi = version.images_list[0] if version.images_list else None %}
             {% if fi %}
-            <img src="{{ fi.original_url }}" 
+            <img src="{{ fi.original_url|cdn_image(200) }}" 
                  alt="{{ card.name }}" 
                  class="card-image"
                  loading="lazy">
@@ -115,7 +118,7 @@
                     {% endfor %}
                     <small class="text-muted">{{ card.card_type }}</small>
                     {% if not card.card_number.startswith(series.code.replace('-', '')) %}
-                    <span class="badge bg-secondary">再録</span>
+                    <span class="badge bg-secondary">再录</span>
                     {% endif %}
                 </div>
             </div>
@@ -127,7 +130,7 @@
 {% if not versions %}
 <div class="text-center py-5">
     <i class="bi bi-inbox display-1 text-muted"></i>
-    <p class="text-muted mt-3">卡牌が見つかりませんでした</p>
+    <p class="text-muted mt-3">未找到卡牌</p>
 </div>
 {% endif %}
 {% endblock %}
