@@ -5,6 +5,7 @@ Flask-Login==0.6.3
 
 # 数据库
 SQLAlchemy==2.0.23
+psycopg2-binary==2.9.9
 
 # 密码加密
 Werkzeug==3.0.1
