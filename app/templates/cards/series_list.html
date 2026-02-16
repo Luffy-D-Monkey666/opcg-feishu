@@ -37,6 +37,14 @@
            class="btn btn-outline-secondary {% if request.args.get('type') == 'promo' %}active{% endif %}">
             宣传卡
         </a>
+        <a href="{{ url_for('cards.series_list', type='family', lang=current_lang) }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'family' %}active{% endif %}">
+            家庭套装
+        </a>
+        <a href="{{ url_for('cards.series_list', type='limited', lang=current_lang) }}" 
+           class="btn btn-outline-secondary {% if request.args.get('type') == 'limited' %}active{% endif %}">
+            限定商品
+        </a>
     </div>
 </div>
 
@@ -54,6 +62,8 @@
                         {% elif series.series_type == 'premium' %}bg-warning text-dark
                         {% elif series.series_type == 'ultimate' %}bg-danger
                         {% elif series.series_type == 'promo' %}bg-dark
+                        {% elif series.series_type == 'family' %}bg-pink text-dark
+                        {% elif series.series_type == 'limited' %}bg-secondary
                         {% else %}bg-secondary
                         {% endif %}">
                         {{ series.series_type }}
