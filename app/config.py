@@ -29,13 +29,11 @@ class ProductionConfig(BaseConfig):
     """生产环境配置"""
     DEBUG = False
     
-    @property
-    def SQLALCHEMY_DATABASE_URI(self):
-        uri = os.environ.get('DATABASE_URL')
-        if uri and uri.startswith('postgres://'):
-            # Render uses postgres:// but SQLAlchemy needs postgresql://
-            uri = uri.replace('postgres://', 'postgresql://', 1)
-        return uri or 'sqlite:///' + os.path.join(basedir, '..', 'data', 'opcg.db')
+    # Handle Render's postgres:// vs SQLAlchemy's postgresql://
+    _db_uri = os.environ.get('DATABASE_URL', '')
+    if _db_uri.startswith('postgres://'):
+        _db_uri = _db_uri.replace('postgres://', 'postgresql://', 1)
+    SQLALCHEMY_DATABASE_URI = _db_uri or 'sqlite:///' + os.path.join(basedir, '..', 'data', 'opcg.db')
 
 
 class TestingConfig(BaseConfig):

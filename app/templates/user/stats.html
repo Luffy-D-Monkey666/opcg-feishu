@@ -1,22 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}コレクション統計 - OPCG TCG Manager{% endblock %}
+{% block title %}收藏統計 - OPCG TCG Manager{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-bar-chart"></i> コレクション統計</h2>
+    <h2><i class="bi bi-bar-chart"></i> 收藏統計</h2>
     <a href="{{ url_for('user.collection') }}" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left"></i> 戻る
+        <i class="bi bi-arrow-left"></i> 返回
     </a>
 </div>
 
-<!-- 概要カード -->
+<!-- 概要卡牌 -->
 <div class="row mb-4">
     <div class="col-md-3 col-6 mb-3">
         <div class="card text-center bg-success text-white h-100">
             <div class="card-body">
                 <h3>{{ collection_count }}</h3>
-                <p class="mb-0">ユニークカード</p>
+                <p class="mb-0">ユニーク卡牌</p>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
         <div class="card text-center bg-primary text-white h-100">
             <div class="card-body">
                 <h3>{{ total_quantity }}</h3>
-                <p class="mb-0">合計枚数</p>
+                <p class="mb-0">合計张数</p>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <div class="card text-center bg-info text-white h-100">
             <div class="card-body">
                 <h3>{{ owned_series }} / {{ all_series }}</h3>
-                <p class="mb-0">シリーズカバー率</p>
+                <p class="mb-0">系列カバー率</p>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
 <!-- 収蔵価値 -->
 <div class="card mb-4 border-success">
     <div class="card-header bg-success text-white">
-        <i class="bi bi-currency-dollar"></i> コレクション価値推定
+        <i class="bi bi-currency-dollar"></i> 收藏価値推定
     </div>
     <div class="card-body">
         <div class="row align-items-center">
@@ -59,11 +59,11 @@
             </div>
             <div class="col-md-4 text-center mb-3 mb-md-0">
                 <h4 class="mb-0">{{ cards_with_price }} / {{ collection_count }}</h4>
-                <small class="text-muted">価格データあり</small>
+                <small class="text-muted">价格データあり</small>
             </div>
             <div class="col-md-4">
                 {% if top_value_cards %}
-                <h6 class="text-muted mb-2">最も価値の高いカード</h6>
+                <h6 class="text-muted mb-2">最も価値の高い卡牌</h6>
                 <ol class="list-unstyled mb-0 small">
                     {% for card_number, name, price, qty, total_value in top_value_cards[:3] %}
                     <li class="mb-1">
@@ -74,35 +74,35 @@
                     {% endfor %}
                 </ol>
                 {% else %}
-                <p class="text-muted small mb-0">価格データがありません</p>
+                <p class="text-muted small mb-0">价格データがありません</p>
                 {% endif %}
             </div>
         </div>
         {% if cards_with_price < collection_count %}
         <div class="alert alert-info mb-0 mt-3 small">
             <i class="bi bi-info-circle"></i> 
-            {{ collection_count - cards_with_price }} 枚のカードには価格データがありません。
-            価格は毎日更新されます。
+            {{ collection_count - cards_with_price }} 张の卡牌には价格データがありません。
+            价格は毎日更新されます。
         </div>
         {% endif %}
     </div>
 </div>
 
 <div class="row">
-    <!-- レアリティ分布 -->
+    <!-- 稀有度分布 -->
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-header">
-                <i class="bi bi-gem"></i> レアリティ分布
+                <i class="bi bi-gem"></i> 稀有度分布
             </div>
             <div class="card-body">
                 {% if rarity_stats %}
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>レアリティ</th>
+                            <th>稀有度</th>
                             <th class="text-end">種類</th>
-                            <th class="text-end">枚数</th>
+                            <th class="text-end">张数</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,11 +130,11 @@
         </div>
     </div>
     
-    <!-- カードタイプ分布 -->
+    <!-- 卡牌タイプ分布 -->
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-header">
-                <i class="bi bi-grid"></i> カードタイプ分布
+                <i class="bi bi-grid"></i> 卡牌タイプ分布
             </div>
             <div class="card-body">
                 {% if type_stats %}
@@ -143,7 +143,7 @@
                         <tr>
                             <th>タイプ</th>
                             <th class="text-end">種類</th>
-                            <th class="text-end">枚数</th>
+                            <th class="text-end">张数</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -213,19 +213,19 @@
         </div>
     </div>
     
-    <!-- シリーズ Top 10 -->
+    <!-- 系列 Top 10 -->
     <div class="col-md-6 mb-4">
         <div class="card h-100">
             <div class="card-header">
-                <i class="bi bi-collection"></i> シリーズ Top 10
+                <i class="bi bi-collection"></i> 系列 Top 10
             </div>
             <div class="card-body">
                 {% if series_stats %}
                 <table class="table table-sm">
                     <thead>
                         <tr>
-                            <th>シリーズ</th>
-                            <th class="text-end">枚数</th>
+                            <th>系列</th>
+                            <th class="text-end">张数</th>
                         </tr>
                     </thead>
                     <tbody>

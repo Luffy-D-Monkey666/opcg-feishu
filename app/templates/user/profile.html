@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}マイページ - OPCG TCG Manager{% endblock %}
+{% block title %}个人主页 - OPCG TCG Manager{% endblock %}
 
 {% block content %}
-<h2 class="mb-4"><i class="bi bi-person-circle"></i> マイページ</h2>
+<h2 class="mb-4"><i class="bi bi-person-circle"></i> 个人主页</h2>
 
 <div class="row">
     <div class="col-md-4">
@@ -24,7 +24,7 @@
                         <div class="card-body">
                             <i class="bi bi-collection display-4 text-success"></i>
                             <h3 class="mt-2">{{ collection_count }}</h3>
-                            <p class="text-muted mb-0">コレクション</p>
+                            <p class="text-muted mb-0">收藏</p>
                         </div>
                         <div class="card-footer bg-transparent">
                             <small><i class="bi bi-bar-chart"></i> 統計を見る</small>
@@ -38,7 +38,7 @@
                         <div class="card-body">
                             <i class="bi bi-heart display-4 text-danger"></i>
                             <h3 class="mt-2">{{ wishlist_count }}</h3>
-                            <p class="text-muted mb-0">ウィッシュリスト</p>
+                            <p class="text-muted mb-0">愿望单</p>
                         </div>
                     </div>
                 </a>
@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <i class="bi bi-layers display-4 text-info"></i>
                             <h3 class="mt-2">{{ deck_count }}</h3>
-                            <p class="text-muted mb-0">デッキ</p>
+                            <p class="text-muted mb-0">卡组</p>
                         </div>
                     </div>
                 </a>
@@ -67,7 +67,7 @@
                         <td>{{ current_user.email }}</td>
                     </tr>
                     <tr>
-                        <th>登録日</th>
+                        <th>注册日</th>
                         <td>{{ current_user.created_at.strftime('%Y-%m-%d') }}</td>
                     </tr>
                 </table>

@@ -1,26 +1,26 @@
 {% extends "base.html" %}
 
-{% block title %}OPCG TCG Manager - ホーム{% endblock %}
+{% block title %}OPCG 卡牌图鉴 - 首页{% endblock %}
 
 {% block content %}
 <div class="row mb-4">
     <div class="col-12 text-center">
         <h1 class="display-4 mb-3">
             <i class="bi bi-collection text-primary"></i>
-            OPCG TCG Manager
+            OPCG 卡牌图鉴
         </h1>
-        <p class="lead text-muted">One Piece Card Game コレクション管理ツール</p>
+        <p class="lead text-muted">海贼王集换式卡牌收藏管理工具</p>
     </div>
 </div>
 
-<!-- 統計カード -->
+<!-- 统计卡片 -->
 <div class="row mb-4">
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
                 <i class="bi bi-folder2-open display-4 text-primary"></i>
                 <h3 class="mt-2">{{ stats.series_count }}</h3>
-                <p class="text-muted mb-0">シリーズ</p>
+                <p class="text-muted mb-0">系列</p>
             </div>
         </div>
     </div>
@@ -29,7 +29,7 @@
             <div class="card-body">
                 <i class="bi bi-grid-3x3-gap display-4 text-success"></i>
                 <h3 class="mt-2">{{ stats.card_count }}</h3>
-                <p class="text-muted mb-0">カード</p>
+                <p class="text-muted mb-0">卡牌</p>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <i class="bi bi-star display-4 text-warning"></i>
                 <h3 class="mt-2">{{ stats.leader_count }}</h3>
-                <p class="text-muted mb-0">リーダー</p>
+                <p class="text-muted mb-0">领航员</p>
             </div>
         </div>
     </div>
@@ -47,42 +47,42 @@
             <div class="card-body">
                 <i class="bi bi-images display-4 text-info"></i>
                 <h3 class="mt-2">{{ stats.version_count }}</h3>
-                <p class="text-muted mb-0">バージョン</p>
+                <p class="text-muted mb-0">版本</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- クイック検索 -->
+<!-- 快速搜索 -->
 <div class="search-box">
-    <h5><i class="bi bi-search"></i> クイック検索</h5>
+    <h5><i class="bi bi-search"></i> 快速搜索</h5>
     <form action="{{ url_for('main.search') }}" method="get">
         <div class="row g-3">
             <div class="col-md-6">
-                <input type="text" class="form-control form-control-lg" name="q" placeholder="カード名 / カード番号を入力...">
+                <input type="text" class="form-control form-control-lg" name="q" placeholder="输入卡牌名称 / 卡牌编号...">
             </div>
             <div class="col-md-3">
                 <select class="form-select form-select-lg" name="color">
-                    <option value="">全ての色</option>
-                    <option value="赤">赤</option>
-                    <option value="緑">緑</option>
-                    <option value="青">青</option>
+                    <option value="">全部颜色</option>
+                    <option value="赤">红</option>
+                    <option value="緑">绿</option>
+                    <option value="青">蓝</option>
                     <option value="紫">紫</option>
                     <option value="黄">黄</option>
-                    <option value="黒">黒</option>
+                    <option value="黒">黑</option>
                 </select>
             </div>
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary btn-lg w-100">
-                    <i class="bi bi-search"></i> 検索
+                    <i class="bi bi-search"></i> 搜索
                 </button>
             </div>
         </div>
     </form>
 </div>
 
-<!-- 最新シリーズ -->
-<h4 class="mb-3"><i class="bi bi-clock-history"></i> 最新シリーズ</h4>
+<!-- 最新系列 -->
+<h4 class="mb-3"><i class="bi bi-clock-history"></i> 最新系列</h4>
 <div class="row">
     {% for series in recent_series %}
     <div class="col-md-4 mb-3">
@@ -92,12 +92,12 @@
                 <h5 class="card-title mt-2">{{ series.code }}</h5>
                 <p class="card-text small text-muted">{{ series.name[:40] }}{% if series.name|length > 40 %}...{% endif %}</p>
                 <p class="mb-0">
-                    <strong>{{ series.card_count }}</strong> カード
+                    <strong>{{ series.card_count }}</strong> 张卡牌
                 </p>
             </div>
             <div class="card-footer">
                 <a href="{{ url_for('cards.series_detail', series_id=series.id) }}" class="btn btn-outline-primary btn-sm w-100">
-                    <i class="bi bi-arrow-right"></i> 詳細を見る
+                    <i class="bi bi-arrow-right"></i> 查看详情
                 </a>
             </div>
         </div>
@@ -107,7 +107,7 @@
 
 <div class="text-center mt-3">
     <a href="{{ url_for('cards.series_list') }}" class="btn btn-outline-secondary">
-        <i class="bi bi-folder"></i> 全てのシリーズを見る
+        <i class="bi bi-folder"></i> 查看全部系列
     </a>
 </div>
 {% endblock %}

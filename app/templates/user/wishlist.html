@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}ウィッシュリスト - OPCG TCG Manager{% endblock %}
+{% block title %}愿望单 - OPCG TCG Manager{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-heart"></i> ウィッシュリスト</h2>
-    <span class="badge bg-danger fs-6">{{ pagination.total }} 枚</span>
+    <h2><i class="bi bi-heart"></i> 愿望单</h2>
+    <span class="badge bg-danger fs-6">{{ pagination.total }} 张</span>
 </div>
 
 {% if items %}
@@ -59,7 +59,7 @@
     <ul class="pagination justify-content-center">
         {% if pagination.has_prev %}
         <li class="page-item">
-            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.prev_num) }}">前へ</a>
+            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.prev_num) }}">上一页</a>
         </li>
         {% endif %}
         {% for p in pagination.iter_pages() %}
@@ -71,7 +71,7 @@
         {% endfor %}
         {% if pagination.has_next %}
         <li class="page-item">
-            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.next_num) }}">次へ</a>
+            <a class="page-link" href="{{ url_for('user.wishlist', page=pagination.next_num) }}">下一页</a>
         </li>
         {% endif %}
     </ul>
@@ -81,9 +81,9 @@
 {% else %}
 <div class="text-center py-5">
     <i class="bi bi-heart display-1 text-muted"></i>
-    <p class="text-muted mt-3">ウィッシュリストは空です</p>
+    <p class="text-muted mt-3">愿望单は空です</p>
     <a href="{{ url_for('cards.card_list') }}" class="btn btn-primary">
-        <i class="bi bi-plus"></i> カードを追加
+        <i class="bi bi-plus"></i> 卡牌を添加
     </a>
 </div>
 {% endif %}
@@ -104,7 +104,7 @@ function removeFromWishlist(versionId) {
 }
 
 function moveToCollection(versionId) {
-    // ウィッシュリストから削除してコレクションに追加
+    // 愿望单から删除して收藏に添加
     fetch('/api/collection/add', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},

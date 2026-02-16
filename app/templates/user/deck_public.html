@@ -9,7 +9,7 @@
         <p class="text-muted mb-0">
             作成者: {{ deck.user.display_name or deck.user.username }}
             {% if deck.share_code %}
-            <span class="badge bg-success ms-2">公開デッキ</span>
+            <span class="badge bg-success ms-2">公開卡组</span>
             {% endif %}
         </p>
     </div>
@@ -26,7 +26,7 @@
 </div>
 {% endif %}
 
-<!-- デッキ統計 -->
+<!-- 卡组統計 -->
 <div class="row mb-4">
     <div class="col">
         <div class="card">
@@ -42,11 +42,11 @@
                     </div>
                     <div class="col">
                         <strong>{{ event_count }}</strong>
-                        <small class="text-muted d-block">イベント</small>
+                        <small class="text-muted d-block">事条</small>
                     </div>
                     <div class="col">
                         <strong>{{ stage_count }}</strong>
-                        <small class="text-muted d-block">ステージ</small>
+                        <small class="text-muted d-block">舞台</small>
                     </div>
                 </div>
             </div>
@@ -54,7 +54,7 @@
     </div>
 </div>
 
-<!-- リーダー -->
+<!-- 领航员 -->
 {% if leader %}
 <div class="card mb-4">
     <div class="card-header bg-dark text-white">
@@ -74,8 +74,8 @@
                 <p class="text-muted mb-0">
                     {{ leader.version.card.card_number }} | 
                     {{ leader.version.card.colors }} | 
-                    ライフ {{ leader.version.card.life }} | 
-                    パワー {{ leader.version.card.power }}
+                    生命 {{ leader.version.card.life }} | 
+                    战力 {{ leader.version.card.power }}
                 </p>
             </div>
         </div>
@@ -83,7 +83,7 @@
 </div>
 {% endif %}
 
-<!-- キャラクター -->
+<!-- 角色 -->
 {% if characters %}
 <div class="card mb-4">
     <div class="card-header">
@@ -110,7 +110,7 @@
 </div>
 {% endif %}
 
-<!-- イベント -->
+<!-- 事条 -->
 {% if events %}
 <div class="card mb-4">
     <div class="card-header">
@@ -137,7 +137,7 @@
 </div>
 {% endif %}
 
-<!-- ステージ -->
+<!-- 舞台 -->
 {% if stages %}
 <div class="card mb-4">
     <div class="card-header">

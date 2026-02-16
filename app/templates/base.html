@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}OPCG TCG Manager{% endblock %}</title>
+    <title>{% block title %}OPCG 卡牌图鉴{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -105,33 +105,33 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('cards.card_list') }}">
-                            <i class="bi bi-grid"></i> カード一覧
+                            <i class="bi bi-grid"></i> 卡牌列表
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('cards.series_list') }}">
-                            <i class="bi bi-folder"></i> シリーズ
+                            <i class="bi bi-folder"></i> 系列
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('main.search') }}">
-                            <i class="bi bi-search"></i> 検索
+                            <i class="bi bi-search"></i> 搜索
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('prices.price_list') }}">
-                            <i class="bi bi-graph-up"></i> 価格
+                            <i class="bi bi-graph-up"></i> 价格
                         </a>
                     </li>
                 </ul>
                 <form class="d-flex me-3" action="{{ url_for('main.search') }}" method="get">
-                    <input class="form-control me-2" type="search" name="q" placeholder="カード検索...">
+                    <input class="form-control me-2" type="search" name="q" placeholder="搜索卡牌...">
                     <button class="btn btn-outline-light" type="submit">
                         <i class="bi bi-search"></i>
                     </button>
                 </form>
                 
-                <!-- ユーザーメニュー -->
+                <!-- 用户菜单 -->
                 <ul class="navbar-nav">
                     {% if current_user.is_authenticated %}
                     <li class="nav-item dropdown">
@@ -140,32 +140,32 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="{{ url_for('user.profile') }}">
-                                <i class="bi bi-person"></i> マイページ
+                                <i class="bi bi-person"></i> 个人主页
                             </a></li>
                             <li><a class="dropdown-item" href="{{ url_for('user.collection') }}">
-                                <i class="bi bi-collection"></i> コレクション
+                                <i class="bi bi-collection"></i> 我的收藏
                             </a></li>
                             <li><a class="dropdown-item" href="{{ url_for('user.wishlist') }}">
-                                <i class="bi bi-heart"></i> ウィッシュリスト
+                                <i class="bi bi-heart"></i> 愿望单
                             </a></li>
                             <li><a class="dropdown-item" href="{{ url_for('user.decks') }}">
-                                <i class="bi bi-layers"></i> デッキ
+                                <i class="bi bi-layers"></i> 卡组
                             </a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">
-                                <i class="bi bi-box-arrow-right"></i> ログアウト
+                                <i class="bi bi-box-arrow-right"></i> 退出登录
                             </a></li>
                         </ul>
                     </li>
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">
-                            <i class="bi bi-box-arrow-in-right"></i> ログイン
+                            <i class="bi bi-box-arrow-in-right"></i> 登录
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.register') }}">
-                            <i class="bi bi-person-plus"></i> 登録
+                            <i class="bi bi-person-plus"></i> 注册
                         </a>
                     </li>
                     {% endif %}
@@ -191,7 +191,7 @@
 
     <footer class="bg-dark text-light py-3 mt-5">
         <div class="container text-center">
-            <small>OPCG TCG Manager - One Piece Card Game Collection Tool</small>
+            <small>OPCG 卡牌图鉴 - 海贼王集换式卡牌收藏工具</small>
         </div>
     </footer>
 

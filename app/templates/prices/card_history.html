@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ card.card_number }} 価格履歴 - OPCG TCG Manager{% endblock %}
+{% block title %}{{ card.card_number }} 价格履歴 - OPCG TCG Manager{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -55,14 +55,14 @@
 <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('prices.price_list') }}">価格</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('prices.price_list') }}">价格</a></li>
         <li class="breadcrumb-item active">{{ card.card_number }}</li>
     </ol>
 </nav>
 
 <div class="row">
     <div class="col-md-4">
-        <!-- カード情報 -->
+        <!-- 卡牌情報 -->
         <div class="card mb-4">
             {% set default_version = versions[0] if versions else None %}
             {% set default_image = default_version.image if default_version else None %}
@@ -79,7 +79,7 @@
                 </div>
                 <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" 
                    class="btn btn-outline-primary btn-sm">
-                    カード詳細へ
+                    卡牌详情へ
                 </a>
             </div>
         </div>
@@ -109,11 +109,11 @@
             </div>
         </div>
         
-        <!-- 価格統計 -->
+        <!-- 价格統計 -->
         <div class="price-stats" id="priceStats">
             <div class="stat-card">
                 <div class="stat-value text-primary" id="currentPrice">-</div>
-                <div class="stat-label">現在価格</div>
+                <div class="stat-label">現在价格</div>
             </div>
             <div class="stat-card">
                 <div class="stat-value text-success" id="lowestPrice">-</div>
@@ -142,14 +142,14 @@
             <canvas id="priceChart"></canvas>
         </div>
         
-        <!-- 価格履歴テーブル -->
-        <h6>価格履歴</h6>
+        <!-- 价格履歴テーブル -->
+        <h6>价格履歴</h6>
         <div class="table-responsive">
             <table class="table table-sm" id="priceTable">
                 <thead>
                     <tr>
                         <th>日時</th>
-                        <th>価格</th>
+                        <th>价格</th>
                         <th>ソース</th>
                         <th>状態</th>
                     </tr>
@@ -204,7 +204,7 @@ function loadChart(days) {
     
     if (!currentVersionId) {
         document.getElementById('priceTableBody').innerHTML = 
-            '<tr><td colspan="4" class="text-center text-muted">価格データがありません</td></tr>';
+            '<tr><td colspan="4" class="text-center text-muted">价格データがありません</td></tr>';
         return;
     }
     
@@ -232,7 +232,7 @@ function renderChart(data) {
         ctx.font = '16px Arial';
         ctx.fillStyle = '#6c757d';
         ctx.textAlign = 'center';
-        ctx.fillText('価格データがありません', ctx.canvas.width / 2, ctx.canvas.height / 2);
+        ctx.fillText('价格データがありません', ctx.canvas.width / 2, ctx.canvas.height / 2);
         return;
     }
     
@@ -245,7 +245,7 @@ function renderChart(data) {
         data: {
             labels: labels,
             datasets: [{
-                label: `価格 (${currency})`,
+                label: `价格 (${currency})`,
                 data: prices,
                 borderColor: '#0d6efd',
                 backgroundColor: 'rgba(13, 110, 253, 0.1)',
@@ -307,7 +307,7 @@ function renderTable(data) {
     const tbody = document.getElementById('priceTableBody');
     
     if (!data.data || data.data.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">価格データがありません</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">价格データがありません</td></tr>';
         return;
     }
     

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}カード一覧 - OPCG TCG Manager{% endblock %}
+{% block title %}卡牌列表 - OPCG 卡牌图鉴{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-grid"></i> カード一覧</h2>
-    <span class="badge bg-secondary fs-6">{{ pagination.total }} 件</span>
+    <h2><i class="bi bi-grid"></i> 卡牌列表</h2>
+    <span class="badge bg-secondary fs-6">{{ pagination.total }} 条</span>
 </div>
 
 <!-- フィルター -->
@@ -13,9 +13,9 @@
     <form method="get" action="{{ url_for('cards.card_list') }}">
         <div class="row g-3">
             <div class="col-md-3">
-                <label class="form-label">シリーズ</label>
+                <label class="form-label">系列</label>
                 <select class="form-select" name="series">
-                    <option value="">全て</option>
+                    <option value="">全部</option>
                     {% for s in series_list %}
                     <option value="{{ s.id }}" {% if request.args.get('series')|int == s.id %}selected{% endif %}>
                         {{ s.code }}
@@ -24,9 +24,9 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label class="form-label">タイプ</label>
+                <label class="form-label">类型</label>
                 <select class="form-select" name="type">
-                    <option value="">全て</option>
+                    <option value="">全部</option>
                     <option value="LEADER" {% if request.args.get('type') == 'LEADER' %}selected{% endif %}>LEADER</option>
                     <option value="CHARACTER" {% if request.args.get('type') == 'CHARACTER' %}selected{% endif %}>CHARACTER</option>
                     <option value="EVENT" {% if request.args.get('type') == 'EVENT' %}selected{% endif %}>EVENT</option>
@@ -34,9 +34,9 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label class="form-label">色</label>
+                <label class="form-label">颜色</label>
                 <select class="form-select" name="color">
-                    <option value="">全て</option>
+                    <option value="">全部</option>
                     <option value="赤" {% if request.args.get('color') == '赤' %}selected{% endif %}>赤</option>
                     <option value="緑" {% if request.args.get('color') == '緑' %}selected{% endif %}>緑</option>
                     <option value="青" {% if request.args.get('color') == '青' %}selected{% endif %}>青</option>
@@ -46,9 +46,9 @@
                 </select>
             </div>
             <div class="col-md-2">
-                <label class="form-label">レアリティ</label>
+                <label class="form-label">稀有度</label>
                 <select class="form-select" name="rarity">
-                    <option value="">全て</option>
+                    <option value="">全部</option>
                     <option value="L" {% if request.args.get('rarity') == 'L' %}selected{% endif %}>L</option>
                     <option value="SEC" {% if request.args.get('rarity') == 'SEC' %}selected{% endif %}>SEC</option>
                     <option value="SR" {% if request.args.get('rarity') == 'SR' %}selected{% endif %}>SR</option>
@@ -59,17 +59,17 @@
             </div>
             <div class="col-md-3 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary me-2">
-                    <i class="bi bi-funnel"></i> フィルター
+                    <i class="bi bi-funnel"></i> 筛选
                 </button>
                 <a href="{{ url_for('cards.card_list') }}" class="btn btn-outline-secondary">
-                    <i class="bi bi-x"></i> クリア
+                    <i class="bi bi-x"></i> 清除
                 </a>
             </div>
         </div>
     </form>
 </div>
 
-<!-- カードグリッド -->
+<!-- 卡牌グリッド -->
 {% if cards %}
 <div class="card-grid">
     {% for card in cards %}
@@ -141,7 +141,7 @@
 {% else %}
 <div class="text-center py-5">
     <i class="bi bi-inbox display-1 text-muted"></i>
-    <p class="text-muted mt-3">カードが見つかりませんでした</p>
+    <p class="text-muted mt-3">未找到卡牌</p>
 </div>
 {% endif %}
 {% endblock %}

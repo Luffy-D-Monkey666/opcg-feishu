@@ -6,14 +6,14 @@
 <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">ホーム</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list') }}">カード一覧</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list') }}">卡牌列表</a></li>
         <li class="breadcrumb-item"><a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}">{{ card.series.code }}</a></li>
         <li class="breadcrumb-item active">{{ card.card_number }}</li>
     </ol>
 </nav>
 
 <div class="row">
-    <!-- カード画像 -->
+    <!-- 卡牌画像 -->
     <div class="col-md-4">
         {% if versions %}
         <div id="cardCarousel" class="carousel slide" data-bs-ride="false">
@@ -41,7 +41,7 @@
             {% endif %}
         </div>
         
-        <!-- バージョン一覧 -->
+        <!-- バージョン列表 -->
         {% if versions|length > 1 %}
         <div class="mt-3">
             <small class="text-muted">{{ versions|length }} バージョン</small>
@@ -59,7 +59,7 @@
         {% endif %}
     </div>
     
-    <!-- カード情報 -->
+    <!-- 卡牌情報 -->
     <div class="col-md-8">
         <div class="d-flex align-items-center mb-3">
             <h2 class="mb-0 me-3">{{ card.name }}</h2>
@@ -67,7 +67,7 @@
             <span class="rarity-{{ card.rarity }} fs-5">{{ card.rarity }}</span>
         </div>
         
-        <!-- コレクション/ウィッシュリスト ボタン -->
+        <!-- 收藏/愿望单 ボタン -->
         {% if current_user.is_authenticated %}
         <div class="mb-3" id="actionButtons">
             {% set current_version = versions[0] if versions else none %}
@@ -75,20 +75,20 @@
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-success" id="addCollectionBtn" 
                         data-version-id="{{ current_version.id }}">
-                    <i class="bi bi-plus-circle"></i> コレクションに追加
+                    <i class="bi bi-plus-circle"></i> 收藏に添加
                 </button>
                 <button type="button" class="btn btn-outline-danger" id="addWishlistBtn"
                         data-version-id="{{ current_version.id }}">
-                    <i class="bi bi-heart"></i> ウィッシュリストに追加
+                    <i class="bi bi-heart"></i> 愿望单に添加
                 </button>
             </div>
             <div class="mt-2">
                 <small class="text-muted" id="collectionStatus">
                     {% if in_collection %}
-                    <i class="bi bi-check-circle text-success"></i> コレクション済み ({{ in_collection.quantity }}枚)
+                    <i class="bi bi-check-circle text-success"></i> 收藏済み ({{ in_collection.quantity }}张)
                     {% endif %}
                     {% if in_wishlist %}
-                    <i class="bi bi-heart-fill text-danger"></i> ウィッシュリスト済み
+                    <i class="bi bi-heart-fill text-danger"></i> 愿望单済み
                     {% endif %}
                 </small>
             </div>
@@ -97,7 +97,7 @@
         {% else %}
         <div class="mb-3">
             <a href="{{ url_for('auth.login') }}" class="btn btn-outline-primary">
-                <i class="bi bi-box-arrow-in-right"></i> ログインしてコレクションに追加
+                <i class="bi bi-box-arrow-in-right"></i> 登录して收藏に添加
             </a>
         </div>
         {% endif %}
@@ -125,7 +125,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>シリーズ</th>
+                                <th>系列</th>
                                 <td>
                                     <a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}">
                                         {{ card.series.code }}
@@ -144,21 +144,21 @@
                         <table class="table table-sm">
                             {% if card.card_type == 'LEADER' %}
                             <tr>
-                                <th width="40%">ライフ</th>
+                                <th width="40%">生命</th>
                                 <td class="stat-value">{{ card.life }}</td>
                             </tr>
                             {% else %}
                             <tr>
-                                <th width="40%">コスト</th>
+                                <th width="40%">费用</th>
                                 <td class="stat-value">{{ card.cost if card.cost is not none else '-' }}</td>
                             </tr>
                             {% endif %}
                             <tr>
-                                <th>パワー</th>
+                                <th>战力</th>
                                 <td class="stat-value">{{ card.power if card.power is not none else '-' }}</td>
                             </tr>
                             <tr>
-                                <th>カウンター</th>
+                                <th>反击</th>
                                 <td class="stat-value">{{ card.counter if card.counter is not none else '-' }}</td>
                             </tr>
                             {% if card.block_icon %}
@@ -173,11 +173,11 @@
             </div>
         </div>
         
-        <!-- 特徴 -->
+        <!-- 特征 -->
         {% if card.traits %}
         <div class="card mb-3">
             <div class="card-header">
-                <i class="bi bi-tags"></i> 特徴
+                <i class="bi bi-tags"></i> 特征
             </div>
             <div class="card-body">
                 {% for trait in card.traits.split('/') %}
@@ -187,11 +187,11 @@
         </div>
         {% endif %}
         
-        <!-- 効果テキスト -->
+        <!-- 效果テキスト -->
         {% if card.effect_text %}
         <div class="card mb-3">
             <div class="card-header">
-                <i class="bi bi-chat-text"></i> 効果
+                <i class="bi bi-chat-text"></i> 效果
             </div>
             <div class="card-body">
                 <p class="mb-0" style="white-space: pre-line;">{{ card.effect_text }}</p>
@@ -199,11 +199,11 @@
         </div>
         {% endif %}
         
-        <!-- トリガー効果 -->
+        <!-- 触发效果 -->
         {% if card.trigger_text %}
         <div class="card mb-3">
             <div class="card-header bg-warning bg-opacity-25">
-                <i class="bi bi-lightning"></i> トリガー
+                <i class="bi bi-lightning"></i> 触发
             </div>
             <div class="card-body">
                 <p class="mb-0">{{ card.trigger_text }}</p>
@@ -211,11 +211,11 @@
         </div>
         {% endif %}
         
-        <!-- 入手情報 -->
+        <!-- 获取信息 -->
         {% if card.source_info %}
         <div class="card mb-3">
             <div class="card-header">
-                <i class="bi bi-box"></i> 入手情報
+                <i class="bi bi-box"></i> 获取信息
             </div>
             <div class="card-body">
                 <p class="mb-0 text-muted">{{ card.source_info }}</p>
@@ -223,18 +223,18 @@
         </div>
         {% endif %}
         
-        <!-- 価格情報 -->
+        <!-- 价格情報 -->
         {% if prices %}
         <div class="card">
             <div class="card-header bg-success bg-opacity-10">
-                <i class="bi bi-currency-dollar"></i> 市場価格
+                <i class="bi bi-currency-dollar"></i> 市場价格
             </div>
             <div class="card-body">
                 <table class="table table-sm mb-0">
                     <thead>
                         <tr>
                             <th>バージョン</th>
-                            <th class="text-end">価格 (USD)</th>
+                            <th class="text-end">价格 (USD)</th>
                             <th class="text-end">更新日</th>
                         </tr>
                     </thead>
@@ -255,9 +255,9 @@
     </div>
 </div>
 
-<!-- 同じシリーズのカード -->
+<!-- 同じ系列の卡牌 -->
 <div class="mt-5">
-    <h4><i class="bi bi-grid-3x3-gap"></i> {{ card.series.code }} の他のカード</h4>
+    <h4><i class="bi bi-grid-3x3-gap"></i> {{ card.series.code }} の他の卡牌</h4>
     <div class="card-grid">
         {% for other in same_series_cards[:6] %}
         <div class="card-item">
@@ -282,7 +282,7 @@
     </div>
     <div class="text-center mt-3">
         <a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}" class="btn btn-outline-secondary">
-            全てのカードを見る
+            全部の卡牌を見る
         </a>
     </div>
 </div>
@@ -303,7 +303,7 @@ if (carousel) {
     });
 }
 
-// コレクション追加
+// 收藏添加
 document.getElementById('addCollectionBtn')?.addEventListener('click', function() {
     const versionId = this.dataset.versionId;
     const btn = this;
@@ -318,10 +318,10 @@ document.getElementById('addCollectionBtn')?.addEventListener('click', function(
     .then(data => {
         if (data.success) {
             const status = document.getElementById('collectionStatus');
-            status.innerHTML = '<i class="bi bi-check-circle text-success"></i> コレクションに追加しました！';
-            btn.innerHTML = '<i class="bi bi-check"></i> 追加済み';
+            status.innerHTML = '<i class="bi bi-check-circle text-success"></i> 收藏に添加しました！';
+            btn.innerHTML = '<i class="bi bi-check"></i> 添加済み';
             setTimeout(() => {
-                btn.innerHTML = '<i class="bi bi-plus-circle"></i> もう1枚追加';
+                btn.innerHTML = '<i class="bi bi-plus-circle"></i> もう1张添加';
                 btn.disabled = false;
             }, 1500);
         }
@@ -329,7 +329,7 @@ document.getElementById('addCollectionBtn')?.addEventListener('click', function(
     .catch(() => btn.disabled = false);
 });
 
-// ウィッシュリスト追加
+// 愿望单添加
 document.getElementById('addWishlistBtn')?.addEventListener('click', function() {
     const versionId = this.dataset.versionId;
     const btn = this;
@@ -344,8 +344,8 @@ document.getElementById('addWishlistBtn')?.addEventListener('click', function() 
     .then(data => {
         if (data.success) {
             const status = document.getElementById('collectionStatus');
-            status.innerHTML += ' <i class="bi bi-heart-fill text-danger"></i> ウィッシュリストに追加しました！';
-            btn.innerHTML = '<i class="bi bi-heart-fill"></i> 追加済み';
+            status.innerHTML += ' <i class="bi bi-heart-fill text-danger"></i> 愿望单に添加しました！';
+            btn.innerHTML = '<i class="bi bi-heart-fill"></i> 添加済み';
             btn.classList.remove('btn-outline-danger');
             btn.classList.add('btn-danger');
         }

@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
-{% block title %}シリーズ一覧 - OPCG TCG Manager{% endblock %}
+{% block title %}系列列表 - OPCG TCG Manager{% endblock %}
 
 {% block content %}
-<h2 class="mb-4"><i class="bi bi-folder"></i> シリーズ一覧</h2>
+<h2 class="mb-4"><i class="bi bi-folder"></i> 系列列表</h2>
 
-<!-- シリーズタイプフィルター -->
+<!-- 系列タイプフィルター -->
 <div class="mb-4">
     <div class="btn-group flex-wrap" role="group">
         <a href="{{ url_for('cards.series_list') }}" 
            class="btn btn-outline-secondary {% if not request.args.get('type') %}active{% endif %}">
-            全て
+            全部
         </a>
         <a href="{{ url_for('cards.series_list', type='booster') }}" 
            class="btn btn-outline-secondary {% if request.args.get('type') == 'booster' %}active{% endif %}">
@@ -31,7 +31,7 @@
     </div>
 </div>
 
-<!-- シリーズグリッド -->
+<!-- 系列グリッド -->
 <div class="row">
     {% for series in series_list %}
     <div class="col-md-4 col-lg-3 mb-4">
@@ -54,14 +54,14 @@
                 </p>
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="text-muted small">
-                        <i class="bi bi-grid-3x3"></i> {{ series.card_count }} カード
+                        <i class="bi bi-grid-3x3"></i> {{ series.card_count }} 卡牌
                     </span>
                 </div>
             </div>
             <div class="card-footer bg-transparent">
                 <a href="{{ url_for('cards.series_detail', series_id=series.id) }}" 
                    class="btn btn-outline-primary btn-sm w-100">
-                    <i class="bi bi-eye"></i> カードを見る
+                    <i class="bi bi-eye"></i> 卡牌を見る
                 </a>
             </div>
         </div>
@@ -72,7 +72,7 @@
 {% if not series_list %}
 <div class="text-center py-5">
     <i class="bi bi-folder-x display-1 text-muted"></i>
-    <p class="text-muted mt-3">シリーズが見つかりませんでした</p>
+    <p class="text-muted mt-3">系列が見つかりませんでした</p>
 </div>
 {% endif %}
 {% endblock %}

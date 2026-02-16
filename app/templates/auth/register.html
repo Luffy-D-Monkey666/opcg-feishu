@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}新規登録 - OPCG TCG Manager{% endblock %}
+{% block title %}新規注册 - OPCG TCG Manager{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-5">
         <div class="card shadow">
             <div class="card-header bg-success text-white">
-                <h4 class="mb-0"><i class="bi bi-person-plus"></i> 新規登録</h4>
+                <h4 class="mb-0"><i class="bi bi-person-plus"></i> 新規注册</h4>
             </div>
             <div class="card-body">
                 <form method="post">
@@ -31,13 +31,13 @@
                         <input type="password" class="form-control" name="password2" required>
                     </div>
                     <button type="submit" class="btn btn-success w-100">
-                        <i class="bi bi-person-plus"></i> 登録
+                        <i class="bi bi-person-plus"></i> 注册
                     </button>
                 </form>
                 <hr>
                 <p class="text-center mb-0">
                     すでにアカウントをお持ちの方は
-                    <a href="{{ url_for('auth.login') }}">ログイン</a>
+                    <a href="{{ url_for('auth.login') }}">登录</a>
                 </p>
             </div>
         </div>
