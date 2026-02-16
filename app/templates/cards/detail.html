@@ -65,6 +65,9 @@
             <h2 class="mb-0 me-3">{{ card.name }}</h2>
             <span class="badge bg-secondary me-2">{{ card.card_number }}</span>
             <span class="rarity-{{ card.rarity }} fs-5">{{ card.rarity }}</span>
+            <a href="{{ url_for('main.search', q=card.card_number) }}" class="btn btn-outline-info btn-sm ms-3" title="查看所有图�的中相同编号的卡片">
+                <i class="bi bi-search"></i> 查看所有版本
+            </a>
         </div>
         
         <!-- 收藏/愿望单 ボタン -->
