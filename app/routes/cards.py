@@ -70,6 +70,9 @@ def card_detail(card_number):
     if lang not in ('jp', 'en'):
         lang = 'jp'
     
+    # 支持版本参数（用于显示特定版本的图片）
+    target_version_id = request.args.get('version_id', type=int)
+    
     # 先尝试查找指定语言的卡片
     card = Card.query.filter_by(card_number=card_number, language=lang).first()
     
@@ -88,6 +91,18 @@ def card_detail(card_number):
     # 如果没有版本，回退到所有版本
     if not versions:
         versions = card.versions.all()
+    
+    # 如果指定了版本ID，把该版本移到第一位
+    if target_version_id:
+        target_version = None
+        other_versions = []
+        for v in versions:
+            if v.id == target_version_id:
+                target_version = v
+            else:
+                other_versions.append(v)
+        if target_version:
+            versions = [target_version] + other_versions
     
     for v in versions:
         v.images_list = v.images.all()
