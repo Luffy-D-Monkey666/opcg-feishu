@@ -126,12 +126,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item {% if request.args.get('lang', 'jp') == 'jp' %}active{% endif %}" 
-                                   href="{{ url_for(request.endpoint or 'main.index', **dict(request.args, lang='jp')) }}">
-                                🇯🇵 日文版 ({{ stats.jp_count if stats else '2302' }} 张)
+                                   href="{{ url_for('cards.card_list', lang='jp') }}">
+                                🇯🇵 日文版
                             </a></li>
                             <li><a class="dropdown-item {% if request.args.get('lang') == 'en' %}active{% endif %}" 
-                                   href="{{ url_for(request.endpoint or 'main.index', **dict(request.args, lang='en')) }}">
-                                🇺🇸 英文版 ({{ stats.en_count if stats else '1108' }} 张)
+                                   href="{{ url_for('cards.card_list', lang='en') }}">
+                                🇺🇸 英文版
                             </a></li>
                         </ul>
                     </li>
