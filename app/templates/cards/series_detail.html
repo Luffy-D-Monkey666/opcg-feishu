@@ -91,7 +91,7 @@
     {% for version in versions %}
     {% set card = version.card_info %}
     <div class="card-item">
-        <a href="{{ url_for('cards.card_detail', card_number=card.card_number) }}" class="text-decoration-none">
+        <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=current_lang) }}" class="text-decoration-none">
             {% set fi = version.images_list[0] if version.images_list else None %}
             {% if fi %}
             <img src="{{ fi.original_url|cdn_image(200) }}" 

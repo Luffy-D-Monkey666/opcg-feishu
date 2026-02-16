@@ -64,19 +64,40 @@ def card_list():
 
 @bp.route('/<card_number>')
 def card_detail(card_number):
-    """カード詳細"""
-    card = Card.query.filter_by(card_number=card_number).first_or_404()
+    """卡片详情"""
+    # 支持语言参数
+    lang = request.args.get('lang', 'jp').strip()
+    if lang not in ('jp', 'en'):
+        lang = 'jp'
     
-    # 预加载版本数据
-    versions = card.versions.all()
+    # 先尝试查找指定语言的卡片
+    card = Card.query.filter_by(card_number=card_number, language=lang).first()
+    
+    # 如果找不到，尝试另一种语言
+    if not card:
+        other_lang = 'en' if lang == 'jp' else 'jp'
+        card = Card.query.filter_by(card_number=card_number, language=other_lang).first_or_404()
+        lang = other_lang  # 更新实际语言
+    
+    # 预加载版本数据（只加载同语言系列的版本）
+    versions = CardVersion.query.filter_by(card_id=card.id)\
+        .join(Series, CardVersion.series_id == Series.id)\
+        .filter(Series.language == lang)\
+        .all()
+    
+    # 如果没有版本，回退到所有版本
+    if not versions:
+        versions = card.versions.all()
+    
     for v in versions:
         v.images_list = v.images.all()
     card.versions_list = versions
     
-    # 同じシリーズの他のカード
+    # 同系列的其他卡片（同语言）
     same_series_cards = Card.query.filter(
         Card.series_id == card.series_id,
-        Card.id != card.id
+        Card.id != card.id,
+        Card.language == lang
     ).order_by(Card.card_number).limit(12).all()
     
     # コレクション/ウィッシュリスト状態をチェック
@@ -106,6 +127,7 @@ def card_detail(card_number):
                           card=card, 
                           versions=versions,
                           same_series_cards=same_series_cards,
+                          current_lang=lang,
                           in_collection=in_collection,
                           in_wishlist=in_wishlist,
                           prices=prices)

@@ -261,7 +261,7 @@
     <div class="card-grid">
         {% for other in same_series_cards[:6] %}
         <div class="card-item">
-            <a href="{{ url_for('cards.card_detail', card_number=other.card_number) }}" class="text-decoration-none">
+            <a href="{{ url_for('cards.card_detail', card_number=other.card_number, lang=current_lang) }}" class="text-decoration-none">
                 {% set other_version = other.versions.first() %}
                 {% if other_version %}
                     {% set other_image = other_version.images.first() %}
