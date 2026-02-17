@@ -383,6 +383,9 @@ python scripts/sync_to_pg.py --import
 
 ## 🔌 API 接口
 
+详细文档见 [docs/API.md](docs/API.md)
+
+
 ```
 GET  /api/cards/search?q=<关键词>     # 搜索卡片
 GET  /api/prices/history/<version_id> # 价格历史
