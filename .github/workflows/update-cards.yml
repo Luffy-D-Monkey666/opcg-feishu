@@ -1,0 +1,51 @@
+name: Update Card Data
+
+on:
+  schedule:
+    - cron: '0 18 * * 0'
+  workflow_dispatch:
+    inputs:
+      language:
+        description: '爬取语言'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+          - jp
+          - en
+          - both
+      series:
+        description: '指定系列 (留空=检查所有新系列)'
+        required: false
+        default: ''
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          playwright install chromium --with-deps          
+      - name: Run scraper
+        run: |
+          LANG="${{ github.event.inputs.language || 'both' }}"
+          SERIES="${{ github.event.inputs.series }}"
+          if [ -n "$SERIES" ]; then
+            [ "$LANG" != "en" ] && python scripts/scrape_all.py --series "$SERIES" --lang jp
+            [ "$LANG" != "jp" ] && python scripts/scrape_all.py --series "$SERIES" --lang en
+          else
+            [ "$LANG" != "en" ] && python scripts/scrape_all.py --check-new --lang jp
+            [ "$LANG" != "jp" ] && python scripts/scrape_all.py --check-new --lang en
+          fi          
+      - name: Commit changes
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add data/
+          git diff --staged --quiet || git commit -m "Update cards $(date +'%Y-%m-%d')"
+          git push
