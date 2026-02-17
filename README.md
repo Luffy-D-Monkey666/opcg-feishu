@@ -452,3 +452,23 @@ MIT License
 ---
 
 *Built with ❤️ for OPCG collectors*
+
+## 🔄 数据库迁移
+
+项目使用 Flask-Migrate 管理数据库结构变更：
+
+```bash
+# 初始化迁移目录 (首次)
+flask db init
+
+# 生成迁移脚本
+flask db migrate -m "描述变更内容"
+
+# 执行迁移
+flask db upgrade
+
+# 回滚迁移
+flask db downgrade
+```
+
+**注意**: 仓库中已包含完整的 SQLite 数据库 (`data/opcg_dev.db`)，克隆后可直接运行，无需执行迁移。

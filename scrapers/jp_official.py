@@ -41,7 +41,10 @@ class JapanOfficialScraper:
     
     BASE_URL = "https://www.onepiece-cardgame.com"
     CARD_LIST_URL = f"{BASE_URL}/cardlist/"
-    IMAGE_DIR = Path("/workspace/opcg-tcg/data/images")
+    
+    # 动态计算项目根目录
+    _PROJECT_ROOT = Path(__file__).parent.parent
+    IMAGE_DIR = _PROJECT_ROOT / "data" / "images"
     
     # 系列类型关键词映射
     SERIES_TYPE_KEYWORDS = {

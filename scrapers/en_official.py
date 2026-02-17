@@ -38,7 +38,10 @@ class EnglishOfficialScraper:
     
     BASE_URL = "https://en.onepiece-cardgame.com"
     CARD_LIST_URL = f"{BASE_URL}/cardlist/"
-    IMAGE_DIR = Path("/workspace/opcg-tcg/data/images/en")
+    
+    # 动态计算项目根目录
+    _PROJECT_ROOT = Path(__file__).parent.parent
+    IMAGE_DIR = _PROJECT_ROOT / "data" / "images" / "en"
     
     SERIES_TYPE_KEYWORDS = {
         'PREMIUM BOOSTER': 'premium',
