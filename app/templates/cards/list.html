@@ -113,6 +113,13 @@
                     {% endfor %}
                     <small class="text-muted">{{ card.card_type }}</small>
                 </div>
+                {% if card.source_description %}
+                <div class="mt-1">
+                    <small class="text-info" style="font-size: 0.7rem;">
+                        <i class="bi bi-box-seam"></i> {{ card.source_description[:30] }}{% if card.source_description|length > 30 %}...{% endif %}
+                    </small>
+                </div>
+                {% endif %}
             </div>
         </a>
     </div>

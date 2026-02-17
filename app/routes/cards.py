@@ -137,6 +137,20 @@ class CardDisplay:
         if self.version:
             return self.version.id
         return None
+    
+    @property
+    def source_description(self):
+        """获取入手情报（版本级别）"""
+        if self.version:
+            return self.version.source_description
+        return None
+    
+    @property
+    def illustration_type(self):
+        """获取插画类型（版本级别）"""
+        if self.version:
+            return self.version.illustration_type
+        return None
 
 
 def _get_series_groups(lang: str) -> dict:
