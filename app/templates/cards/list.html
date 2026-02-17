@@ -31,6 +31,7 @@
                     <option value="CHARACTER" {% if request.args.get('type') == 'CHARACTER' %}selected{% endif %}>CHARACTER</option>
                     <option value="EVENT" {% if request.args.get('type') == 'EVENT' %}selected{% endif %}>EVENT</option>
                     <option value="STAGE" {% if request.args.get('type') == 'STAGE' %}selected{% endif %}>STAGE</option>
+                    <option value="DON" {% if request.args.get('type') == 'DON' %}selected{% endif %}>🔴 DON!!</option>
                 </select>
             </div>
             <div class="col-auto">
@@ -58,6 +59,7 @@
                     <option value="SP" {% if request.args.get('rarity') == 'SP' %}selected{% endif %}>SP</option>
                     <option value="TR" {% if request.args.get('rarity') == 'TR' %}selected{% endif %}>TR</option>
                     <option value="P" {% if request.args.get('rarity') == 'P' %}selected{% endif %}>P</option>
+                    <option value="DON" {% if request.args.get('rarity') == 'DON' %}selected{% endif %}>🔴 DON</option>
                 </select>
             </div>
             <div class="col-auto">

@@ -189,6 +189,7 @@ def _get_series_groups(lang: str) -> dict:
         'extra': '✨ 额外补充 (Extra)',
         'premium': '👑 高级补充 (Premium)',
         'promo': '🎁 促销卡 (Promo)',
+        'don': '🔴 DON卡 (DON!!)',
         'limited': '🔒 限定商品 (Limited)',
         'ultimate': '⚔️ 终极套牌 (Ultimate)',
         'family': '👨‍👩‍👧 家庭套牌 (Family)',
@@ -204,7 +205,7 @@ def _get_series_groups(lang: str) -> dict:
     
     # 排序：按定义顺序
     ordered_groups = {}
-    for type_key in ['booster', 'starter', 'extra', 'premium', 'promo', 'limited', 'ultimate', 'family', 'other']:
+    for type_key in ['booster', 'starter', 'extra', 'premium', 'promo', 'don', 'limited', 'ultimate', 'family', 'other']:
         group_name = type_names.get(type_key)
         if group_name and group_name in groups:
             ordered_groups[group_name] = groups[group_name]
