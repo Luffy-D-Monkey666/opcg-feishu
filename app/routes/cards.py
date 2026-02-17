@@ -268,6 +268,17 @@ def card_detail(card_number):
                 other_versions.append(v)
         if target_version:
             versions = [target_version] + other_versions
+    # 如果指定了来源系列（from_series），把该系列的版本移到第一位
+    elif from_series_id:
+        matching_versions = []
+        other_versions = []
+        for v in versions:
+            if v.series_id == from_series_id:
+                matching_versions.append(v)
+            else:
+                other_versions.append(v)
+        if matching_versions:
+            versions = matching_versions + other_versions
     
     for v in versions:
         v.images_list = v.images.all()
