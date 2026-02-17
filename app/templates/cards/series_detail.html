@@ -94,7 +94,8 @@
         <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=current_lang, version_id=version.id) }}" class="text-decoration-none">
             {% set fi = version.images_list[0] if version.images_list else None %}
             {% if fi %}
-            <img src="{{ fi.original_url|cdn_image(200) }}" 
+            {% set fi_url = fi.local_path if fi.local_path else fi.original_url %}
+            <img src="{{ fi_url|cdn_image(200) if not fi.local_path else fi_url }}" 
                  alt="{{ card.name }}" 
                  class="card-image"
                  loading="lazy">

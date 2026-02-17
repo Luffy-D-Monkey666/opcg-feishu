@@ -48,7 +48,9 @@
                            class="text-decoration-none">
                             <div class="text-center">
                                 {% if version.images_list %}
-                                <img src="{{ version.images_list[0].original_url }}" 
+                                {% set av_img = version.images_list[0] %}
+                                {% set av_img_url = av_img.local_path if av_img.local_path else av_img.original_url %}
+                                <img src="{{ av_img_url }}" 
                                      alt="{{ card.name }}" 
                                      class="img-fluid rounded shadow-sm"
                                      style="max-height: 200px;"

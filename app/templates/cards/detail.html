@@ -24,8 +24,10 @@
             <div class="carousel-inner">
                 {% for version in versions %}
                     {% if version.images_list %}
+                    {% set ver_img = version.images_list[0] %}
+                    {% set ver_img_url = ver_img.local_path if ver_img.local_path else ver_img.original_url %}
                     <div class="carousel-item {% if loop.first %}active{% endif %}">
-                        <img src="{{ version.images_list[0].original_url }}" 
+                        <img src="{{ ver_img_url }}" 
                              class="d-block w-100 rounded shadow" 
                              alt="{{ card.name }} {{ version.version_type }}">
                         <div class="carousel-caption d-block bg-dark bg-opacity-75 rounded py-1">
@@ -308,7 +310,8 @@
                 {% if other_version %}
                     {% set other_image = other_version.images.first() %}
                     {% if other_image %}
-                    <img src="{{ other_image.original_url }}" 
+                    {% set oi_url = other_image.local_path if other_image.local_path else other_image.original_url %}
+                    <img src="{{ oi_url }}" 
                          alt="{{ other.name }}" 
                          class="card-image"
                          loading="lazy">
