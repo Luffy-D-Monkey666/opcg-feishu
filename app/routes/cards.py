@@ -15,7 +15,7 @@ bp = Blueprint('cards', __name__, url_prefix='/cards')
 
 @bp.route('/')
 def card_list():
-    """卡牌列表"""
+    """卡牌列表 - 基于版本展示，支持平行卡"""
     page = request.args.get('page', 1, type=int)
     per_page = 24
     
@@ -31,28 +31,58 @@ def card_list():
     rarity = request.args.get('rarity', '').strip()
     illustration = request.args.get('illustration', '').strip()
     
-    q = Card.query.filter(Card.language == lang)
-    
+    # 当选择了系列时，基于 CardVersion 查询（包含平行卡/异画卡）
+    # 当没有选择系列时，基于 Card 查询（每个卡号只显示一次）
     if series_id:
-        q = q.filter(Card.series_id == series_id)
-    if card_type:
-        q = q.filter(Card.card_type == card_type)
-    if color:
-        q = q.filter(Card.colors.contains(color))
-    if rarity:
-        q = q.filter(Card.rarity == rarity)
+        # 基于版本查询 - 显示该系列所有版本（包括平行卡）
+        q = CardVersion.query.filter(CardVersion.series_id == series_id)\
+            .join(Card, CardVersion.card_id == Card.id)\
+            .filter(Card.language == lang)
+        
+        if card_type:
+            q = q.filter(Card.card_type == card_type)
+        if color:
+            q = q.filter(Card.colors.contains(color))
+        if rarity:
+            q = q.filter(Card.rarity == rarity)
+        if illustration:
+            q = q.filter(CardVersion.illustration_type == illustration)
+        
+        pagination = q.order_by(Card.card_number, CardVersion.version_suffix).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
+        
+        # 将版本转换为统一的显示格式
+        versions = pagination.items
+        cards = []
+        for v in versions:
+            card = Card.query.get(v.card_id)
+            # 创建一个包装对象，包含版本信息
+            card_display = CardDisplay(card, v)
+            cards.append(card_display)
+    else:
+        # 没有选择系列时，按卡片查询（每个卡号只显示一次）
+        q = Card.query.filter(Card.language == lang)
+        
+        if card_type:
+            q = q.filter(Card.card_type == card_type)
+        if color:
+            q = q.filter(Card.colors.contains(color))
+        if rarity:
+            q = q.filter(Card.rarity == rarity)
+        
+        # 插画类型筛选（需要 JOIN CardVersion）
+        if illustration:
+            q = q.join(CardVersion, Card.id == CardVersion.card_id)\
+                 .filter(CardVersion.illustration_type == illustration)\
+                 .distinct()
+        
+        pagination = q.order_by(Card.card_number).paginate(
+            page=page, per_page=per_page, error_out=False
+        )
+        
+        cards = [CardDisplay(c, None) for c in pagination.items]
     
-    # 插画类型筛选（需要 JOIN CardVersion）
-    if illustration:
-        q = q.join(CardVersion, Card.id == CardVersion.card_id)\
-             .filter(CardVersion.illustration_type == illustration)\
-             .distinct()
-    
-    pagination = q.order_by(Card.card_number).paginate(
-        page=page, per_page=per_page, error_out=False
-    )
-    
-    cards = pagination.items
     series_list = Series.query.filter_by(language=lang).order_by(Series.code).all()
     
     # 系列分组（用于侧边栏树形导航）
@@ -77,6 +107,36 @@ def card_list():
                           current_series=current_series,
                           stats=stats,
                           current_lang=lang)
+
+
+class CardDisplay:
+    """卡片显示包装类，统一卡片和版本的显示接口"""
+    def __init__(self, card, version=None):
+        self.card = card
+        self.version = version
+        self.card_number = card.card_number
+        self.name = card.name
+        self.card_type = card.card_type
+        self.rarity = card.rarity
+        self.colors = card.colors
+        
+    @property
+    def versions(self):
+        """兼容模板中的 card.versions.first() 调用"""
+        return self
+    
+    def first(self):
+        """返回指定版本或卡片的第一个版本"""
+        if self.version:
+            return self.version
+        return self.card.versions.first()
+    
+    @property
+    def display_version_id(self):
+        """用于详情页链接的版本ID"""
+        if self.version:
+            return self.version.id
+        return None
 
 
 def _get_series_groups(lang: str) -> dict:

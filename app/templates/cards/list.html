@@ -87,7 +87,8 @@
 <div class="card-grid">
     {% for card in cards %}
     <div class="card-item">
-        <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=request.args.get('lang', 'jp')) }}" class="text-decoration-none">
+        {% set version_id_param = card.display_version_id %}
+        <a href="{{ url_for('cards.card_detail', card_number=card.card_number, lang=request.args.get('lang', 'jp'), version_id=version_id_param) if version_id_param else url_for('cards.card_detail', card_number=card.card_number, lang=request.args.get('lang', 'jp')) }}" class="text-decoration-none">
             {% set first_version = card.versions.first() %}
             {% set first_image = first_version.images.first() if first_version else None %}
             {% if first_image %}
