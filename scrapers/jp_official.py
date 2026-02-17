@@ -32,6 +32,8 @@ class CardData:
     image_url: Optional[str] = None
     version_index: int = 0  # 同编号的第几个版本 (0=普通, 1+=异画等)
     illustration_type: Optional[str] = None  # 原作/アニメ/オリジナル/その他
+    has_star_mark: bool = False  # 是否有星标
+    modal_id: Optional[str] = None  # HTML中的modal ID，用于匹配插画类型
 
 
 class JapanOfficialScraper:
@@ -121,9 +123,14 @@ class JapanOfficialScraper:
         logger.info(f"共找到 {len(series_list)} 个系列")
         return series_list
     
-    def scrape_series(self, series_id: str, download_images: bool = False) -> List[CardData]:
+    def scrape_series(self, series_id: str, download_images: bool = False, fetch_extras: bool = True) -> List[CardData]:
         """
         爬取指定系列的所有卡片 - 直接从HTML解析
+        
+        Args:
+            series_id: 官网系列ID
+            download_images: 是否下载图片
+            fetch_extras: 是否获取插画类型和星标（会额外请求，较慢）
         """
         url = f"{self.CARD_LIST_URL}?series={series_id}"
         logger.info(f"爬取系列: {url}")
@@ -157,6 +164,18 @@ class JapanOfficialScraper:
                 card.version_index = seen_cards[card_num]
             else:
                 seen_cards[card_num] = 0
+        
+        # 获取插画类型和星标
+        if fetch_extras and all_cards:
+            logger.info("获取插画类型和星标...")
+            illustration_map = self._fetch_illustration_types(series_id)
+            star_ids = self._fetch_star_marked_cards(series_id)
+            
+            # 应用到卡片数据
+            for card in all_cards:
+                if card.modal_id:
+                    card.illustration_type = illustration_map.get(card.modal_id)
+                    card.has_star_mark = card.modal_id in star_ids
         
         # 下载图片
         if download_images:
@@ -248,7 +267,8 @@ class JapanOfficialScraper:
                             feature,
                             effect,
                             trigger,
-                            getInfo
+                            getInfo,
+                            modalId: modal.id || null
                         });
                     } catch (e) {
                         console.error('Error parsing card:', e);
@@ -277,7 +297,8 @@ class JapanOfficialScraper:
                     trigger_text=data.get('trigger'),
                     source_info=data.get('getInfo'),
                     block_icon=self._parse_int(data.get('block')),
-                    image_url=data.get('imageUrl')
+                    image_url=data.get('imageUrl'),
+                    modal_id=data.get('modalId')
                 )
                 cards.append(card)
             except Exception as e:
@@ -319,50 +340,76 @@ class JapanOfficialScraper:
         except Exception as e:
             logger.error(f"下载图片失败 {card.card_number}: {e}")
     
-    def scrape_illustration_types(self, series_id: str) -> Dict[str, str]:
+    def _fetch_illustration_types(self, series_id: str) -> Dict[str, str]:
         """
-        获取系列中每张卡片的插画类型
-        
-        通过 POST 请求分别筛选每个插画类型，收集该类型下的卡片列表，
-        然后反推每张卡片的插画类型。
+        获取系列中每张卡片的插画类型（内部方法）
         
         Returns:
-            Dict[str, str]: {card_id: illustration_type}
-            card_id 格式: "OP14-001" 或 "OP14-001_p1"
-            illustration_type: "原作" / "アニメ" / "オリジナル" / "その他"
+            Dict[str, str]: {modal_id: illustration_type}
         """
-        logger.info(f"获取插画类型: series={series_id}")
-        
         illustration_types = ['原作', 'アニメ', 'オリジナル', 'その他']
         card_to_type = {}
         
         for ill_type in illustration_types:
-            # 使用 POST 提交筛选表单
-            url = f"{self.CARD_LIST_URL}?series={series_id}"
-            
-            # 构建表单数据
-            self.page.goto(url, wait_until='networkidle')
-            time.sleep(1)
-            self._close_cookie_banner()
-            
-            # 通过 JavaScript 提交表单
-            card_ids = self.page.evaluate('''
-                (args) => {
-                    const [illustrationType, seriesId] = args;
+            try:
+                card_ids = self.page.evaluate('''
+                    (args) => {
+                        const [illustrationType, seriesId] = args;
+                        return new Promise((resolve) => {
+                            const formData = new FormData();
+                            formData.append('illustrations[]', illustrationType);
+                            formData.append('series', seriesId);
+                            
+                            fetch('/cardlist/', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.text())
+                            .then(html => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                const ids = [];
+                                doc.querySelectorAll('.resultCol .modalCol').forEach(modal => {
+                                    if (modal.id) ids.push(modal.id);
+                                });
+                                resolve(ids);
+                            })
+                            .catch(err => resolve([]));
+                        });
+                    }
+                ''', [ill_type, series_id])
+                
+                for card_id in card_ids:
+                    if card_id and card_id not in card_to_type:
+                        card_to_type[card_id] = ill_type
+                        
+                logger.debug(f"插画类型 [{ill_type}]: {len(card_ids)} 张")
+            except Exception as e:
+                logger.warning(f"获取插画类型 {ill_type} 失败: {e}")
+        
+        return card_to_type
+    
+    def _fetch_star_marked_cards(self, series_id: str) -> set:
+        """
+        获取系列中有星标的卡片ID（内部方法）
+        
+        Returns:
+            set: 有星标的 modal_id 集合
+        """
+        try:
+            star_ids = self.page.evaluate('''
+                (seriesId) => {
                     return new Promise((resolve) => {
-                        // 创建 FormData
                         const formData = new FormData();
-                        formData.append('illustrations[]', illustrationType);
+                        formData.append('stars[]', '1');  // 1 = 有星标
                         formData.append('series', seriesId);
                         
-                        // POST 请求
-                        fetch(window.location.href, {
+                        fetch('/cardlist/', {
                             method: 'POST',
                             body: formData
                         })
                         .then(response => response.text())
                         .then(html => {
-                            // 解析返回的 HTML
                             const parser = new DOMParser();
                             const doc = parser.parseFromString(html, 'text/html');
                             const ids = [];
@@ -371,22 +418,22 @@ class JapanOfficialScraper:
                             });
                             resolve(ids);
                         })
-                        .catch(err => {
-                            console.error(err);
-                            resolve([]);
-                        });
+                        .catch(err => resolve([]));
                     });
                 }
-            ''', [ill_type, series_id])
+            ''', series_id)
             
-            logger.info(f"插画类型 [{ill_type}]: {len(card_ids)} 张卡片")
-            
-            # 记录每张卡的插画类型
-            for card_id in card_ids:
-                if card_id and card_id not in card_to_type:
-                    card_to_type[card_id] = ill_type
-        
-        return card_to_type
+            logger.debug(f"星标卡: {len(star_ids)} 张")
+            return set(star_ids)
+        except Exception as e:
+            logger.warning(f"获取星标卡失败: {e}")
+            return set()
+    
+    def scrape_illustration_types(self, series_id: str) -> Dict[str, str]:
+        """
+        获取系列中每张卡片的插画类型（兼容旧接口）
+        """
+        return self._fetch_illustration_types(series_id)
 
 
 def test_scraper():

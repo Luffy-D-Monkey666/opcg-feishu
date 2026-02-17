@@ -1,24 +1,41 @@
 #!/usr/bin/env python3
 """
 爬取所有系列卡片并存入数据库
+支持日文和英文官网
 """
 import sys
-sys.path.insert(0, '/workspace/opcg-tcg')
+import os
+
+# 动态设置路径
+script_dir = os.path.dirname(os.path.abspath(__file__))
+project_dir = os.path.dirname(script_dir)
+sys.path.insert(0, project_dir)
 
 import time
 from loguru import logger
-from scrapers.jp_official import JapanOfficialScraper, CardData
-from app import create_app, db
-from app.models.series import Series
-from app.models.card import Card, CardVersion, CardImage
 
 # 配置日志
-logger.add("/workspace/opcg-tcg/logs/scrape_{time:YYYY-MM-DD}.log", rotation="1 day")
+log_dir = os.path.join(project_dir, 'logs')
+os.makedirs(log_dir, exist_ok=True)
+logger.add(os.path.join(log_dir, "scrape_{time:YYYY-MM-DD}.log"), rotation="1 day")
 
 
-def save_series_to_db(series_data: dict) -> Series:
+def get_scraper(lang: str):
+    """获取对应语言的爬虫"""
+    if lang == 'jp':
+        from scrapers.jp_official import JapanOfficialScraper
+        return JapanOfficialScraper()
+    else:
+        from scrapers.en_official import EnglishOfficialScraper
+        return EnglishOfficialScraper()
+
+
+def save_series_to_db(series_data: dict, lang: str):
     """保存系列到数据库"""
-    series = Series.query.filter_by(code=series_data['code']).first()
+    from app.models.series import Series
+    from app import db
+    
+    series = Series.query.filter_by(code=series_data['code'], language=lang).first()
     
     if not series:
         series = Series(
@@ -26,42 +43,31 @@ def save_series_to_db(series_data: dict) -> Series:
             name=series_data['name'],
             official_series_id=series_data['official_series_id'],
             series_type=series_data['series_type'],
-            language='jp'
+            language=lang
         )
         db.session.add(series)
         db.session.commit()
-        logger.info(f"新增系列: {series.code}")
+        logger.info(f"新增系列: {series.code} ({lang})")
     
     return series
 
 
-def save_card_to_db(card_data: CardData, series: Series):
-    """保存卡片到数据库
-    
-    数据模型说明:
-    - Card: 唯一标识一张卡片（card_number + language）
-    - card_series: 多对多关系，记录卡片在哪些系列中出现
-    - CardVersion: 同一卡片的不同版本（普通、异画等）
-    
-    这样设计允许:
-    1. 再录卡可以同时出现在多个系列的图鉴中
-    2. 每个系列的图鉴展示该系列包含的所有卡片
-    """
-    from app.models.card import card_series
+def save_card_to_db(card_data, series, lang: str):
+    """保存卡片到数据库"""
+    from app.models.card import Card, CardVersion, CardImage, card_series
+    from app import db
     
     # 查找或创建基础卡片
     card = Card.query.filter_by(
         card_number=card_data.card_number,
-        language='jp'
+        language=lang
     ).first()
     
-    is_new_card = False
     if not card:
-        is_new_card = True
         card = Card(
             card_number=card_data.card_number,
-            series_id=series.id,  # 主系列（第一次创建时的系列）
-            language='jp',
+            series_id=series.id,
+            language=lang,
             name=card_data.name,
             card_type=card_data.card_type,
             rarity=card_data.rarity,
@@ -78,7 +84,7 @@ def save_card_to_db(card_data: CardData, series: Series):
             block_icon=card_data.block_icon
         )
         db.session.add(card)
-        db.session.flush()  # 获取 card.id
+        db.session.flush()
     
     # 检查卡片是否已经关联到此系列
     existing_link = db.session.execute(
@@ -89,12 +95,10 @@ def save_card_to_db(card_data: CardData, series: Series):
     ).first()
     
     if not existing_link:
-        # 判断是否为再录卡：卡号前缀与系列代码不匹配
         card_prefix = card_data.card_number.split('-')[0] if '-' in card_data.card_number else ''
         series_prefix = series.code.replace('-', '')
         is_reprint = card_prefix != series_prefix
         
-        # 添加卡片与系列的关联
         db.session.execute(
             card_series.insert().values(
                 card_id=card.id,
@@ -105,7 +109,6 @@ def save_card_to_db(card_data: CardData, series: Series):
         )
     
     # 创建卡片版本
-    # 每个版本关联到特定系列，记录入手情报
     version_suffix = f"_v{card_data.version_index}" if card_data.version_index > 0 else ""
     version = CardVersion.query.filter_by(
         card_id=card.id,
@@ -116,23 +119,28 @@ def save_card_to_db(card_data: CardData, series: Series):
     if not version:
         version = CardVersion(
             card_id=card.id,
-            series_id=series.id,  # 版本所属系列
+            series_id=series.id,
             version_suffix=version_suffix,
             version_type='normal' if card_data.version_index == 0 else 'alt_art',
-            source_description=card_data.source_info  # 入手情报
+            source_description=card_data.source_info,
+            illustration_type=getattr(card_data, 'illustration_type', None),
+            has_star_mark=getattr(card_data, 'has_star_mark', False)
         )
         db.session.add(version)
         db.session.flush()
-    elif not version.source_description and card_data.source_info:
-        # 更新已有版本的入手情报（如果之前没有）
-        version.source_description = card_data.source_info
+    else:
+        # 更新已有版本的插画类型和星标（如果之前没有）
+        updated = False
+        if not version.illustration_type and getattr(card_data, 'illustration_type', None):
+            version.illustration_type = card_data.illustration_type
+            updated = True
+        if not version.has_star_mark and getattr(card_data, 'has_star_mark', False):
+            version.has_star_mark = True
+            updated = True
     
     # 创建图片记录
     if card_data.image_url:
-        image = CardImage.query.filter_by(
-            version_id=version.id
-        ).first()
-        
+        image = CardImage.query.filter_by(version_id=version.id).first()
         if not image:
             image = CardImage(
                 version_id=version.id,
@@ -141,27 +149,27 @@ def save_card_to_db(card_data: CardData, series: Series):
             db.session.add(image)
 
 
-def scrape_all_series(download_images: bool = False):
+def scrape_all_series(lang: str = 'jp', download_images: bool = False):
     """爬取所有系列"""
+    from app import create_app, db
+    from app.models.card import Card
+    
     app = create_app()
     
     with app.app_context():
-        scraper = JapanOfficialScraper()
+        scraper = get_scraper(lang)
         
         try:
             scraper.start_browser()
-            
-            # 获取系列列表
             series_list = scraper.get_series_list()
-            logger.info(f"共找到 {len(series_list)} 个系列")
+            logger.info(f"共找到 {len(series_list)} 个系列 ({lang})")
             
             total_cards = 0
             
             for i, series_data in enumerate(series_list):
                 logger.info(f"\n[{i+1}/{len(series_list)}] 处理系列: {series_data['code']}")
                 
-                # 保存系列
-                series = save_series_to_db(series_data)
+                series = save_series_to_db(series_data, lang)
                 
                 # 检查是否已爬取
                 existing_count = Card.query.filter_by(series_id=series.id).count()
@@ -170,16 +178,14 @@ def scrape_all_series(download_images: bool = False):
                     total_cards += existing_count
                     continue
                 
-                # 爬取卡片
                 try:
                     cards = scraper.scrape_series(
                         series_data['official_series_id'],
                         download_images=download_images
                     )
                     
-                    # 保存卡片
                     for card_data in cards:
-                        save_card_to_db(card_data, series)
+                        save_card_to_db(card_data, series, lang)
                     
                     db.session.commit()
                     total_cards += len(cards)
@@ -190,27 +196,26 @@ def scrape_all_series(download_images: bool = False):
                     db.session.rollback()
                     continue
                 
-                # 避免请求过快
                 time.sleep(2)
             
-            logger.info(f"\n=== 爬取完成 ===")
+            logger.info(f"\n=== 爬取完成 ({lang}) ===")
             logger.info(f"总计 {total_cards} 张卡片")
             
         finally:
             scraper.close_browser()
 
 
-def scrape_single_series(series_code: str, download_images: bool = False):
+def scrape_single_series(series_code: str, lang: str = 'jp', download_images: bool = False):
     """爬取单个系列"""
+    from app import create_app, db
+    
     app = create_app()
     
     with app.app_context():
-        scraper = JapanOfficialScraper()
+        scraper = get_scraper(lang)
         
         try:
             scraper.start_browser()
-            
-            # 获取系列列表找到对应ID
             series_list = scraper.get_series_list()
             series_data = None
             
@@ -220,24 +225,73 @@ def scrape_single_series(series_code: str, download_images: bool = False):
                     break
             
             if not series_data:
-                logger.error(f"未找到系列: {series_code}")
+                logger.error(f"未找到系列: {series_code} ({lang})")
                 return
             
-            # 保存系列
-            series = save_series_to_db(series_data)
+            series = save_series_to_db(series_data, lang)
             
-            # 爬取卡片
             cards = scraper.scrape_series(
                 series_data['official_series_id'],
                 download_images=download_images
             )
             
-            # 保存卡片
             for card_data in cards:
-                save_card_to_db(card_data, series)
+                save_card_to_db(card_data, series, lang)
             
             db.session.commit()
-            logger.info(f"系列 {series.code} 保存 {len(cards)} 张卡片")
+            logger.info(f"系列 {series.code} ({lang}) 保存 {len(cards)} 张卡片")
+            
+        finally:
+            scraper.close_browser()
+
+
+def check_new_series(lang: str = 'jp'):
+    """检查并爬取新系列"""
+    from app import create_app, db
+    from app.models.series import Series
+    
+    app = create_app()
+    
+    with app.app_context():
+        scraper = get_scraper(lang)
+        
+        try:
+            scraper.start_browser()
+            series_list = scraper.get_series_list()
+            
+            # 获取已有系列
+            existing_codes = set(
+                s.code for s in Series.query.filter_by(language=lang).all()
+            )
+            
+            # 找出新系列
+            new_series = [s for s in series_list if s['code'] not in existing_codes]
+            
+            if not new_series:
+                logger.info(f"没有发现新系列 ({lang})")
+                return
+            
+            logger.info(f"发现 {len(new_series)} 个新系列 ({lang})")
+            
+            for series_data in new_series:
+                logger.info(f"爬取新系列: {series_data['code']}")
+                
+                series = save_series_to_db(series_data, lang)
+                
+                try:
+                    cards = scraper.scrape_series(series_data['official_series_id'])
+                    
+                    for card_data in cards:
+                        save_card_to_db(card_data, series, lang)
+                    
+                    db.session.commit()
+                    logger.info(f"系列 {series.code} 保存 {len(cards)} 张卡片")
+                    
+                except Exception as e:
+                    logger.error(f"爬取系列 {series_data['code']} 失败: {e}")
+                    db.session.rollback()
+                
+                time.sleep(2)
             
         finally:
             scraper.close_browser()
@@ -248,18 +302,22 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser(description='爬取OPCG卡片数据')
     parser.add_argument('--series', type=str, help='指定系列代码 (如 OP-14)')
+    parser.add_argument('--lang', type=str, default='jp', choices=['jp', 'en'], help='语言 (jp/en)')
     parser.add_argument('--images', action='store_true', help='下载图片')
     parser.add_argument('--all', action='store_true', help='爬取所有系列')
+    parser.add_argument('--check-new', action='store_true', help='检查并爬取新系列')
     
     args = parser.parse_args()
     
     if args.series:
-        scrape_single_series(args.series, download_images=args.images)
+        scrape_single_series(args.series, lang=args.lang, download_images=args.images)
+    elif args.check_new:
+        check_new_series(lang=args.lang)
     elif args.all:
-        scrape_all_series(download_images=args.images)
+        scrape_all_series(lang=args.lang, download_images=args.images)
     else:
-        print("请指定 --series <代码> 或 --all")
-        print("示例:")
-        print("  python scrape_all.py --series OP-14")
-        print("  python scrape_all.py --all")
-        print("  python scrape_all.py --all --images")
+        print("用法:")
+        print("  python scrape_all.py --series OP-15 --lang jp   # 爬取指定系列")
+        print("  python scrape_all.py --all --lang jp            # 爬取所有系列")
+        print("  python scrape_all.py --check-new --lang jp      # 检查新系列")
+        print("  python scrape_all.py --check-new --lang en      # 检查英文新系列")
