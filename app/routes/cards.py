@@ -44,7 +44,11 @@ def card_list():
         if color:
             q = q.filter(Card.colors.contains(color))
         if rarity:
-            q = q.filter(Card.rarity == rarity)
+            # SP 需要匹配多个变体
+            if rarity == 'SP':
+                q = q.filter(db.or_(Card.rarity == 'SP CARD', Card.rarity == 'SPカード'))
+            else:
+                q = q.filter(Card.rarity == rarity)
         if illustration:
             q = q.filter(CardVersion.illustration_type == illustration)
         
@@ -69,7 +73,11 @@ def card_list():
         if color:
             q = q.filter(Card.colors.contains(color))
         if rarity:
-            q = q.filter(Card.rarity == rarity)
+            # SP 需要匹配多个变体
+            if rarity == 'SP':
+                q = q.filter(db.or_(Card.rarity == 'SP CARD', Card.rarity == 'SPカード'))
+            else:
+                q = q.filter(Card.rarity == rarity)
         
         # 插画类型筛选（需要 JOIN CardVersion）
         if illustration:

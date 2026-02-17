@@ -55,6 +55,9 @@
                     <option value="R" {% if request.args.get('rarity') == 'R' %}selected{% endif %}>R</option>
                     <option value="UC" {% if request.args.get('rarity') == 'UC' %}selected{% endif %}>UC</option>
                     <option value="C" {% if request.args.get('rarity') == 'C' %}selected{% endif %}>C</option>
+                    <option value="SP" {% if request.args.get('rarity') == 'SP' %}selected{% endif %}>SP</option>
+                    <option value="TR" {% if request.args.get('rarity') == 'TR' %}selected{% endif %}>TR</option>
+                    <option value="P" {% if request.args.get('rarity') == 'P' %}selected{% endif %}>P</option>
                 </select>
             </div>
             <div class="col-auto">
