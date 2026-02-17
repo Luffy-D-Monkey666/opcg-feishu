@@ -226,10 +226,6 @@ python scripts/sync_to_pg.py --import
 
 用 [UptimeRobot](https://uptimerobot.com) 每 5 分钟 ping 网站 URL
 
-| has_star_mark | Boolean | 是否有星标 |
-| illustration_type | String(20) | 原作/アニメ/オリジナル/その他 |
-| source_description | String(500) | 入手情報 |
-
 ## 🕷️ 爬虫说明
 
 ### 数据源
@@ -333,38 +329,6 @@ python scripts/scrape_all.py --all --lang en
 ```bash
 python run.py
 # 访问 http://localhost:5000
-```
-
-## ☁️ 部署到 Render
-
-### 1. 创建 Web Service
-
-- 连接 GitHub 仓库
-- 选择 Python 环境
-- Build Command: `pip install -r requirements.txt && playwright install chromium --with-deps`
-- Start Command: `gunicorn run:app --bind 0.0.0.0:$PORT`
-
-### 2. 创建 PostgreSQL 数据库
-
-- 在 Render 创建 PostgreSQL 实例
-- 复制 External Database URL
-
-### 3. 设置环境变量
-
-```
-FLASK_ENV=production
-SECRET_KEY=<生成随机密钥>
-DATABASE_URL=<PostgreSQL 连接字符串>
-```
-
-### 4. 数据迁移
-
-```bash
-# 本地导出数据
-python scripts/sync_to_pg.py --export
-
-# 导入到 PostgreSQL
-python scripts/sync_to_pg.py --import
 ```
 
 ## 📱 主要页面
