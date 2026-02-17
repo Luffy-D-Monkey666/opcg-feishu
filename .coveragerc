@@ -1,0 +1,13 @@
+[run]
+source = app
+omit = 
+    app/config.py
+    */__pycache__/*
+    */venv/*
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+show_missing = True

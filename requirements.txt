@@ -26,7 +26,12 @@ loguru==0.7.2
 # 生产环境
 gunicorn==21.2.0
 Flask-Migrate==4.0.5
--e 
 # 测试
 pytest==7.4.3
 pytest-cov==4.1.0
+
+# 代码质量
+pre-commit==3.6.0
+black==23.12.1
+isort==5.13.2
+flake8==7.0.0

@@ -1,5 +1,10 @@
 # OPCG TCG 卡牌图鉴系统
 
+[![Tests](https://github.com/Luffy-D-Monkey666/opcg-feishu/actions/workflows/test.yml/badge.svg)](https://github.com/Luffy-D-Monkey666/opcg-feishu/actions/workflows/test.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
+
+
 > One Piece Card Game 卡牌收藏管理工具
 
 **在线演示**: https://opcg-tcg.onrender.com

@@ -45,3 +45,40 @@ pytest --cov=app --cov-report=html
 # 运行特定测试
 pytest tests/test_models.py -v
 ```
+
+## 代码质量工具
+
+### Pre-commit Hooks
+
+项目使用 pre-commit 自动检查代码质量：
+
+```bash
+# 安装 pre-commit
+pip install pre-commit
+
+# 安装 git hooks
+pre-commit install
+
+# 手动运行所有检查
+pre-commit run --all-files
+```
+
+### 检查项目
+
+| 工具 | 用途 |
+|------|------|
+| `black` | 代码格式化 |
+| `isort` | import 排序 |
+| `flake8` | 代码风格检查 |
+| `trailing-whitespace` | 移除行尾空格 |
+| `end-of-file-fixer` | 确保文件以换行结束 |
+
+### 测试覆盖率
+
+```bash
+# 运行测试并生成覆盖率报告
+pytest --cov=app --cov-report=html
+
+# 查看 HTML 报告
+open htmlcov/index.html
+```
