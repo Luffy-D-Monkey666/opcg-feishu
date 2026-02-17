@@ -73,14 +73,6 @@
                 </select>
             </div>
             <div class="col-auto">
-                <label class="form-label small mb-1">星标</label>
-                <select class="form-select form-select-sm" name="star">
-                    <option value="">全部</option>
-                    <option value="1" {% if request.args.get('star') == '1' %}selected{% endif %}>⭐ 有星标</option>
-                    <option value="0" {% if request.args.get('star') == '0' %}selected{% endif %}>无星标</option>
-                </select>
-            </div>
-            <div class="col-auto">
                 <button type="submit" class="btn btn-primary btn-sm">
                     <i class="bi bi-funnel"></i> 筛选
                 </button>
@@ -120,7 +112,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ card.card_number }}</small>
                     <div>
-                        {% if card.has_star_mark %}<span class="badge bg-warning text-dark" title="星标异画">⭐</span>{% endif %}
+                        
                         <span class="rarity-{{ card.rarity }}">{{ card.rarity }}</span>
                     </div>
                 </div>
@@ -146,7 +138,7 @@
 
 <!-- 分页 -->
 {% if pagination.pages > 1 %}
-{% set filter_args = {'series': request.args.get('series', ''), 'type': request.args.get('type', ''), 'color': request.args.get('color', ''), 'rarity': request.args.get('rarity', ''), 'illustration': request.args.get('illustration', ''), 'star': request.args.get('star', ''), 'lang': request.args.get('lang', 'jp')} %}
+{% set filter_args = {'series': request.args.get('series', ''), 'type': request.args.get('type', ''), 'color': request.args.get('color', ''), 'rarity': request.args.get('rarity', ''), 'illustration': request.args.get('illustration', ''), 'lang': request.args.get('lang', 'jp')} %}
 <nav class="mt-4">
     <ul class="pagination justify-content-center flex-wrap">
         {% if pagination.has_prev %}
