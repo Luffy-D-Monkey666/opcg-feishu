@@ -1,6 +1,6 @@
 # OPCG TCG 管理系统 - 项目文档
 
-> 最后更新: 2026-02-16 11:35 GMT+8
+> 最后更新: 2026-02-17 11:37 GMT+8
 
 ## 📋 项目概述
 
@@ -197,14 +197,14 @@ python scripts/scrape_all.py --all --images
 - [x] 数据库存储
 - [x] 批量爬取脚本
 
-**爬取结果** (2026-02-16 更新):
-- 系列数: **49**
-- 卡片数: **2302** (唯一卡号)
-- 版本数: **3683** (每个系列独立计数，含异画版和再录卡)
-- 卡片-系列关联: **2776**
+**爬取结果** (2026-02-17 更新):
+- 日文系列数: **52** (含 P/LTD/FDS)
+- 日文卡片数: **2,394**
+- 日文版本数: **4,272** (含异画版和再录卡)
 
 **数据模型改进** (2026-02-16):
 - CardVersion 新增 `series_id` 字段，表示该版本来自哪个系列
+- CardVersion 新增 `illustration_type` 字段（原作/アニメ/オリジナル/その他）
 - 同一张卡在不同系列中会有独立的版本记录
 - 图鉴展示时按 `series_id` 筛选即可获得完整列表
 
@@ -221,10 +221,10 @@ python scripts/scrape_all.py --all --images
 - [x] 英文卡片数据入库
 - [x] 日英数据关联
 
-**爬取结果**:
-- 日文卡片: 2302
-- 英文卡片: 1108
-- 总计: 3410
+**爬取结果** (2026-02-17 更新):
+- 英文系列数: **52** (含 P/LTD)
+- 英文卡片数: **2,346**
+- 英文版本数: **4,310** (含异画版)
 
 ### ✅ 阶段3c: 用户收藏功能 (完成)
 - [x] 用户注册/登录 (Flask-Login)
@@ -280,11 +280,9 @@ python scripts/scrape_all.py --all --images
 - 每个系列的版本独立存储
 - 图鉴查询改为按 `series_id` 筛选 CardVersion
 
-**校核结果** (2026-02-16):
-- OP-14: 156 ✅ (含 6 张再录卡)
-- OP-09: 158 ✅
-- OP-01: 154 ✅
-- 所有 49 个系列版本数与官网一致
+**校核结果** (2026-02-17):
+- 日文: 52 个系列全部与官网一致 ✅
+- 英文: 52 个系列全部与官网一致 ✅
 
 ### 📈 阶段6b: 价格走势图表 (完成)
 **新增功能**:
@@ -311,7 +309,7 @@ python scripts/scrape_all.py --all --images
 - 显示有价格数据的卡片比例
 - Top 3 最有价值卡片列表
 
-### 🚧 阶段7: 数据完善与 UI 优化 (进行中)
+### ✅ 阶段7: 数据完善与 UI 优化 (完成)
 
 #### 7a: 入手情报字段 (完成)
 **问题**: 每个版本的入手情报需要单独存储
@@ -319,7 +317,7 @@ python scripts/scrape_all.py --all --images
 - CardVersion 的 `source_description` 字段现在存储每个版本的入手情报
 - 修改 `scrape_all.py` 在新爬取时自动存储
 - 创建 `update_source_info.py` 脚本更新现有数据
-- **状态**: 全部 49 个系列已更新完成
+- **状态**: 全部系列已更新完成
 
 #### 7b: 插画类型字段 (完成)
 **问题**: 官网有 イラスト種類 筛选（原作/アニメ/オリジナル/その他）
@@ -327,7 +325,6 @@ python scripts/scrape_all.py --all --images
 - CardVersion 新增 `illustration_type` 字段
 - 爬虫新增 `scrape_illustration_types()` 方法（通过 POST 请求筛选）
 - 创建 `update_illustration_types.py` 脚本
-- **OP-14 测试**: 原作 23, オリジナル 126 (再录卡 7 张暂无)
 
 #### 7c: 左侧导航树 (完成)
 **功能**: 卡片列表页添加固定侧边栏
@@ -336,13 +333,91 @@ python scripts/scrape_all.py --all --images
 - 响应式设计（移动端可隐藏）
 - 快速筛选按钮
 
-**文件**:
-- `templates/base_sidebar.html` - 带侧边栏的基础模板
-- `templates/cards/list.html` - 更新后的卡片列表
-
 #### 7d: 前端筛选功能 (待做)
 - [ ] 添加 イラスト種類 筛选下拉框
 - [ ] 显示版本入手情报
+
+### ✅ 阶段8: 数据完整性修复 (2026-02-17 完成)
+
+#### 8a: 英文版 card_series 关联修复
+**问题**: 2103 张英文卡片没有与系列关联
+**解决**: 根据卡片编号前缀重新分配正确的 series_id 并建立 card_series 关联
+**结果**: 所有英文卡片已关联到正确系列
+
+#### 8b: 日文缺失系列补充 (P/LTD/FDS)
+**问题**: P(促销卡)、LTD(限定商品)、FDS(家庭套装) 系列数据为 0
+**解决**: 从官网爬取完整数据
+**结果**:
+- P: 377 版本 ✅
+- LTD: 161 版本 ✅
+- FDS: 51 版本 ✅
+
+#### 8c: 日文异画卡数据补充
+**问题**: Booster/Extra/Premium 系列缺少异画版本
+**解决**: 重新爬取所有日文系列，补充缺失版本
+**结果**: 所有日文系列版本数与官网一致
+
+#### 8d: 英文版完整数据补充
+**问题**: 英文版多个系列数据不完整
+**解决**: 爬取所有英文系列
+**结果**:
+- 新增 OP-08, OP-09 完整数据 (~300 版本)
+- 补充 OP-10~OP-13 异画卡
+- 补充 EB-01~EB-03 异画卡
+- 补充 PRB-01, PRB-02 全部数据 (~354 版本)
+- 新增英文 P (Promotion) 338 张
+- 新增英文 LTD (Other Product) 159 张
+
+---
+
+## 📊 最新数据统计 (2026-02-17)
+
+| 指标 | 日文版 | 英文版 | 总计 |
+|------|--------|--------|------|
+| 系列数 | 52 | 52 | 104 |
+| 卡片数 | 2,394 | 2,346 | 4,740 |
+| 版本数 | 4,272 | 4,310 | 8,582 |
+| card_series | - | - | 6,144 |
+
+### 日文系列分布
+- Booster (OP-01~OP-14): 14 个
+- Starter (ST-01~ST-29): 27 个
+- Extra (EB-01~EB-04): 4 个
+- Premium (PRB-01~PRB-02): 2 个
+- Ultimate (ST-10, ST-13): 2 个
+- Promo (P): 1 个 (377 版本)
+- Limited (LTD): 1 个 (161 版本)
+- Family (FDS): 1 个 (51 版本)
+
+### 英文系列分布
+- Booster (OP-01~OP-14, OP14-EB04): 15 个
+- Starter (ST-01~ST-29): 27 个
+- Extra (EB-01~EB-03): 3 个
+- Premium (PRB-01~PRB-02): 2 个
+- Other (ST-10, ST-13): 2 个
+- Promo (P): 1 个 (338 版本)
+- Limited (LTD): 1 个 (159 版本)
+
+---
+
+## 🌐 部署信息
+
+### 生产环境 (Render)
+- **网站地址**: https://opcg-tcg.onrender.com
+- **数据库**: PostgreSQL (Render 托管)
+- **GitHub**: https://github.com/Luffy-D-Monkey666/opcg-feishu
+- **保活**: UptimeRobot 每 5 分钟 ping
+
+### 数据库连接 (External URL)
+```
+postgresql://opcg_db_user:WmQTa2RvIsnYAhEcSXJ75vofVjbqJn7F@dpg-d69davcr85hc73d9fmlg-a.oregon-postgres.render.com/opcg_db
+```
+
+### 数据同步流程
+1. 本地 SQLite (`data/opcg_dev.db`) 开发和爬取
+2. 导出 CSV (`data/*.csv`)
+3. 推送 GitHub
+4. 使用 psycopg2 同步到 Render PostgreSQL
 
 ---
 
