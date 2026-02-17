@@ -154,10 +154,16 @@
                             </tr>
                             <tr>
                                 <th>系列</th>
-                                <td>
-                                    <a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}">
+                                <td id="seriesCell">
+                                    {% if display_series %}
+                                    <a href="{{ url_for('cards.card_list', series=display_series.id, lang=current_lang) }}" id="seriesLink">
+                                        {{ display_series.code }}
+                                    </a>
+                                    {% else %}
+                                    <a href="{{ url_for('cards.card_list', series=card.series_id, lang=current_lang) }}" id="seriesLink">
                                         {{ card.series.code }}
                                     </a>
+                                    {% endif %}
                                 </td>
                             </tr>
                             {% if card.attribute %}
@@ -239,17 +245,24 @@
         </div>
         {% endif %}
         
-        <!-- 获取信息 -->
-        {% if card.source_info %}
-        <div class="card mb-3">
+        <!-- 获取信息 - 动态显示当前版本的 source_description -->
+        <div class="card mb-3" id="sourceInfoCard">
             <div class="card-header">
                 <i class="bi bi-box"></i> 获取信息
             </div>
             <div class="card-body">
-                <p class="mb-0 text-muted">{{ card.source_info }}</p>
+                <p class="mb-0 text-muted" id="sourceInfoText">
+                    {% set current_version = versions[0] if versions else none %}
+                    {% if current_version and current_version.source_description %}
+                        {{ current_version.source_description }}
+                    {% elif card.source_info %}
+                        {{ card.source_info }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </p>
             </div>
         </div>
-        {% endif %}
         
         <!-- 价格情報 -->
         {% if prices %}
@@ -319,19 +332,71 @@
 {% endblock %}
 
 {% block extra_js %}
-{% if current_user.is_authenticated %}
 <script>
-// 版本ID更新（カルーセル変更時）
-const carousel = document.getElementById('cardCarousel');
-const versionIds = [{% for v in versions %}{{ v.id }}{% if not loop.last %}, {% endif %}{% endfor %}];
+// 版本数据（包含 source_description 和 series 信息）
+const versionsData = [
+    {% for v in versions %}
+    {
+        id: {{ v.id }},
+        sourceDescription: {{ v.source_description|tojson if v.source_description else 'null' }},
+        seriesId: {{ v.series_id if v.series_id else 'null' }},
+        seriesCode: {{ v.series.code|tojson if v.series else 'null' }}
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+];
 
+// 默认卡片级别的 source_info（fallback）
+const cardSourceInfo = {{ card.source_info|tojson if card.source_info else 'null' }};
+const cardSeriesId = {{ card.series_id }};
+const cardSeriesCode = {{ card.series.code|tojson }};
+const currentLang = {{ current_lang|tojson }};
+
+// 更新右侧显示信息的函数
+function updateVersionInfo(index) {
+    const version = versionsData[index];
+    if (!version) return;
+    
+    // 更新获取信息
+    const sourceInfoText = document.getElementById('sourceInfoText');
+    if (sourceInfoText) {
+        const source = version.sourceDescription || cardSourceInfo || '-';
+        sourceInfoText.textContent = source;
+    }
+    
+    // 更新系列
+    const seriesLink = document.getElementById('seriesLink');
+    if (seriesLink && version.seriesId && version.seriesCode) {
+        seriesLink.textContent = version.seriesCode;
+        seriesLink.href = `/cards?series=${version.seriesId}&lang=${currentLang}`;
+    }
+}
+
+// 轮播图切换事件
+const carousel = document.getElementById('cardCarousel');
 if (carousel) {
     carousel.addEventListener('slid.bs.carousel', function(e) {
-        const currentVersionId = versionIds[e.to];
-        document.getElementById('addCollectionBtn').dataset.versionId = currentVersionId;
-        document.getElementById('addWishlistBtn').dataset.versionId = currentVersionId;
+        updateVersionInfo(e.to);
+        {% if current_user.is_authenticated %}
+        // 更新收藏按钮的版本ID
+        const currentVersionId = versionsData[e.to]?.id;
+        if (currentVersionId) {
+            document.getElementById('addCollectionBtn')?.setAttribute('data-version-id', currentVersionId);
+            document.getElementById('addWishlistBtn')?.setAttribute('data-version-id', currentVersionId);
+        }
+        {% endif %}
     });
 }
+
+// 版本列表点击事件
+document.querySelectorAll('.list-group-item[data-bs-slide-to]').forEach((item, index) => {
+    item.addEventListener('click', function() {
+        updateVersionInfo(index);
+    });
+});
+</script>
+
+{% if current_user.is_authenticated %}
+<script>
 
 // 收藏添加
 document.getElementById('addCollectionBtn')?.addEventListener('click', function() {

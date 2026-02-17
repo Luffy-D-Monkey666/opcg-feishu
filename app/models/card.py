@@ -145,6 +145,7 @@ class CardVersion(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # 关系
+    series = db.relationship('Series', backref=db.backref('versions', lazy='dynamic'))
     images = db.relationship('CardImage', backref='version', lazy='dynamic', cascade='all, delete-orphan')
     prices = db.relationship('PriceHistory', backref='version', lazy='dynamic', cascade='all, delete-orphan')
     
