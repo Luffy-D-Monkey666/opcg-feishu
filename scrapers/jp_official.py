@@ -165,17 +165,16 @@ class JapanOfficialScraper:
             else:
                 seen_cards[card_num] = 0
         
-        # 获取插画类型和星标
+        # 获取插画类型（星标无法通过API获取，需要看卡片图片）
         if fetch_extras and all_cards:
-            logger.info("获取插画类型和星标...")
+            logger.info("获取插画类型...")
             illustration_map = self._fetch_illustration_types(series_id)
-            star_ids = self._fetch_star_marked_cards(series_id)
             
             # 应用到卡片数据
             for card in all_cards:
                 if card.modal_id:
                     card.illustration_type = illustration_map.get(card.modal_id)
-                    card.has_star_mark = card.modal_id in star_ids
+                # 星标无法自动检测，保持默认 False
         
         # 下载图片
         if download_images:
@@ -388,46 +387,6 @@ class JapanOfficialScraper:
                 logger.warning(f"获取插画类型 {ill_type} 失败: {e}")
         
         return card_to_type
-    
-    def _fetch_star_marked_cards(self, series_id: str) -> set:
-        """
-        获取系列中有星标的卡片ID（内部方法）
-        
-        Returns:
-            set: 有星标的 modal_id 集合
-        """
-        try:
-            star_ids = self.page.evaluate('''
-                (seriesId) => {
-                    return new Promise((resolve) => {
-                        const formData = new FormData();
-                        formData.append('stars[]', '1');  // 1 = 有星标
-                        formData.append('series', seriesId);
-                        
-                        fetch('/cardlist/', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => response.text())
-                        .then(html => {
-                            const parser = new DOMParser();
-                            const doc = parser.parseFromString(html, 'text/html');
-                            const ids = [];
-                            doc.querySelectorAll('.resultCol .modalCol').forEach(modal => {
-                                if (modal.id) ids.push(modal.id);
-                            });
-                            resolve(ids);
-                        })
-                        .catch(err => resolve([]));
-                    });
-                }
-            ''', series_id)
-            
-            logger.debug(f"星标卡: {len(star_ids)} 张")
-            return set(star_ids)
-        except Exception as e:
-            logger.warning(f"获取星标卡失败: {e}")
-            return set()
     
     def scrape_illustration_types(self, series_id: str) -> Dict[str, str]:
         """
