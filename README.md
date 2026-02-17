@@ -1,230 +1,345 @@
-# OPCG TCG Manager
+# OPCG TCG 卡牌图鉴系统
 
-One Piece Card Game 卡牌收藏管理系统 - 一个全功能的卡牌数据库和收藏管理工具。
+> One Piece Card Game 卡牌收藏管理工具
 
-🔗 **在线演示**: [https://opcg-tcg.onrender.com](https://opcg-tcg.onrender.com)
+**在线演示**: https://opcg-tcg.onrender.com
 
-## ✨ 功能特性
+## 📋 项目概述
 
-### 📚 卡牌数据库
-- **多语言支持**: 日文/英文卡牌数据
-- **完整图鉴**: 收录所有官方系列（OP/ST/EB/PRB/P 等）
-- **高级筛选**: 
-  - 系列、类型、颜色、稀有度
-  - 插画类型（原作/动画/原创）
-  - ⭐ 星标异画卡识别
-- **版本管理**: 同一卡片的多个版本（普通版、异画版、SP 版等）
-- **入手情报**: 每个版本显示来源信息
+这是一个完整的 One Piece Card Game (OPCG) 卡牌数据库和收藏管理系统，支持：
 
-### 🎯 收藏管理
-- 用户注册/登录
-- 收藏列表管理
-- 愿望单功能
-- 收藏统计
-
-### 💰 价格追踪
-- 市场价格数据（数据来源: OPTCG API）
-- 价格历史记录
+- 🃏 **卡片浏览** - 日文/英文双语支持，8500+ 张卡片版本
+- 🔍 **高级搜索** - 按类型、颜色、稀有度、插画类型筛选
+- 📦 **系列管理** - 104 个系列（Booster/Starter/Extra/Premium/Promo等）
+- 👤 **用户系统** - 注册登录、收藏管理、愿望单
+- 🎴 **卡组构建** - 创建卡组、分享链接
+- 💰 **价格追踪** - 市场价格历史图表
 
 ## 🏗️ 技术架构
 
-### 后端
-- **框架**: Flask 3.0
-- **数据库**: PostgreSQL (生产) / SQLite (开发)
-- **ORM**: SQLAlchemy
-- **认证**: Flask-Login
-
-### 前端
-- **UI框架**: Bootstrap 5
-- **图标**: Bootstrap Icons
-- **响应式设计**: 支持移动端
-
-### 数据抓取
-- **爬虫**: Playwright (Headless Chrome)
-- **数据源**: 
-  - 日文官网: onepiece-cardgame.com
-  - 英文官网: en.onepiece-cardgame.com
-  - 价格: OPTCG API
-
-### 部署
-- **平台**: Render
-- **CI/CD**: GitHub 自动部署
+```
+Flask (Python 3.12) + SQLAlchemy + Playwright
+├── 后端: Flask + Flask-Login + Flask-SQLAlchemy
+├── 数据库: SQLite (开发) / PostgreSQL (生产)
+├── 爬虫: Playwright (headless Chrome)
+├── 前端: Bootstrap 5 + Jinja2
+└── 部署: Render.com
+```
 
 ## 📁 项目结构
 
 ```
 opcg-tcg/
-├── app/                      # Flask 应用
-│   ├── __init__.py          # 应用工厂
-│   ├── models/              # 数据模型
-│   │   ├── card.py          # Card, CardVersion, CardImage
-│   │   ├── series.py        # Series
-│   │   ├── user.py          # User, Collection, Wishlist
-│   │   └── price.py         # PriceHistory
-│   ├── routes/              # 路由/视图
-│   │   ├── main.py          # 首页
-│   │   ├── cards.py         # 卡牌列表、详情
-│   │   ├── auth.py          # 认证
-│   │   ├── user.py          # 用户中心
-│   │   ├── prices.py        # 价格
-│   │   └── api.py           # API 接口
-│   ├── templates/           # Jinja2 模板
-│   └── static/              # 静态资源
-├── scrapers/                 # 数据爬虫
-│   ├── jp_official.py       # 日文官网爬虫
-│   └── en_official.py       # 英文官网爬虫
-├── scripts/                  # 脚本工具
-│   ├── scrape_all.py        # 全量抓取
-│   ├── update_prices.py     # 价格更新
-│   └── update_source_info.py # 入手情报更新
-├── requirements.txt          # Python 依赖
-├── Procfile                 # Render 启动配置
-└── render.yaml              # Render 部署配置
+├── app/                          # Flask 应用
+│   ├── __init__.py              # 应用工厂
+│   ├── config.py                # 配置文件
+│   ├── models/                  # 数据模型
+│   │   ├── card.py              # Card, CardVersion, CardImage
+│   │   ├── series.py            # Series (系列)
+│   │   ├── user.py              # User (用户)
+│   │   ├── collection.py        # UserCollection, Wishlist
+│   │   ├── deck.py              # Deck, DeckCard
+│   │   └── price.py             # PriceHistory
+│   ├── routes/                  # 路由
+│   │   ├── main.py              # 首页
+│   │   ├── cards.py             # 卡片列表/详情
+│   │   ├── auth.py              # 登录/注册
+│   │   ├── user.py              # 用户中心
+│   │   ├── prices.py            # 价格页面
+│   │   └── api.py               # JSON API
+│   ├── templates/               # Jinja2 模板
+│   └── static/                  # 静态资源
+├── scrapers/                    # 爬虫模块
+│   ├── jp_official.py           # 日文官网爬虫
+│   ├── en_official.py           # 英文官网爬虫
+│   └── price_scraper.py         # 价格爬虫
+├── scripts/                     # 运维脚本
+│   ├── scrape_all.py            # 批量爬取
+│   ├── update_prices.py         # 价格更新
+│   └── sync_to_pg.py            # 同步到 PostgreSQL
+├── data/                        # 数据文件
+│   └── opcg_dev.db              # SQLite 数据库
+├── requirements.txt             # Python 依赖
+├── render.yaml                  # Render 部署配置
+├── Procfile                     # 启动命令
+└── run.py                       # 入口文件
 ```
 
-## 🗄️ 数据模型
+## 📊 数据模型
 
-### Card (卡片)
-核心卡片数据，唯一标识: `card_number + language`
+### 核心关系图
 
-| 字段 | 说明 |
-|------|------|
-| card_number | 卡片编号 (如 OP01-001) |
-| language | 语言 (jp/en) |
-| name | 卡片名称 |
-| card_type | 类型 (LEADER/CHARACTER/EVENT/STAGE) |
-| rarity | 稀有度 (L/SEC/SR/R/UC/C/SP CARD/TR/P) |
-| colors | 颜色 (赤/緑/青/紫/黒/黄) |
-| cost/life/power/counter | 数值属性 |
-| effect_text | 效果文本 |
-| traits | 特征 |
+```
+Series (系列)
+  │
+  ├──< Card (卡片) ──< CardVersion (版本) ──< CardImage (图片)
+  │                          │
+  │                          └──< PriceHistory (价格)
+  │
+  └──< card_series (多对多：再录卡关联)
 
-### CardVersion (卡片版本)
-同一卡片的不同版本（普通、异画、SP 等）
+User (用户)
+  ├──< UserCollection (收藏)
+  ├──< Wishlist (愿望单)
+  └──< Deck (卡组) ──< DeckCard (卡组卡片)
+```
 
-| 字段 | 说明 |
-|------|------|
-| card_id | 所属卡片 |
-| series_id | 来源系列 |
-| version_type | 版本类型 (normal/alt_art/special/promo) |
-| version_suffix | 版本后缀 (_p1, _v1 等) |
-| has_star_mark | ⭐ 是否有星标 (OP04+ 异画卡) |
-| source_description | 入手情报 |
-| illustration_type | 插画类型 (原作/アニメ/オリジナル) |
+### Card 模型字段
 
-### Series (系列)
-卡片系列/补充包信息
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| card_number | String(20) | 卡片编号 (如 OP14-001) |
+| language | String(5) | 语言 (jp/en) |
+| name | String(200) | 卡片名称 |
+| card_type | String(20) | LEADER/CHARACTER/EVENT/STAGE |
+| rarity | String(10) | L/C/UC/R/SR/SEC |
+| colors | String(50) | 颜色 (逗号分隔: 赤,緑,青,紫,黄,黒) |
+| cost | Integer | 费用 |
+| life | Integer | 生命值 (LEADER) |
+| power | Integer | 力量 |
+| counter | Integer | Counter 值 |
+| attribute | String(20) | 属性 (斬/打/特/知) |
+| traits | String(500) | 特征 (斜杠分隔) |
+| effect_text | Text | 效果文本 |
+| trigger_text | Text | 触发效果 |
+| block_icon | Integer | Block 图标数量 |
 
-| 字段 | 说明 |
-|------|------|
-| code | 系列代码 (OP01, ST01 等) |
-| name | 系列名称 |
-| series_type | 类型 (booster/starter/extra/promo) |
-| language | 语言 |
+### CardVersion 模型字段
 
-## 🚀 本地开发
+| 字段 | 类型 | 说明 |
+|------|------|------|
+| card_id | FK | 所属卡片 |
+| series_id | FK | 来源系列 |
+| version_type | String(20) | normal/alt_art/comic/special/promo |
+| version_suffix | String(10) | 版本后缀 (_p1, _sp) |
+| has_star_mark | Boolean | 是否有星标 |
+| illustration_type | String(20) | 原作/アニメ/オリジナル/その他 |
+| source_description | String(500) | 入手情報 |
 
-### 环境要求
-- Python 3.12+
-- PostgreSQL (可选，开发可用 SQLite)
-- Playwright (爬虫需要)
+## 🕷️ 爬虫说明
 
-### 安装步骤
+### 数据源
+
+- **日文官网**: https://www.onepiece-cardgame.com/cardlist/
+- **英文官网**: https://en.onepiece-cardgame.com/cardlist/
+- **价格 API**: https://optcgapi.com/
+
+### 爬虫原理
+
+官网使用 JavaScript 渲染，数据存储在 HTML 的 `.modalCol` 元素中：
+
+```html
+<div class="resultCol">
+  <dl class="modalCol" id="OP14-001">
+    <dt>
+      <div class="infoCol">
+        <span>OP14-001</span> | <span>L</span> | <span>LEADER</span>
+      </div>
+      <div class="cardName">トラファルガー・ロー</div>
+    </dt>
+    <dd>
+      <div class="frontCol"><img data-src="..."></div>
+      <div class="backCol">
+        <div class="cost"><h3>ライフ</h3>5</div>
+        <div class="power"><h3>パワー</h3>5000</div>
+        <div class="color"><h3>色</h3>赤</div>
+        <div class="feature"><h3>特徴</h3>...</div>
+        <div class="text"><h3>テキスト</h3>...</div>
+        <div class="getInfo"><h3>入手情報</h3>...</div>
+      </div>
+    </dd>
+  </dl>
+</div>
+```
+
+爬虫使用 Playwright 加载页面后，通过 JavaScript 直接提取 DOM 数据。
+
+### 运行爬虫
 
 ```bash
-# 克隆仓库
-git clone https://github.com/Luffy-D-Monkey666/opcg-feishu.git
-cd opcg-feishu
-
-# 创建虚拟环境
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
 # 安装依赖
 pip install -r requirements.txt
-
-# 安装 Playwright 浏览器 (爬虫需要)
 playwright install chromium
 
-# 初始化数据库
-flask db upgrade
+# 爬取单个系列
+python scripts/scrape_all.py --series OP-14
 
-# 运行开发服务器
-flask run --debug
-```
+# 爬取所有日文系列
+python scripts/scrape_all.py --all --lang jp
 
-### 环境变量
+# 爬取所有英文系列
+python scripts/scrape_all.py --all --lang en
 
-```bash
-# .env 文件
-SECRET_KEY=your-secret-key
-DATABASE_URL=postgresql://user:pass@localhost/opcg  # 或 sqlite:///instance/opcg.db
-FLASK_ENV=development
-```
-
-## 📊 数据抓取
-
-### 全量抓取日文数据
-```bash
-python scripts/scrape_all.py
-```
-
-### 抓取英文数据
-```bash
-python scripts/scrape_en_full.py
-```
-
-### 更新价格数据
-```bash
+# 更新价格数据
 python scripts/update_prices.py
 ```
 
-### 更新入手情报
+## 🚀 本地开发
+
+### 1. 克隆项目
+
 ```bash
-python scripts/update_source_info.py
+git clone https://github.com/Luffy-D-Monkey666/opcg-feishu.git
+cd opcg-feishu
 ```
 
-## 🌟 特色功能说明
+### 2. 创建虚拟环境
 
-### 星标异画卡识别
-OP04 及之后的补充包中，异画卡（Parallel/Alt Art）在卡面编号位置有星星标识。系统通过分析图片 URL 后缀 (`_r1`, `_r2`) 自动识别这些版本。
-
-### 多版本管理
-同一卡片编号可能有多个版本：
-- **普通版**: 标准版本
-- **异画版 (alt_art)**: 不同插画的收藏版
-- **SP 版**: 特殊稀有版本
-- **Promo**: 促销/活动限定版
-
-每个版本独立记录来源系列和入手情报。
-
-### 系列导航
-支持从不同系列进入同一张卡片的详情页，会自动显示该系列对应版本的信息。
-
-## 📝 API 接口
-
-### 收藏操作
-```
-POST /api/collection/add    # 添加收藏
-POST /api/collection/remove # 移除收藏
-POST /api/wishlist/add      # 添加愿望单
-POST /api/wishlist/remove   # 移除愿望单
+```bash
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# 或 venv\Scripts\activate  # Windows
 ```
 
-## 🤝 贡献
+### 3. 安装依赖
 
-欢迎提交 Issue 和 Pull Request！
+```bash
+pip install -r requirements.txt
+playwright install chromium
+```
 
-## 📄 许可证
+### 4. 初始化数据库
+
+```bash
+python -c "from app import create_app, db; app = create_app(); app.app_context().push(); db.create_all()"
+```
+
+### 5. 爬取数据
+
+```bash
+# 爬取日文数据
+python scripts/scrape_all.py --all --lang jp
+
+# 爬取英文数据
+python scripts/scrape_all.py --all --lang en
+```
+
+### 6. 启动应用
+
+```bash
+python run.py
+# 访问 http://localhost:5000
+```
+
+## ☁️ 部署到 Render
+
+### 1. 创建 Web Service
+
+- 连接 GitHub 仓库
+- 选择 Python 环境
+- Build Command: `pip install -r requirements.txt && playwright install chromium --with-deps`
+- Start Command: `gunicorn run:app --bind 0.0.0.0:$PORT`
+
+### 2. 创建 PostgreSQL 数据库
+
+- 在 Render 创建 PostgreSQL 实例
+- 复制 External Database URL
+
+### 3. 设置环境变量
+
+```
+FLASK_ENV=production
+SECRET_KEY=<生成随机密钥>
+DATABASE_URL=<PostgreSQL 连接字符串>
+```
+
+### 4. 数据迁移
+
+```bash
+# 本地导出数据
+python scripts/sync_to_pg.py --export
+
+# 导入到 PostgreSQL
+python scripts/sync_to_pg.py --import
+```
+
+## 📱 主要页面
+
+| 路由 | 功能 |
+|------|------|
+| `/` | 首页 (统计数据) |
+| `/cards/` | 卡片列表 |
+| `/cards/<number>` | 卡片详情 |
+| `/cards/series` | 系列列表 |
+| `/cards/series/<id>` | 系列详情 |
+| `/search` | 搜索页面 |
+| `/prices` | 价格一览 |
+| `/prices/card/<number>` | 价格历史 |
+| `/auth/login` | 登录 |
+| `/auth/register` | 注册 |
+| `/user/collection` | 我的收藏 |
+| `/user/wishlist` | 愿望单 |
+| `/user/decks` | 我的卡组 |
+| `/user/stats` | 收藏统计 |
+
+## 🔌 API 接口
+
+```
+GET  /api/cards/search?q=<关键词>     # 搜索卡片
+GET  /api/prices/history/<version_id> # 价格历史
+POST /api/decks/<id>/add-card         # 添加卡片到卡组
+POST /api/decks/<id>/remove-card      # 从卡组移除卡片
+```
+
+## 📈 数据统计 (2026-02-17)
+
+| 语言 | 系列数 | 卡片数 | 版本数 |
+|------|--------|--------|--------|
+| 日文 | 52 | 2,394 | 4,272 |
+| 英文 | 52 | 2,346 | 4,310 |
+| **总计** | **104** | **4,740** | **8,582** |
+
+## 🔧 配置说明
+
+### app/config.py
+
+```python
+class DevelopmentConfig:
+    DEBUG = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///data/opcg_dev.db'
+    SECRET_KEY = 'dev-secret-key'
+
+class ProductionConfig:
+    DEBUG = False
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SECRET_KEY = os.environ.get('SECRET_KEY')
+```
+
+### 图片 CDN
+
+项目使用 wsrv.nl 作为图片 CDN 代理：
+
+```python
+def cdn_image(url, width=None):
+    cdn_url = f"https://wsrv.nl/?url={quote(url, safe='')}"
+    if width:
+        cdn_url += f"&w={width}"
+    cdn_url += "&output=webp&q=85"
+    return cdn_url
+```
+
+## 📝 复刻指南 (给 AI)
+
+如果你是另一个 AI，想要复刻这个项目：
+
+1. **理解数据源**: 官网 HTML 结构在 `.modalCol` 中，所有卡片数据一次性加载
+2. **爬虫核心**: 使用 Playwright 等待页面渲染，然后执行 JS 提取 DOM
+3. **版本处理**: 同一编号可能有多个版本（普通/异画/漫画），用 `version_index` 区分
+4. **系列关联**: CardVersion.series_id 表示该版本来自哪个补充包
+5. **再录卡**: 使用 card_series 多对多表处理同一张卡在多个系列出现的情况
+6. **语言分离**: jp 和 en 是独立的数据，通过 Card.language 区分
+
+### 关键代码位置
+
+- 爬虫逻辑: `scrapers/jp_official.py` 的 `_extract_cards_from_html()` 方法
+- 数据模型: `app/models/card.py`
+- 卡片列表: `app/routes/cards.py` 的 `card_list()` 方法
+- 模板示例: `app/templates/cards/list.html`
+
+## 📜 License
 
 MIT License
 
-## 🙏 致谢
-
-- 数据来源: [ONE PIECE CARD GAME 官方网站](https://www.onepiece-cardgame.com/)
-- 价格数据: OPTCG API
-- 图片版权归 Bandai/集英社/东映动画 所有
-
 ---
 
-Made with ❤️ for One Piece Card Game collectors
+*Built with ❤️ for OPCG collectors*
