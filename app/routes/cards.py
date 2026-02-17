@@ -30,6 +30,7 @@ def card_list():
     color = request.args.get('color', '').strip()
     rarity = request.args.get('rarity', '').strip()
     illustration = request.args.get('illustration', '').strip()
+    star = request.args.get('star', '').strip()  # 星标筛选
     
     # 当选择了系列时，基于 CardVersion 查询（包含平行卡/异画卡）
     # 当没有选择系列时，基于 Card 查询（每个卡号只显示一次）
@@ -51,6 +52,10 @@ def card_list():
                 q = q.filter(Card.rarity == rarity)
         if illustration:
             q = q.filter(CardVersion.illustration_type == illustration)
+        if star == '1':
+            q = q.filter(CardVersion.has_star_mark == True)
+        elif star == '0':
+            q = q.filter(CardVersion.has_star_mark == False)
         
         pagination = q.order_by(Card.card_number, CardVersion.version_suffix).paginate(
             page=page, per_page=per_page, error_out=False
@@ -79,11 +84,16 @@ def card_list():
             else:
                 q = q.filter(Card.rarity == rarity)
         
-        # 插画类型筛选（需要 JOIN CardVersion）
-        if illustration:
-            q = q.join(CardVersion, Card.id == CardVersion.card_id)\
-                 .filter(CardVersion.illustration_type == illustration)\
-                 .distinct()
+        # 插画类型或星标筛选（需要 JOIN CardVersion）
+        if illustration or star:
+            q = q.join(CardVersion, Card.id == CardVersion.card_id)
+            if illustration:
+                q = q.filter(CardVersion.illustration_type == illustration)
+            if star == '1':
+                q = q.filter(CardVersion.has_star_mark == True)
+            elif star == '0':
+                q = q.filter(CardVersion.has_star_mark == False)
+            q = q.distinct()
         
         pagination = q.order_by(Card.card_number).paginate(
             page=page, per_page=per_page, error_out=False
@@ -159,6 +169,13 @@ class CardDisplay:
         if self.version:
             return self.version.illustration_type
         return None
+    
+    @property
+    def has_star_mark(self):
+        """获取星标状态（版本级别）"""
+        if self.version:
+            return self.version.has_star_mark
+        return False
 
 
 def _get_series_groups(lang: str) -> dict:
