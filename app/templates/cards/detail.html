@@ -6,8 +6,12 @@
 <nav aria-label="breadcrumb" class="mb-3">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ url_for('main.index') }}">首页</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list') }}">卡牌列表</a></li>
-        <li class="breadcrumb-item"><a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}">{{ card.series.code }}</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list', lang=current_lang) }}">卡牌列表</a></li>
+        {% if display_series %}
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list', series=display_series.id, lang=current_lang) }}">{{ display_series.code }}</a></li>
+        {% else %}
+        <li class="breadcrumb-item"><a href="{{ url_for('cards.card_list', series=card.series_id, lang=current_lang) }}">{{ card.series.code }}</a></li>
+        {% endif %}
         <li class="breadcrumb-item active">{{ card.card_number }}</li>
     </ol>
 </nav>
@@ -280,12 +284,13 @@
 </div>
 
 <!-- 同じ系列の卡牌 -->
+{% if display_series %}
 <div class="mt-5">
-    <h4><i class="bi bi-grid-3x3-gap"></i> {{ card.series.code }} 的其他卡牌</h4>
+    <h4><i class="bi bi-grid-3x3-gap"></i> {{ display_series.code }} 的其他卡牌</h4>
     <div class="card-grid">
         {% for other in same_series_cards[:6] %}
         <div class="card-item">
-            <a href="{{ url_for('cards.card_detail', card_number=other.card_number, lang=current_lang) }}" class="text-decoration-none">
+            <a href="{{ url_for('cards.card_detail', card_number=other.card_number, lang=current_lang, from_series=display_series.id) }}" class="text-decoration-none">
                 {% set other_version = other.versions.first() %}
                 {% if other_version %}
                     {% set other_image = other_version.images.first() %}
@@ -305,11 +310,12 @@
         {% endfor %}
     </div>
     <div class="text-center mt-3">
-        <a href="{{ url_for('cards.series_detail', series_id=card.series_id) }}" class="btn btn-outline-secondary">
+        <a href="{{ url_for('cards.card_list', series=display_series.id, lang=current_lang) }}" class="btn btn-outline-secondary">
             查看全部卡牌
         </a>
     </div>
 </div>
+{% endif %}
 {% endblock %}
 
 {% block extra_js %}

@@ -235,6 +235,9 @@ def card_detail(card_number):
     # 支持版本参数（用于显示特定版本的图片）
     target_version_id = request.args.get('version_id', type=int)
     
+    # 支持来源系列参数（用于面包屑导航）
+    from_series_id = request.args.get('from_series', type=int)
+    
     # 先尝试查找指定语言的卡片
     card = Card.query.filter_by(card_number=card_number, language=lang).first()
     
@@ -270,12 +273,31 @@ def card_detail(card_number):
         v.images_list = v.images.all()
     card.versions_list = versions
     
-    # 同系列的其他卡片（同语言）
-    same_series_cards = Card.query.filter(
-        Card.series_id == card.series_id,
-        Card.id != card.id,
-        Card.language == lang
-    ).order_by(Card.card_number).limit(12).all()
+    # 确定显示的"来源系列"（用于面包屑）
+    # 优先使用 from_series，其次使用版本的 series_id，最后使用卡片的 series_id
+    display_series = None
+    if from_series_id:
+        display_series = Series.query.get(from_series_id)
+    if not display_series and target_version_id:
+        # 从版本获取系列
+        target_v = CardVersion.query.get(target_version_id)
+        if target_v:
+            display_series = Series.query.get(target_v.series_id)
+    if not display_series:
+        display_series = card.series
+    
+    # 同系列的其他卡片（基于 display_series）
+    if display_series:
+        # 从该系列的版本中获取其他卡片
+        same_series_card_ids = db.session.query(Card.id).join(
+            CardVersion, Card.id == CardVersion.card_id
+        ).filter(
+            CardVersion.series_id == display_series.id,
+            Card.id != card.id
+        ).distinct().limit(12).all()
+        same_series_cards = Card.query.filter(Card.id.in_([c[0] for c in same_series_card_ids])).order_by(Card.card_number).all()
+    else:
+        same_series_cards = []
     
     # コレクション/ウィッシュリスト状態をチェック
     in_collection = None
@@ -307,7 +329,9 @@ def card_detail(card_number):
                           current_lang=lang,
                           in_collection=in_collection,
                           in_wishlist=in_wishlist,
-                          prices=prices)
+                          prices=prices,
+                          display_series=display_series,
+                          from_series_id=from_series_id)
 
 
 @bp.route('/series/')
