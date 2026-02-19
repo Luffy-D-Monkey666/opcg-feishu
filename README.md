@@ -1,6 +1,6 @@
 # OPCG TCG 卡牌图鉴系统
 
-[![Tests](https://github.com/Luffy-D-Monkey666/opcg-feishu/actions/workflows/test.yml/badge.svg)](https://github.com/Luffy-D-Monkey666/opcg-feishu/actions/workflows/test.yml)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/downloads/)
 
