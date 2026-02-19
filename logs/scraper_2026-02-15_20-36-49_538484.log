@@ -1,4 +1,0 @@
-2026-02-15 20:36:51.112 | INFO     | scrapers.jp_official:start_browser:92 - 浏览器已启动
-2026-02-15 20:36:51.112 | INFO     | scrapers.jp_official:get_series_list:109 - 获取系列列表...
-2026-02-15 20:37:03.986 | INFO     | scrapers.jp_official:get_series_list:141 - 共找到 0 个系列
-2026-02-15 20:37:04.024 | INFO     | scrapers.jp_official:close_browser:100 - 浏览器已关闭
